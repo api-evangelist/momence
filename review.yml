@@ -1,0 +1,142 @@
+aid: momence
+name: Momence
+review:
+  question: Does Momence expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-04'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Momence's documented public API surface
+    (the /api/v2 Host API and Member API at api.momence.com) is request/response
+    REST over HTTPS, authenticated with OAuth2. The published OpenAPI schema
+    (https://static.momence.com/schema/api-v2-schema.yaml) defines only REST
+    paths and OAuth2 security schemes - there is no server-push transport
+    (WebSocket or SSE) and no callbacks/webhook objects on Momence's own public
+    API to model. There is therefore no realtime protocol surface for an
+    AsyncAPI document to describe.
+findings:
+  summary: |
+    Momence publishes a documented public REST API. It is a management platform
+    for fitness, wellness, and experience-based businesses (studios, gyms, spas,
+    instructors). The Public API lives at base https://api.momence.com under
+    /api/v2 and is split into a Host API (staff / back-office, aligned with
+    dashboard permissions) and a Member API (scoped to the currently logged-in
+    customer). Authentication is OAuth2: an authorization code grant that
+    redirects customers to a Momence login screen, a password grant reserved for
+    staff automation, and refresh tokens; access tokens are short-lived. API
+    access is enabled by creating public API clients (client_id / client_secret)
+    in the Momence dashboard under Apps & Integrations > Developer API. The
+    documented surface covers members, sessions and bookings, memberships,
+    checkout / sales / reports, appointments, addresses, and saved payment
+    methods. No documented public WebSocket (ws:// or wss://) endpoint exists on
+    Momence's own API.
+  openSource: |
+    Momence is a proprietary commercial SaaS platform. The API is a partner /
+    integration surface gated by dashboard-created OAuth2 public API clients,
+    not an open-source project. There is no public Momence GitHub organization
+    that hosts the platform or an official SDK as of the review date.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.momence.com/api/v2
+      documented: true
+      note: Host API and Member API. OAuth2-authenticated request/response REST defined in the published OpenAPI schema.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in the Momence Public API docs or OpenAPI schema as of the review date.
+    - protocol: Webhook
+      scheme: https
+      documented: false
+      note: >-
+        Webhooks are referenced informally in the developer hub, but the public
+        v2 OpenAPI schema defines no webhook/callback objects and no registration
+        endpoint. Not modeled as a documented public artifact here.
+  endpointsConfirmedRest:
+    - GET    https://api.momence.com/api/v2/auth/authorize
+    - POST   https://api.momence.com/api/v2/auth/token
+    - GET    https://api.momence.com/api/v2/auth/profile
+    - POST   https://api.momence.com/api/v2/auth/logout
+    - GET    https://api.momence.com/api/v2/host/members
+    - POST   https://api.momence.com/api/v2/host/members
+    - POST   https://api.momence.com/api/v2/host/members/list
+    - GET    https://api.momence.com/api/v2/host/members/{memberId}
+    - PUT    https://api.momence.com/api/v2/host/members/{memberId}/name
+    - PUT    https://api.momence.com/api/v2/host/members/{memberId}/email
+    - PUT    https://api.momence.com/api/v2/host/members/{memberId}/phone-number
+    - GET    https://api.momence.com/api/v2/host/members/{memberId}/notes
+    - GET    https://api.momence.com/api/v2/host/members/{memberId}/sessions
+    - POST   https://api.momence.com/api/v2/host/members/{memberId}/tags/{tagId}
+    - DELETE https://api.momence.com/api/v2/host/members/{memberId}/tags/{tagId}
+    - GET    https://api.momence.com/api/v2/host/tags
+    - GET    https://api.momence.com/api/v2/host/memberships
+    - GET    https://api.momence.com/api/v2/host/members/{memberId}/bought-memberships/active
+    - PUT    https://api.momence.com/api/v2/host/members/{memberId}/bought-memberships/{boughtMembershipId}/credits
+    - PUT    https://api.momence.com/api/v2/host/members/{memberId}/bought-memberships/{boughtMembershipId}/membership-freeze
+    - GET    https://api.momence.com/api/v2/host/sessions
+    - GET    https://api.momence.com/api/v2/host/sessions/{sessionId}
+    - GET    https://api.momence.com/api/v2/host/sessions/{sessionId}/bookings
+    - POST   https://api.momence.com/api/v2/host/sessions/{sessionId}/bookings/free
+    - POST   https://api.momence.com/api/v2/host/sessions/{sessionId}/waitlist/bookings
+    - POST   https://api.momence.com/api/v2/host/session-bookings/{bookingId}/check-in
+    - DELETE https://api.momence.com/api/v2/host/session-bookings/{bookingId}
+    - DELETE https://api.momence.com/api/v2/host/session-recurring-bookings/{bookingId}
+    - POST   https://api.momence.com/api/v2/host/checkout/compatible-memberships
+    - POST   https://api.momence.com/api/v2/host/checkout/prices
+    - POST   https://api.momence.com/api/v2/host/checkout
+    - GET    https://api.momence.com/api/v2/host/sales
+    - GET    https://api.momence.com/api/v2/host/appointments/reservations
+    - POST   https://api.momence.com/api/v2/host/reports
+    - GET    https://api.momence.com/api/v2/host/reports/{reportRunId}
+    - GET    https://api.momence.com/api/v2/member
+    - PUT    https://api.momence.com/api/v2/member
+    - GET    https://api.momence.com/api/v2/member/visits
+    - PUT    https://api.momence.com/api/v2/member/email
+    - PUT    https://api.momence.com/api/v2/member/phone-number
+    - POST   https://api.momence.com/api/v2/member/password-reset-email
+    - GET    https://api.momence.com/api/v2/member-addresses
+    - POST   https://api.momence.com/api/v2/member-addresses
+    - GET    https://api.momence.com/api/v2/member-addresses/{memberAddressId}
+    - PUT    https://api.momence.com/api/v2/member-addresses/{memberAddressId}
+    - DELETE https://api.momence.com/api/v2/member-addresses/{memberAddressId}
+    - GET    https://api.momence.com/api/v2/member/bought-memberships/active
+    - POST   https://api.momence.com/api/v2/member/checkout/compatible-memberships
+    - POST   https://api.momence.com/api/v2/member/checkout/prices
+    - POST   https://api.momence.com/api/v2/member/checkout
+    - GET    https://api.momence.com/api/v2/member/host/locations
+    - GET    https://api.momence.com/api/v2/member/host/memberships
+    - GET    https://api.momence.com/api/v2/member/host/sessions
+    - GET    https://api.momence.com/api/v2/member/host/signable-documents
+    - POST   https://api.momence.com/api/v2/member/host/signable-documents/sign
+    - GET    https://api.momence.com/api/v2/member/saved-payment-methods
+    - GET    https://api.momence.com/api/v2/member/sessions
+sources:
+  - url: https://api.docs.momence.com/
+    type: Documentation
+    note: Momence Public API developer hub - member API vs host API, getting started.
+  - url: https://api.docs.momence.com/docs/get-started
+    type: Documentation
+    note: Base OpenAPI schema link and instructions to create a public API client in the dashboard.
+  - url: https://api.docs.momence.com/docs/authorization
+    type: Documentation
+    note: OAuth2 authorization; Host API (staff) vs Member API (customer) scoping.
+  - url: https://api.docs.momence.com/docs/getting-started
+    type: Documentation
+    note: OAuth2 token flow - authorization code, password, and refresh token grants; token endpoint /api/v2/auth/token.
+  - url: https://static.momence.com/schema/api-v2-schema.yaml
+    type: OpenAPI
+    note: Published OpenAPI 3.0 schema, title "Momence Public" v2.0, server https://api.momence.com; OAuth2 + basic (client_id/client_secret) security. REST only, no WebSocket or callbacks.
+  - url: https://momence.com/pricing
+    type: Pricing
+    note: Tiered monthly subscription plus payment-processing / platform fees.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists on Momence's own public API. The
+    documented API is OAuth2-authenticated request/response REST (Host API and
+    Member API under /api/v2), defined in the published OpenAPI schema. No
+    AsyncAPI document was created because there is no server-push transport
+    (WebSocket, SSE) or documented webhook/callback surface on Momence's own API
+    to model.

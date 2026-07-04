@@ -1,0 +1,52 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Momence
+providerId: momence
+created: '2026-07-04'
+modified: '2026-07-04'
+reconciled: false
+tags:
+- Fitness
+- Wellness
+- Studio Management
+- Rate Limiting
+- Quotas
+description: >-
+  Momence does not publish fixed numeric rate limits for its Public API in the
+  developer documentation as of the review date. Access is gated by OAuth2 with
+  per-host public API clients (client_id / client_secret), and tokens are
+  short-lived (access tokens expire within hours and must be refreshed via the
+  refresh-token grant), which bounds long-running automation. Clients should
+  assume standard throttling protections may apply and handle 429 responses with
+  backoff. Numeric per-client or per-endpoint request ceilings are not documented.
+notes: >-
+  No RPM / RPD / concurrent-request limits are stated in the Momence API docs.
+  Verify current limits with Momence developer support before building
+  high-volume integrations. Short token lifetimes are a practical constraint on
+  sustained automation.
+sources:
+- https://api.docs.momence.com/
+- https://api.docs.momence.com/docs/authorization
+- https://api.docs.momence.com/docs/getting-started
+responseCodes:
+  throttled: 429
+limits:
+- name: Public API Requests
+  scope: client
+  metric: requests
+  limit: not published
+  notes: No fixed numeric request-rate limit is documented for the Public API.
+- name: Access Token Lifetime
+  scope: token
+  metric: duration
+  limit: short-lived (hours)
+  notes: Access tokens expire within hours and must be refreshed with the refresh-token grant.
+policies:
+- name: OAuth2 Client Gating
+  description: Every call is authenticated with an OAuth2 token issued to a dashboard-created public API client; unauthenticated or expired-token calls are rejected.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter and honor Retry-After on any 429 responses.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

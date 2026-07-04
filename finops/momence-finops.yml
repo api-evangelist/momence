@@ -1,0 +1,104 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Momence
+providerId: momence
+created: '2026-07-04'
+modified: '2026-07-04'
+reconciled: false
+tags:
+- Fitness
+- Wellness
+- Studio Management
+- Payments
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Momence spend. Momence is a SaaS platform billed as a tiered
+  monthly software subscription, with per-transaction payment processing and
+  platform fees layered on top of card and ACH transactions, plus optional
+  add-ons (marketing, branded app, extra staff/locations). The Public API is
+  included in the platform subscription rather than metered separately, so API
+  cost is effectively the subscription tier that unlocks it. The dominant
+  variable cost for most operators is payment processing on member transactions.
+notes: >-
+  Per-tier subscription prices and processing rates vary by region and change
+  over time; the figures in the plans artifact are indicative third-party
+  reports, not reconciled Momence rates. Verify on the Momence pricing page.
+sources:
+- https://momence.com/pricing
+- https://api.docs.momence.com/
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Momence
+serviceCategory: Business Management Software
+billingModel:
+  pricingCategory: Subscription
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+  - Adjustment
+focusColumns:
+  ServiceName: Momence Platform
+  ServiceCategory: Business Management Software
+  ProviderName: Momence
+  PublisherName: Momence
+  InvoiceIssuerName: Momence
+  BillingCurrency: USD
+  ChargeCategory: Purchase
+  PricingCategory: Subscription
+meters:
+- name: subscription_fee
+  description: Monthly platform subscription fee for the chosen Momence tier.
+  unit: months
+  aggregation: sum
+  dimensions:
+  - account
+  - plan
+- name: platform_transaction_fee
+  description: Per-transaction platform fee charged on member payments, varying by plan tier.
+  unit: transactions
+  aggregation: sum
+  dimensions:
+  - account
+  - plan
+- name: card_processing_fee
+  description: Payment processing fee on card transactions (percentage plus fixed amount), online and in-person.
+  unit: transactions
+  aggregation: sum
+  dimensions:
+  - account
+  - channel
+- name: ach_processing_fee
+  description: Processing fee on ACH / direct-debit transactions.
+  unit: transactions
+  aggregation: sum
+  dimensions:
+  - account
+- name: add_on_fees
+  description: Optional add-ons such as marketing, the branded member app, and extra staff or locations.
+  unit: months
+  aggregation: sum
+  dimensions:
+  - account
+  - addon
+principles:
+- name: Visibility
+  description: Track the monthly subscription tier plus payment-processing and platform fees on member transactions; reconcile against Momence sales and reports data pulled via the API.
+- name: Allocation
+  description: Map fees to locations, programs, or teams using member tags, sessions, and sales metadata.
+- name: Optimization
+  description: Choose the tier whose lower platform fee offsets its higher base fee at your transaction volume; encourage lower-cost payment rails (e.g., ACH) where appropriate; prune unused add-ons.
+- name: Accountability
+  description: Assign an owner for the Momence subscription and processing spend; review monthly against membership revenue.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

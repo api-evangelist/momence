@@ -1,0 +1,138 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Momence
+providerId: momence
+created: '2026-07-04'
+modified: '2026-07-04'
+reconciled: false
+tags:
+- Fitness
+- Wellness
+- Studio Management
+- Booking
+- Payments
+- Plans
+description: >-
+  Momence sells the platform as tiered monthly software subscriptions, with
+  payment processing and per-transaction platform fees layered on top. Published
+  tiers commonly cited are a free/basic entry plan, a mid Pro plan, and a higher
+  Custom/Enterprise plan, with add-ons (marketing, branded app, additional
+  staff/locations) sold separately. The public REST API is part of the platform
+  and is not billed as a separate metered product; access is enabled by creating
+  public API clients in the dashboard. Exact tier names, monthly prices, and
+  processing rates vary by region and change over time and are not reconciled
+  here - verify on the Momence pricing page.
+notes: >-
+  Third-party sources report figures such as ~$60-$99/month for the mid tier and
+  ~$199/month for the higher tier, a ~5% platform fee on lower tiers dropping to
+  ~2.5% on Pro, and US card processing around 3.9% + $0.30 online / 3.7% + $0.05
+  in-person / ~1.8% ACH. Treat these as indicative only; Momence's own pricing
+  page is authoritative. A 14-day free trial is offered.
+sources:
+- https://momence.com/pricing
+- https://api.docs.momence.com/
+- https://api.docs.momence.com/docs/get-started
+plans:
+- id: momence-basic
+  name: Basic / Free
+  type: free
+  description: >-
+    Entry tier to run core scheduling, memberships, and payments, typically with
+    higher per-transaction platform fees and limited add-ons. Includes access to
+    create public API clients.
+  entries:
+  - label: Monthly Subscription
+    name: subscription
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0 base (higher per-transaction platform fee, ~5%)
+    userMultiplied: false
+  elements:
+  - name: Class & Appointment Scheduling
+  - name: Memberships & Packages
+  - name: Point of Sale
+  - name: Public API Access
+- id: momence-pro
+  name: Pro
+  type: paid
+  description: >-
+    Mid tier with a lower platform fee and expanded features - marketing tools,
+    automations, and more back-office capability. Includes public API access.
+  entries:
+  - label: Monthly Subscription
+    name: subscription
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: indicative ~$60-$99/month (see pricing page)
+    userMultiplied: false
+  - label: Online Card Processing
+    name: processing_online
+    type: usage
+    metric: transactions
+    limit: -1
+    timeFrame: month
+    geo: us
+    unit: 1
+    price: indicative ~3.9% + $0.30 per online card payment
+    userMultiplied: false
+  - label: In-Person Card Processing
+    name: processing_in_person
+    type: usage
+    metric: transactions
+    limit: -1
+    timeFrame: month
+    geo: us
+    unit: 1
+    price: indicative ~3.7% + $0.05 per in-person card payment
+    userMultiplied: false
+  - label: ACH Processing
+    name: processing_ach
+    type: usage
+    metric: transactions
+    limit: -1
+    timeFrame: month
+    geo: us
+    unit: 1
+    price: indicative ~1.8% per ACH (direct debit) payment
+    userMultiplied: false
+  elements:
+  - name: Everything in Basic
+  - name: Marketing & Automations
+  - name: Lower Platform Fee (~2.5%)
+  - name: Public API Access
+- id: momence-custom
+  name: Custom / Enterprise
+  type: enterprise
+  description: >-
+    Higher tier for larger studios and multi-location operators with the branded
+    member app, priority support, and negotiated terms and processing rates.
+    Contact Momence sales.
+  entries:
+  - label: Custom Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: indicative ~$199/month and up / contact sales
+    userMultiplied: false
+  elements:
+  - name: Everything in Pro
+  - name: Branded Member App
+  - name: Multi-Location
+  - name: Priority Support
+  - name: Negotiated Processing Rates
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

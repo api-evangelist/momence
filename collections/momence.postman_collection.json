@@ -1,0 +1,87 @@
+{
+  "info": {
+    "name": "Momence Public API",
+    "description": "Momence Public API (api.momence.com, /api/v2) - Host API for staff/back-office automation and Member API scoped to the logged-in customer. Authenticated with OAuth2 (Bearer access token). Base URL: https://api.momence.com/api/v2",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [ { "key": "token", "value": "{{accessToken}}", "type": "string" } ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.momence.com/api/v2" },
+    { "key": "accessToken", "value": "" },
+    { "key": "memberId", "value": "" },
+    { "key": "sessionId", "value": "" },
+    { "key": "bookingId", "value": "" },
+    { "key": "boughtMembershipId", "value": "" },
+    { "key": "tagId", "value": "" },
+    { "key": "reportRunId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        { "name": "OAuth2 authorize", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/auth/authorize", "host": ["{{baseUrl}}"], "path": ["auth","authorize"] }, "description": "Redirect a customer to the Momence login screen to begin the authorization code flow." } },
+        { "name": "OAuth2 token", "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\"grant_type\":\"authorization_code\"}" }, "url": { "raw": "{{baseUrl}}/auth/token", "host": ["{{baseUrl}}"], "path": ["auth","token"] }, "description": "Exchange an authorization code (or password/refresh token) for an access token." } },
+        { "name": "Get logged user data", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/auth/profile", "host": ["{{baseUrl}}"], "path": ["auth","profile"] } } },
+        { "name": "Logout", "request": { "method": "POST", "url": { "raw": "{{baseUrl}}/auth/logout", "host": ["{{baseUrl}}"], "path": ["auth","logout"] } } }
+      ]
+    },
+    {
+      "name": "Host - Members",
+      "item": [
+        { "name": "Get members", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/host/members", "host": ["{{baseUrl}}"], "path": ["host","members"] } } },
+        { "name": "Add member", "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{}" }, "url": { "raw": "{{baseUrl}}/host/members", "host": ["{{baseUrl}}"], "path": ["host","members"] } } },
+        { "name": "Get members (with filters)", "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{}" }, "url": { "raw": "{{baseUrl}}/host/members/list", "host": ["{{baseUrl}}"], "path": ["host","members","list"] } } },
+        { "name": "Get member", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/host/members/{{memberId}}", "host": ["{{baseUrl}}"], "path": ["host","members","{{memberId}}"] } } },
+        { "name": "Update member name", "request": { "method": "PUT", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{}" }, "url": { "raw": "{{baseUrl}}/host/members/{{memberId}}/name", "host": ["{{baseUrl}}"], "path": ["host","members","{{memberId}}","name"] } } },
+        { "name": "Get member notes", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/host/members/{{memberId}}/notes", "host": ["{{baseUrl}}"], "path": ["host","members","{{memberId}}","notes"] } } },
+        { "name": "Assign tag to member", "request": { "method": "POST", "url": { "raw": "{{baseUrl}}/host/members/{{memberId}}/tags/{{tagId}}", "host": ["{{baseUrl}}"], "path": ["host","members","{{memberId}}","tags","{{tagId}}"] } } },
+        { "name": "List tags", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/host/tags", "host": ["{{baseUrl}}"], "path": ["host","tags"] } } }
+      ]
+    },
+    {
+      "name": "Host - Sessions & Bookings",
+      "item": [
+        { "name": "List sessions", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/host/sessions", "host": ["{{baseUrl}}"], "path": ["host","sessions"] } } },
+        { "name": "Get session detail", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/host/sessions/{{sessionId}}", "host": ["{{baseUrl}}"], "path": ["host","sessions","{{sessionId}}"] } } },
+        { "name": "List session bookings", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/host/sessions/{{sessionId}}/bookings", "host": ["{{baseUrl}}"], "path": ["host","sessions","{{sessionId}}","bookings"] } } },
+        { "name": "Add member to session for free", "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{}" }, "url": { "raw": "{{baseUrl}}/host/sessions/{{sessionId}}/bookings/free", "host": ["{{baseUrl}}"], "path": ["host","sessions","{{sessionId}}","bookings","free"] } } },
+        { "name": "Add member to waitlist", "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{}" }, "url": { "raw": "{{baseUrl}}/host/sessions/{{sessionId}}/waitlist/bookings", "host": ["{{baseUrl}}"], "path": ["host","sessions","{{sessionId}}","waitlist","bookings"] } } },
+        { "name": "Check in booking", "request": { "method": "POST", "url": { "raw": "{{baseUrl}}/host/session-bookings/{{bookingId}}/check-in", "host": ["{{baseUrl}}"], "path": ["host","session-bookings","{{bookingId}}","check-in"] } } },
+        { "name": "Cancel session booking", "request": { "method": "DELETE", "url": { "raw": "{{baseUrl}}/host/session-bookings/{{bookingId}}", "host": ["{{baseUrl}}"], "path": ["host","session-bookings","{{bookingId}}"] } } }
+      ]
+    },
+    {
+      "name": "Host - Memberships",
+      "item": [
+        { "name": "Get available host memberships", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/host/memberships", "host": ["{{baseUrl}}"], "path": ["host","memberships"] } } },
+        { "name": "Get member active subscriptions and packs", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/host/members/{{memberId}}/bought-memberships/active", "host": ["{{baseUrl}}"], "path": ["host","members","{{memberId}}","bought-memberships","active"] } } },
+        { "name": "Freeze bought membership", "request": { "method": "PUT", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{}" }, "url": { "raw": "{{baseUrl}}/host/members/{{memberId}}/bought-memberships/{{boughtMembershipId}}/membership-freeze", "host": ["{{baseUrl}}"], "path": ["host","members","{{memberId}}","bought-memberships","{{boughtMembershipId}}","membership-freeze"] } } }
+      ]
+    },
+    {
+      "name": "Host - Checkout & Sales",
+      "item": [
+        { "name": "Get compatible memberships", "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{}" }, "url": { "raw": "{{baseUrl}}/host/checkout/compatible-memberships", "host": ["{{baseUrl}}"], "path": ["host","checkout","compatible-memberships"] } } },
+        { "name": "Get prices", "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{}" }, "url": { "raw": "{{baseUrl}}/host/checkout/prices", "host": ["{{baseUrl}}"], "path": ["host","checkout","prices"] } } },
+        { "name": "Perform checkout", "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{}" }, "url": { "raw": "{{baseUrl}}/host/checkout", "host": ["{{baseUrl}}"], "path": ["host","checkout"] } } },
+        { "name": "Get sales", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/host/sales", "host": ["{{baseUrl}}"], "path": ["host","sales"] } } },
+        { "name": "Run report", "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{}" }, "url": { "raw": "{{baseUrl}}/host/reports", "host": ["{{baseUrl}}"], "path": ["host","reports"] } } },
+        { "name": "Get report run", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/host/reports/{{reportRunId}}", "host": ["{{baseUrl}}"], "path": ["host","reports","{{reportRunId}}"] } } }
+      ]
+    },
+    {
+      "name": "Member",
+      "item": [
+        { "name": "Get member info", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/member", "host": ["{{baseUrl}}"], "path": ["member"] } } },
+        { "name": "Get member visits", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/member/visits", "host": ["{{baseUrl}}"], "path": ["member","visits"] } } },
+        { "name": "Get member addresses", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/member-addresses", "host": ["{{baseUrl}}"], "path": ["member-addresses"] } } },
+        { "name": "Get available host sessions", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/member/host/sessions", "host": ["{{baseUrl}}"], "path": ["member","host","sessions"] } } },
+        { "name": "Perform member checkout", "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{}" }, "url": { "raw": "{{baseUrl}}/member/checkout", "host": ["{{baseUrl}}"], "path": ["member","checkout"] } } },
+        { "name": "Get saved payment methods", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/member/saved-payment-methods", "host": ["{{baseUrl}}"], "path": ["member","saved-payment-methods"] } } }
+      ]
+    }
+  ]
+}

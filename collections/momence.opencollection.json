@@ -1,0 +1,215 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Momence Public API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{accessToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": { "name": "Authentication", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "OAuth2 authorize", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.momence.com/api/v2/auth/authorize" },
+          "docs": "Redirect a customer to the Momence login screen to begin the authorization code flow."
+        },
+        {
+          "info": { "name": "OAuth2 token", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.momence.com/api/v2/auth/token", "body": { "type": "json", "data": "{\"grant_type\":\"authorization_code\"}" } },
+          "docs": "Exchange an authorization code (or password/refresh token) for an access token."
+        },
+        {
+          "info": { "name": "Get logged user data", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.momence.com/api/v2/auth/profile" },
+          "docs": "Return the profile of the currently authenticated user."
+        },
+        {
+          "info": { "name": "Logout", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.momence.com/api/v2/auth/logout" },
+          "docs": "Log the current user out and invalidate the session."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Host - Members", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get members", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.momence.com/api/v2/host/members" },
+          "docs": "List members (customers) in the host."
+        },
+        {
+          "info": { "name": "Add member", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.momence.com/api/v2/host/members", "body": { "type": "json", "data": "{}" } },
+          "docs": "Create a new member."
+        },
+        {
+          "info": { "name": "Get members (with filters)", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.momence.com/api/v2/host/members/list", "body": { "type": "json", "data": "{}" } },
+          "docs": "List members using a filter payload."
+        },
+        {
+          "info": { "name": "Get member", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.momence.com/api/v2/host/members/:memberId", "params": [ { "name": "memberId", "value": "", "type": "path" } ] },
+          "docs": "Retrieve a single member by ID."
+        },
+        {
+          "info": { "name": "Update member name", "type": "http" },
+          "http": { "method": "PUT", "url": "https://api.momence.com/api/v2/host/members/:memberId/name", "params": [ { "name": "memberId", "value": "", "type": "path" } ], "body": { "type": "json", "data": "{}" } },
+          "docs": "Update a member's name."
+        },
+        {
+          "info": { "name": "Get member notes", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.momence.com/api/v2/host/members/:memberId/notes", "params": [ { "name": "memberId", "value": "", "type": "path" } ] },
+          "docs": "List notes for a member."
+        },
+        {
+          "info": { "name": "Assign tag to member", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.momence.com/api/v2/host/members/:memberId/tags/:tagId", "params": [ { "name": "memberId", "value": "", "type": "path" }, { "name": "tagId", "value": "", "type": "path" } ] },
+          "docs": "Assign a tag to a member."
+        },
+        {
+          "info": { "name": "List tags", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.momence.com/api/v2/host/tags" },
+          "docs": "List available tags."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Host - Sessions & Bookings", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List sessions", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.momence.com/api/v2/host/sessions" },
+          "docs": "Return a list of sessions (classes)."
+        },
+        {
+          "info": { "name": "Get session detail", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.momence.com/api/v2/host/sessions/:sessionId", "params": [ { "name": "sessionId", "value": "", "type": "path" } ] },
+          "docs": "Return the detail of a single session."
+        },
+        {
+          "info": { "name": "List session bookings", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.momence.com/api/v2/host/sessions/:sessionId/bookings", "params": [ { "name": "sessionId", "value": "", "type": "path" } ] },
+          "docs": "Return the bookings for a session."
+        },
+        {
+          "info": { "name": "Add member to session for free", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.momence.com/api/v2/host/sessions/:sessionId/bookings/free", "params": [ { "name": "sessionId", "value": "", "type": "path" } ], "body": { "type": "json", "data": "{}" } },
+          "docs": "Add a member to a session for free."
+        },
+        {
+          "info": { "name": "Add member to waitlist", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.momence.com/api/v2/host/sessions/:sessionId/waitlist/bookings", "params": [ { "name": "sessionId", "value": "", "type": "path" } ], "body": { "type": "json", "data": "{}" } },
+          "docs": "Add a member to a session waitlist."
+        },
+        {
+          "info": { "name": "Check in booking", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.momence.com/api/v2/host/session-bookings/:bookingId/check-in", "params": [ { "name": "bookingId", "value": "", "type": "path" } ] },
+          "docs": "Mark a session booking as checked-in."
+        },
+        {
+          "info": { "name": "Cancel session booking", "type": "http" },
+          "http": { "method": "DELETE", "url": "https://api.momence.com/api/v2/host/session-bookings/:bookingId", "params": [ { "name": "bookingId", "value": "", "type": "path" } ] },
+          "docs": "Cancel a session booking."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Host - Memberships", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get available host memberships", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.momence.com/api/v2/host/memberships" },
+          "docs": "List the membership products the host sells."
+        },
+        {
+          "info": { "name": "Get member active subscriptions and packs", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.momence.com/api/v2/host/members/:memberId/bought-memberships/active", "params": [ { "name": "memberId", "value": "", "type": "path" } ] },
+          "docs": "List a member's active subscriptions and packs."
+        },
+        {
+          "info": { "name": "Freeze bought membership", "type": "http" },
+          "http": { "method": "PUT", "url": "https://api.momence.com/api/v2/host/members/:memberId/bought-memberships/:boughtMembershipId/membership-freeze", "params": [ { "name": "memberId", "value": "", "type": "path" }, { "name": "boughtMembershipId", "value": "", "type": "path" } ], "body": { "type": "json", "data": "{}" } },
+          "docs": "Freeze a member's bought membership immediately or schedule a freeze."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Host - Checkout & Sales", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get compatible memberships", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.momence.com/api/v2/host/checkout/compatible-memberships", "body": { "type": "json", "data": "{}" } },
+          "docs": "Resolve memberships compatible with a checkout cart."
+        },
+        {
+          "info": { "name": "Get prices", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.momence.com/api/v2/host/checkout/prices", "body": { "type": "json", "data": "{}" } },
+          "docs": "Get prices for a checkout cart."
+        },
+        {
+          "info": { "name": "Perform checkout", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.momence.com/api/v2/host/checkout", "body": { "type": "json", "data": "{}" } },
+          "docs": "Perform checkout on behalf of a member."
+        },
+        {
+          "info": { "name": "Get sales", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.momence.com/api/v2/host/sales" },
+          "docs": "List sales."
+        },
+        {
+          "info": { "name": "Run report", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.momence.com/api/v2/host/reports", "body": { "type": "json", "data": "{}" } },
+          "docs": "Generate a host report."
+        },
+        {
+          "info": { "name": "Get report run", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.momence.com/api/v2/host/reports/:reportRunId", "params": [ { "name": "reportRunId", "value": "", "type": "path" } ] },
+          "docs": "Retrieve the result of a report run."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Member", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get member info", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.momence.com/api/v2/member" },
+          "docs": "Get the logged-in member's info."
+        },
+        {
+          "info": { "name": "Get member visits", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.momence.com/api/v2/member/visits" },
+          "docs": "List the member's visits."
+        },
+        {
+          "info": { "name": "Get member addresses", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.momence.com/api/v2/member-addresses" },
+          "docs": "List the member's addresses."
+        },
+        {
+          "info": { "name": "Get available host sessions", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.momence.com/api/v2/member/host/sessions" },
+          "docs": "Browse a host's available sessions as a member."
+        },
+        {
+          "info": { "name": "Perform member checkout", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.momence.com/api/v2/member/checkout", "body": { "type": "json", "data": "{}" } },
+          "docs": "Perform checkout to buy or book a session as the logged-in member."
+        },
+        {
+          "info": { "name": "Get saved payment methods", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.momence.com/api/v2/member/saved-payment-methods" },
+          "docs": "List the member's saved payment methods."
+        }
+      ]
+    }
+  ]
+}
