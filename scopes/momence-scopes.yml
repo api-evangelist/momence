@@ -1,0 +1,18 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/momence-openapi.yml
+docs: https://api.docs.momence.com/docs/getting-started
+note: Momence OAuth2 does not define scopes - the API is always used as a specific
+  user and all permissions are inferred from that user's Momence account role, per
+  https://api.docs.momence.com/docs/getting-started and
+  https://api.docs.momence.com/docs/authorization.
+schemes:
+- name: OAuth2
+  source: openapi/momence-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: /api/v2/auth/token
+  - flow: authorizationCode
+    authorizationUrl: /api/v2/auth/authorize
+    tokenUrl: /api/v2/auth/token
+scopes: []
