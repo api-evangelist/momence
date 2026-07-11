@@ -190,6 +190,10 @@ apis:
     checkout to buy or book a session, list and cancel the member's own session
     bookings, and read and sign required signable documents (waivers and contracts).
 common:
+- type: DomainSecurity
+  url: security/momence-domain-security.yml
+- type: Authentication
+  url: authentication/momence-authentication.yml
 - type: OAuthScopes
   url: scopes/momence-scopes.yml
 - type: LinkedIn

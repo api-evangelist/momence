@@ -1,0 +1,29 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/momence-openapi.yml
+summary:
+  types:
+  - http
+  - oauth2
+  oauth2_flows:
+  - authorizationCode
+  - password
+schemes:
+- name: OAuth2
+  type: oauth2
+  flows:
+  - flow: password
+    tokenUrl: /api/v2/auth/token
+    scopes: 0
+  - flow: authorizationCode
+    authorizationUrl: /api/v2/auth/authorize
+    tokenUrl: /api/v2/auth/token
+    scopes: 0
+  sources:
+  - openapi/momence-openapi.yml
+- name: OAuth2ApiClient
+  type: http
+  scheme: basic
+  description: Use your `client_id` as username and `client_secret` as password
+  sources:
+  - openapi/momence-openapi.yml

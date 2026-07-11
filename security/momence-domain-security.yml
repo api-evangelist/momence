@@ -1,0 +1,26 @@
+generated: '2026-07-11'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: momence.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 29 21:29:17 2026 GMT
+  hsts: false
+- host: api.docs.momence.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Aug 22 10:57:03 2026 GMT
+  hsts: null
+- host: api.momence.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 29 21:29:17 2026 GMT
+  hsts: null
+domains:
+- domain: momence.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: quarantine
