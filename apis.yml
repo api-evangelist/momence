@@ -190,6 +190,8 @@ apis:
     checkout to buy or book a session, list and cancel the member's own session
     bookings, and read and sign required signable documents (waivers and contracts).
 common:
+- type: AgenticAccess
+  url: agentic-access/momence-agentic-access.yml
 - type: DomainSecurity
   url: security/momence-domain-security.yml
 - type: Authentication
