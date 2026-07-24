@@ -1,0 +1,316 @@
+openapi: 3.0.0
+info:
+  title: Momence Public auth member-sessions API
+  description: ''
+  version: '2.0'
+  contact: {}
+servers:
+- url: https://api.momence.com
+  description: Production API
+security:
+- OAuth2: []
+  OAuth2ApiClient: []
+tags:
+- name: member-sessions
+paths:
+  /api/v2/member/sessions:
+    get:
+      operationId: ApiV2MemberSessionBookingsController_list
+      summary: Get member bookings
+      description: Returns list of sessions current user is signed up for
+      parameters:
+      - name: page
+        required: true
+        in: query
+        description: Starts at 0
+        schema:
+          minimum: 0
+          example: 0
+          type: integer
+      - name: pageSize
+        required: true
+        in: query
+        schema:
+          minimum: 1
+          example: 10
+          type: integer
+      - name: sortOrder
+        required: false
+        in: query
+        schema:
+          enum:
+          - ASC
+          - DESC
+          type: string
+      - name: sortBy
+        required: false
+        in: query
+        description: Field to sort by
+        schema:
+          type: string
+      - name: startAfter
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: endAfter
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/PaginatedResponseDto'
+                - required:
+                  - payload
+                  properties:
+                    payload:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/MemberSessionBookingDto'
+          description: ''
+      tags:
+      - member-sessions
+      security:
+      - OAuth2: []
+  /api/v2/member/sessions/{sessionBookingId}:
+    delete:
+      operationId: ApiV2MemberSessionBookingsController_cancel
+      summary: Cancel member booking
+      description: Cancels session booking
+      parameters:
+      - name: sessionBookingId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+      - member-sessions
+      security:
+      - OAuth2: []
+components:
+  schemas:
+    MemberTeacherDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: Doe
+        pictureUrl:
+          type: string
+          nullable: true
+          example: https://example.com/picture.jpg
+      required:
+      - id
+      - firstName
+      - lastName
+      - pictureUrl
+    PaginatedResponseDataDto:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 0
+          minimum: 0
+        pageSize:
+          type: integer
+          example: 10
+          minimum: 1
+        totalCount:
+          type: integer
+          example: 1
+        sortBy:
+          type: string
+        sortOrder:
+          type: string
+          enum:
+          - ASC
+          - DESC
+      required:
+      - page
+      - pageSize
+      - totalCount
+    MemberSessionBookingDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        createdAt:
+          type: string
+          example: '2021-08-01T10:00:00Z'
+          format: date-time
+        roomSpotId:
+          type: integer
+          nullable: true
+        checkedIn:
+          type: boolean
+        cancelledAt:
+          type: string
+          nullable: true
+          example: null
+          format: date-time
+        isRecurring:
+          type: boolean
+          example: false
+        session:
+          $ref: '#/components/schemas/MemberSessionBookingSessionDto'
+      required:
+      - id
+      - createdAt
+      - roomSpotId
+      - checkedIn
+      - cancelledAt
+      - isRecurring
+      - session
+    MemberSessionBookingSessionDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Stretching with John
+        type:
+          enum:
+          - private
+          - special-event
+          - special-event-new
+          - retreat
+          - fitness
+          - course
+          - course-class
+          - semester
+          - recital
+          type: string
+          example: fitness
+          x-enumNames:
+          - PRIVATE
+          - SPECIAL_EVENT
+          - SPECIAL_EVENT_NEW
+          - RETREAT
+          - FITNESS
+          - COURSE
+          - COURSE_CLASS
+          - SEMESTER
+          - RECITAL
+        description:
+          type: string
+          nullable: true
+          example: Our program is designed to help you increase your flexibility and strength.
+        startsAt:
+          type: string
+          example: '2021-08-01T10:00:00Z'
+          format: date-time
+        endsAt:
+          type: string
+          example: '2021-08-01T11:00:00Z'
+          format: date-time
+        durationInMinutes:
+          type: integer
+          example: 60
+          minimum: 0
+        capacity:
+          type: integer
+          nullable: true
+          example: 10
+          minimum: 0
+        teacher:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/MemberTeacherDto'
+        isRecurring:
+          type: boolean
+          example: false
+        isInPerson:
+          type: boolean
+          example: false
+        inPersonLocation:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/MemberLocationDto'
+        onlineStreamUrl:
+          type: string
+          nullable: true
+          example: https://example.com/online-stream
+        onlineStreamPassword:
+          type: string
+          nullable: true
+          example: password123
+        bannerImageUrl:
+          type: string
+          nullable: true
+          example: https://example.com/banner.jpg
+        hostPhotoUrl:
+          type: string
+          nullable: true
+          example: https://example.com/host.jpg
+        isLocationPrivate:
+          type: boolean
+          example: false
+      required:
+      - id
+      - name
+      - type
+      - description
+      - startsAt
+      - endsAt
+      - durationInMinutes
+      - capacity
+      - teacher
+      - isRecurring
+      - isInPerson
+      - inPersonLocation
+      - onlineStreamUrl
+      - onlineStreamPassword
+      - bannerImageUrl
+      - hostPhotoUrl
+      - isLocationPrivate
+    PaginatedResponseDto:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/PaginatedResponseDataDto'
+      required:
+      - pagination
+    MemberLocationDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Main Studio
+      required:
+      - id
+      - name
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          scopes: {}
+          tokenUrl: /api/v2/auth/token
+        authorizationCode:
+          authorizationUrl: /api/v2/auth/authorize
+          tokenUrl: /api/v2/auth/token
+          scopes: {}
+    OAuth2ApiClient:
+      type: http
+      scheme: basic
+      description: Use your `client_id` as username and `client_secret` as password

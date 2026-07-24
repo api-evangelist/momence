@@ -1,0 +1,302 @@
+openapi: 3.0.0
+info:
+  title: Momence Public auth member-addresses API
+  description: ''
+  version: '2.0'
+  contact: {}
+servers:
+- url: https://api.momence.com
+  description: Production API
+security:
+- OAuth2: []
+  OAuth2ApiClient: []
+tags:
+- name: member-addresses
+paths:
+  /api/v2/member-addresses:
+    get:
+      operationId: ApiV2MemberAddressesController_list
+      summary: Get member addresses
+      parameters:
+      - name: page
+        required: true
+        in: query
+        description: Starts at 0
+        schema:
+          minimum: 0
+          example: 0
+          type: integer
+      - name: pageSize
+        required: true
+        in: query
+        schema:
+          minimum: 1
+          example: 10
+          type: integer
+      - name: sortOrder
+        required: false
+        in: query
+        schema:
+          enum:
+          - ASC
+          - DESC
+          type: string
+      - name: sortBy
+        required: false
+        in: query
+        description: Field to sort by
+        schema:
+          example: createdAt
+          enum:
+          - createdAt
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/PaginatedResponseDto'
+                - required:
+                  - payload
+                  properties:
+                    payload:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/ApiV2MemberAddressDto'
+              examples:
+                addresses:
+                  summary: Member addresses
+                  value:
+                    pagination:
+                      page: 0
+                      pageSize: 10
+                      totalCount: 1
+                    payload:
+                    - id: 5
+                      address: 153 Hunters Drive
+                      city: New York
+                      country: US
+                      zipcode: '8513'
+                      createdAt: 2021-01-01 00:00:00+00:00
+          description: ''
+      tags:
+      - member-addresses
+      security:
+      - OAuth2: []
+    post:
+      operationId: ApiV2MemberAddressesController_create
+      summary: Create member address
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiV2MemberAddressRequestDto'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiV2MemberAddressDto'
+              examples:
+                addresses:
+                  summary: Member address
+                  value:
+                    id: 5
+                    address: 153 Hunters Drive
+                    city: New York
+                    country: US
+                    zipcode: '8513'
+                    createdAt: 2021-01-01 00:00:00+00:00
+          description: ''
+      tags:
+      - member-addresses
+      security:
+      - OAuth2: []
+  /api/v2/member-addresses/{memberAddressId}:
+    get:
+      operationId: ApiV2MemberAddressesController_get
+      summary: Get member address
+      parameters:
+      - name: memberAddressId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiV2MemberAddressDto'
+              examples:
+                addresses:
+                  summary: Member address
+                  value:
+                    id: 5
+                    address: 153 Hunters Drive
+                    city: New York
+                    country: US
+                    zipcode: '8513'
+                    createdAt: 2021-01-01 00:00:00+00:00
+          description: ''
+      tags:
+      - member-addresses
+      security:
+      - OAuth2: []
+    put:
+      operationId: ApiV2MemberAddressesController_update
+      summary: Update member address
+      parameters:
+      - name: memberAddressId
+        required: true
+        in: path
+        schema:
+          type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiV2MemberAddressRequestDto'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiV2MemberAddressDto'
+              examples:
+                addresses:
+                  summary: Member address
+                  value:
+                    id: 5
+                    address: 153 Hunters Drive
+                    city: New York
+                    country: US
+                    zipcode: '8513'
+                    createdAt: 2021-01-01 00:00:00+00:00
+          description: ''
+      tags:
+      - member-addresses
+      security:
+      - OAuth2: []
+    delete:
+      operationId: ApiV2MemberAddressesController_delete
+      summary: Delete member address
+      parameters:
+      - name: memberAddressId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+      - member-addresses
+      security:
+      - OAuth2: []
+components:
+  schemas:
+    ApiV2MemberAddressDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        address:
+          type: string
+          example: 153 Hunters Drive
+        zipcode:
+          type: string
+          example: '8513'
+        city:
+          type: string
+          example: New York
+        country:
+          type: string
+          example: US
+        createdAt:
+          type: string
+          example: '2021-09-22T00:00:00.000Z'
+          format: date-time
+      required:
+      - id
+      - address
+      - zipcode
+      - city
+      - country
+      - createdAt
+    ApiV2MemberAddressRequestDto:
+      type: object
+      properties:
+        address:
+          type: string
+          example: 153 Hunters Drive
+          maxLength: 2048
+        zipcode:
+          type: string
+          example: '8513'
+          maxLength: 255
+        city:
+          type: string
+          example: New York
+          maxLength: 255
+        country:
+          type: string
+          example: US
+          maxLength: 255
+      required:
+      - address
+      - zipcode
+      - city
+      - country
+    PaginatedResponseDataDto:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 0
+          minimum: 0
+        pageSize:
+          type: integer
+          example: 10
+          minimum: 1
+        totalCount:
+          type: integer
+          example: 1
+        sortBy:
+          type: string
+        sortOrder:
+          type: string
+          enum:
+          - ASC
+          - DESC
+      required:
+      - page
+      - pageSize
+      - totalCount
+    PaginatedResponseDto:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/PaginatedResponseDataDto'
+      required:
+      - pagination
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          scopes: {}
+          tokenUrl: /api/v2/auth/token
+        authorizationCode:
+          authorizationUrl: /api/v2/auth/authorize
+          tokenUrl: /api/v2/auth/token
+          scopes: {}
+    OAuth2ApiClient:
+      type: http
+      scheme: basic
+      description: Use your `client_id` as username and `client_secret` as password

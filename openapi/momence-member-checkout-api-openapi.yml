@@ -1,0 +1,928 @@
+openapi: 3.0.0
+info:
+  title: Momence Public auth member-checkout API
+  description: ''
+  version: '2.0'
+  contact: {}
+servers:
+- url: https://api.momence.com
+  description: Production API
+security:
+- OAuth2: []
+  OAuth2ApiClient: []
+tags:
+- name: member-checkout
+paths:
+  /api/v2/member/checkout/compatible-memberships:
+    post:
+      operationId: ApiV2MemberCheckoutController_postCompatibleMemberships
+      summary: Get compatible memberships
+      description: 'This endpoint will return list of bought memberships potentially compatible with specified checkout cart.
+
+
+        **NOTE**: The endpoint also returns memberships that are incompatible which is indicated by the incompatibility field. This is so you can present user with a reason why the membership is not usable in this case.
+
+
+        | Incompatibility | Description |
+
+        | --- | --- |
+
+        | session-membership-excluded | session is not included in specified membership |
+
+        | session-bought-membership-will-expire | bought membership will expire before the session start and it''s not scheduled to renew |
+
+        | session-bought-membership-pack-will-expire | pack will expire before the session starts |
+
+        | session-bought-membership-already-used | bought membership was already used for this session and it''s not allowed to use it multiple times |
+
+        | session-bought-membership-usage-limit-reached | subscription has reached its usage limit for the renewal period that''s aligned with session |
+
+        | session-bought-membership-usage-limit-reached-for-semester-or-course | subscription has reached its usage limit for the renewal period or periods that''re aligned with the whole semester or course |
+
+        | session-bought-membership-daily-limit-reached | bought membership was already used today and is limited to one use per day |
+
+        | session-bought-membership-no-event-credits-left | no event credits are left in the pack |
+
+        | session-bought-membership-no-money-credits-left | no money credits are left in the pack |
+
+        | session-bought-membership-on-demand | bought membership is only usable for on-demand content, not classes |
+
+        | session-bought-membership-starts-later | bought membership starts being valid after the session start |
+
+        | session-bought-membership-invalid-type | bought membership is not usable for this |
+
+        | session-bought-membership-disabled | membership linked with the bought membership was disabled and thus it can''t be used |
+
+        | session-bought-membership-frozen | bought membership is frozen when the session happens |
+
+        | session-subscription-ticket-limit | subscription is limited to one ticket |
+
+        | unknown | unknown reason |
+
+        '
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberCheckoutCompatibleMembershipsRequestDto'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberCheckoutCompatibleMembershipsDto'
+          description: ''
+      tags:
+      - member-checkout
+      security:
+      - OAuth2: []
+  /api/v2/member/checkout/prices:
+    post:
+      operationId: ApiV2MemberCheckoutController_postPrices
+      summary: Get prices
+      description: This endpoint should be used before calling checkout to fetch correct prices for every item. The checkout endpoint will reject any request that doesn't contain correct prices even when you're using memberships to pay.
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberCheckoutPricesRequestDto'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberCheckoutPricesResponseDto'
+          description: ''
+      tags:
+      - member-checkout
+      security:
+      - OAuth2: []
+  /api/v2/member/checkout:
+    post:
+      operationId: ApiV2MemberCheckoutController_post
+      summary: Perform checkout
+      description: 'Perform payment for specified items in the checkout cart. The endpoint will return list of purchased items.
+
+
+        **NOTE**: Currently the endpoint only supports buying sessions with membership payment method.
+
+
+        **NOTE:** You should call `/prices` endpoint to fetch correct prices for every item in the cart before calling this endpoint
+
+
+        **NOTE:** You should call `/compatible-memberships` endpoint to fetch list of bought memberships that are potentially compatible with the cart before calling this endpoint
+
+
+        | Error | Description |
+
+        | --- | --- |
+
+        | err-no-payment-methods | request doesn''t contain any payment methods |
+
+        | err-no-items | request doesn''t contain any items |
+
+        | err-too-many-items | request contain more than 1 items |
+
+        | err-combined-payment-methods | request contains multiple payment method types in single request |
+
+        | err-cannot-pay-for-membership-with-membership | request is attempting to buy membership with membership |
+
+        | err-multiple-membership-types | request is combining different membership types in payment methods |
+
+        | err-multiple-subscriptions | request contains more than 1 subscription payment methods |
+
+        | err-saved-card-not-found | request contains invalid saved card payment method |
+
+        | err-cart-validation-failed | general error when validating cart |
+
+        | err-payment-failed | error occurred during payment processing |
+
+        | err-duplicate-membership-payment-methods | request contains single bought membership multiple times |
+
+        | err-invalid-membership-payment-method | request contains invalid membership payment method |
+
+        | err-incompatible-membership | request contains membership that''s incompatible with the checkout cart |
+
+        | err-unsupported-payment-methods | request contains invalid payment methods |
+
+        | err-session-has-invalid-state | request contains session with status that prevent sale |
+
+        | err-session-has-passed | request contains session that has already passed |
+
+        | err-session-sales-ended | request contains session that has ended sales |
+
+        | err-session-dropins-not-allowed | request contains session that does not allow dropins |
+
+        | err-session-is-full | request contains session that''s full |
+
+        | err-session-purchase-limit-reached | request contains session that member has already booked and host doesn''t allow that |
+
+        | err-session-access-restricted | request contains session that requires specific tag to book |
+
+        | err-duplicate-item-ids | request contains single item id multiple times |
+
+        | err-duplicate-payment-method-ids | request contains single payment method id multiple times |
+
+        | err-unsupported-item-type | request contains unsupported item type |
+
+        | err-missing-customer-date-of-birth | customer has no birthday information, but it''s required |
+
+        | err-customer-age-prevents-from-action | customer is not eligible for the action due to age restriction |
+
+        '
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberCheckoutRequestDto'
+            examples:
+              buySessionUsingSubscription:
+                summary: Buy session using subscription
+                value:
+                  items:
+                  - id: '1'
+                    type: session
+                    sessionId: 15525
+                    attemptedPriceInCurrency: '10.5'
+                  paymentMethods:
+                  - id: '1'
+                    type: membership
+                    boughtMembershipId: 25568
+              buySessionUsingSavedPaymentMethod:
+                summary: Buy session using saved payment method
+                value:
+                  items:
+                  - id: '1'
+                    type: session
+                    sessionId: 15525
+                    attemptedPriceInCurrency: '10.5'
+                  paymentMethods:
+                  - id: '1'
+                    type: saved_payment_method
+                    savedPaymentMethodId: 5155
+              buySessionUsingMultiplePackages:
+                summary: Buy session using multiple packages
+                value:
+                  items:
+                  - id: '1'
+                    type: session
+                    sessionId: 15525
+                    attemptedPriceInCurrency: '10.5'
+                  paymentMethods:
+                  - id: '1'
+                    type: membership
+                    boughtMembershipId: 25568
+                  - id: '2'
+                    type: membership
+                    boughtMembershipId: 25548
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberCheckoutResponseDto'
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberCheckoutErrorResponseDto'
+      tags:
+      - member-checkout
+      security:
+      - OAuth2: []
+components:
+  schemas:
+    MemberCheckoutCompatibleBoughtMembershipDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        type:
+          enum:
+          - subscription
+          - on-demand-subscription
+          - package-events
+          - package-money
+          - patron
+          type: string
+          example: subscription
+          x-enumNames:
+          - Subscription
+          - OnDemandSubscription
+          - PackageEvents
+          - PackageMoney
+          - Patron
+        startDate:
+          type: string
+          nullable: true
+          description: start date of the bought membership
+          example: '2021-01-01T00:00:00Z'
+          format: date-time
+        endDate:
+          type: string
+          nullable: true
+          description: expiration date of the bought membership
+          example: '2021-02-01T00:00:00Z'
+          format: date-time
+        eventCreditsLeft:
+          type: number
+          nullable: true
+          description: number of event credits left, valid for PACKAGE_EVENTS
+          example: null
+        eventCreditsTotal:
+          type: number
+          nullable: true
+          description: number of event credits originally included in the package, valid for PACKAGE_EVENTS
+          example: null
+        moneyCreditsLeft:
+          type: number
+          nullable: true
+          description: number of money credits left, valid for PACKAGE_MONEY
+          example: null
+        moneyCreditsTotal:
+          type: number
+          nullable: true
+          description: number of money credits originally included in the package, valid for PACKAGE_MONEY
+          example: null
+        membership:
+          nullable: true
+          description: info about origin membership, it's possible the bought membership has no origin membership
+          allOf:
+          - $ref: '#/components/schemas/HostMembershipBasicDto'
+      required:
+      - id
+      - type
+      - startDate
+      - endDate
+      - eventCreditsLeft
+      - eventCreditsTotal
+      - moneyCreditsLeft
+      - moneyCreditsTotal
+      - membership
+    MemberCheckoutPricesRequestDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/MemberCheckoutMembershipItemDto'
+            - $ref: '#/components/schemas/MemberCheckoutSessionItemDto'
+        homeLocationId:
+          type: integer
+        paymentMethods:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/MemberPaymentMethodMembershipDto'
+            - $ref: '#/components/schemas/MemberPaymentMethodSavedPaymentMethodDto'
+      required:
+      - items
+      - paymentMethods
+    MemberCheckoutCompatibleMembershipsDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemberCheckoutCompatibleMembershipDto'
+      required:
+      - items
+    MemberCheckoutErrorResponseDto:
+      type: object
+      properties:
+        type:
+          enum:
+          - err-no-payment-methods
+          - err-no-items
+          - err-too-many-items
+          - err-combined-payment-methods
+          - err-cannot-pay-for-membership-with-membership
+          - err-multiple-membership-types
+          - err-multiple-subscriptions
+          - err-saved-card-not-found
+          - err-cart-validation-failed
+          - err-payment-failed
+          - err-duplicate-membership-payment-methods
+          - err-invalid-membership-payment-method
+          - err-incompatible-membership
+          - err-unsupported-payment-methods
+          - err-session-has-invalid-state
+          - err-session-has-passed
+          - err-session-sales-ended
+          - err-session-dropins-not-allowed
+          - err-session-is-full
+          - err-session-purchase-limit-reached
+          - err-session-access-restricted
+          - err-duplicate-item-ids
+          - err-duplicate-payment-method-ids
+          - err-unsupported-item-type
+          - err-missing-customer-date-of-birth
+          - err-customer-age-prevents-from-action
+          type: string
+          x-enumNames:
+          - ERR_NO_PAYMENT_METHODS
+          - ERR_NO_ITEMS
+          - ERR_TOO_MANY_ITEMS
+          - ERR_COMBINED_PAYMENT_METHODS
+          - ERR_CANNOT_PAY_FOR_MEMBERSHIP_WITH_MEMBERSHIP
+          - ERR_MULTIPLE_MEMBERSHIP_TYPES
+          - ERR_MULTIPLE_SUBSCRIPTIONS
+          - ERR_SAVED_CARD_NOT_FOUND
+          - ERR_CART_VALIDATION_FAILED
+          - ERR_PAYMENT_FAILED
+          - ERR_DUPLICATE_MEMBERSHIP_PAYMENT_METHODS
+          - ERR_INVALID_MEMBERSHIP_PAYMENT_METHOD
+          - ERR_INCOMPATIBLE_MEMBERSHIP
+          - ERR_UNSUPPORTED_PAYMENT_METHODS
+          - ERR_SESSION_HAS_INVALID_STATE
+          - ERR_SESSION_HAS_PASSED
+          - ERR_SESSION_SALES_ENDED
+          - ERR_SESSION_DROPINS_NOT_ALLOWED
+          - ERR_SESSION_IS_FULL
+          - ERR_SESSION_PURCHASE_LIMIT_REACHED
+          - ERR_SESSION_ACCESS_RESTRICTED
+          - ERR_DUPLICATE_ITEM_IDS
+          - ERR_DUPLICATE_PAYMENT_METHOD_IDS
+          - ERR_UNSUPPORTED_ITEM_TYPE
+          - ERR_MISSING_CUSTOMER_DATE_OF_BIRTH
+          - ERR_CUSTOMER_IS_NOT_ELIGIBLE_DUE_TO_AGE_RESTRICTION
+        message:
+          type: string
+      required:
+      - type
+      - message
+    MemberCheckoutPricesItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+        priceInCurrencyWithTax:
+          type: string
+        priceInCurrencyWithoutTax:
+          type: string
+        taxInCurrency:
+          type: string
+      required:
+      - id
+      - priceInCurrencyWithTax
+      - priceInCurrencyWithoutTax
+      - taxInCurrency
+    MemberCheckoutPurchasedEventCreditsDto:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - event-credit
+        numberOfEventCredits:
+          type: number
+      required:
+      - type
+      - numberOfEventCredits
+    MemberCheckoutSessionItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - session
+        sessionId:
+          type: integer
+        appliedPriceRuleIds:
+          type: array
+          items:
+            type: integer
+      required:
+      - id
+      - type
+      - sessionId
+    MemberCheckoutCompatibleMembershipDto:
+      type: object
+      properties:
+        boughtMembership:
+          $ref: '#/components/schemas/MemberCheckoutCompatibleBoughtMembershipDto'
+        incompatibility:
+          enum:
+          - session-membership-excluded
+          - session-bought-membership-will-expire
+          - session-bought-membership-pack-will-expire
+          - session-bought-membership-already-used
+          - session-bought-membership-usage-limit-reached
+          - session-bought-membership-usage-limit-reached-for-semester-or-course
+          - session-bought-membership-daily-limit-reached
+          - session-bought-membership-no-event-credits-left
+          - session-bought-membership-no-money-credits-left
+          - session-bought-membership-on-demand
+          - session-bought-membership-starts-later
+          - session-bought-membership-invalid-type
+          - session-bought-membership-disabled
+          - session-bought-membership-frozen
+          - session-subscription-ticket-limit
+          - unknown
+          type: string
+          x-enumNames:
+          - SESSION_MEMBERSHIP_EXCLUDED
+          - SESSION_BOUGHT_MEMBERSHIP_WILL_EXPIRE
+          - SESSION_BOUGHT_MEMBERSHIP_PACK_WILL_EXPIRE
+          - SESSION_BOUGHT_MEMBERSHIP_ALREADY_USED
+          - SESSION_BOUGHT_MEMBERSHIP_USAGE_LIMIT_REACHED
+          - SESSION_BOUGHT_MEMBERSHIP_USAGE_LIMIT_REACHED_FOR_SEMESTER_OR_COURSE
+          - SESSION_BOUGHT_MEMBERSHIP_DAILY_LIMIT_REACHED
+          - SESSION_BOUGHT_MEMBERSHIP_NO_EVENT_CREDITS_LEFT
+          - SESSION_BOUGHT_MEMBERSHIP_NO_MONEY_CREDITS_LEFT
+          - SESSION_BOUGHT_MEMBERSHIP_ON_DEMAND
+          - SESSION_BOUGHT_MEMBERSHIP_STARTS_LATER
+          - SESSION_BOUGHT_MEMBERSHIP_INVALID_TYPE
+          - SESSION_BOUGHT_MEMBERSHIP_DISABLED
+          - SESSION_BOUGHT_MEMBERSHIP_FROZEN
+          - SESSION_BOUGHT_MEMBERSHIP_TICKET_LIMIT
+          - UNKNOWN
+      required:
+      - boughtMembership
+    MemberPaymentMethodSavedPaymentMethodDto:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - saved_payment_method
+        savedPaymentMethodId:
+          type: integer
+      required:
+      - id
+      - type
+      - savedPaymentMethodId
+    MemberCheckoutPurchasedProductDto:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - product
+        productOrderId:
+          type: integer
+      required:
+      - type
+      - productOrderId
+    MemberCheckoutPricesResponseDto:
+      type: object
+      properties:
+        totalInCurrency:
+          type: string
+        itemsWithPrices:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemberCheckoutPricesItemDto'
+      required:
+      - totalInCurrency
+      - itemsWithPrices
+    MemberCheckoutPurchasedMembershipDto:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - membership
+        boughtMembershipId:
+          type: integer
+      required:
+      - type
+      - boughtMembershipId
+    MemberCheckoutMembershipItemWithPriceDto:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - subscription
+        membershipId:
+          type: integer
+        attemptedPriceInCurrency:
+          type: string
+      required:
+      - id
+      - type
+      - membershipId
+      - attemptedPriceInCurrency
+    MemberPaymentMethodMembershipDto:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - membership
+        boughtMembershipId:
+          type: integer
+      required:
+      - id
+      - type
+      - boughtMembershipId
+    MemberCheckoutResponseDto:
+      type: object
+      properties:
+        purchasedItems:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/MemberCheckoutPurchasedSessionDto'
+            - $ref: '#/components/schemas/MemberCheckoutPurchasedMembershipDto'
+            - $ref: '#/components/schemas/MemberCheckoutPurchasedAppointmentDto'
+            - $ref: '#/components/schemas/MemberCheckoutPurchasedProductDto'
+            - $ref: '#/components/schemas/MemberCheckoutPurchasedGiftCardDto'
+            - $ref: '#/components/schemas/MemberCheckoutPurchasedMoneyCreditsDto'
+            - $ref: '#/components/schemas/MemberCheckoutPurchasedEventCreditsDto'
+      required:
+      - purchasedItems
+    MemberCheckoutRequestDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/MemberCheckoutMembershipItemWithPriceDto'
+            - $ref: '#/components/schemas/MemberCheckoutSessionItemWithPriceDto'
+        homeLocationId:
+          type: integer
+        paymentMethods:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/MemberPaymentMethodMembershipDto'
+            - $ref: '#/components/schemas/MemberPaymentMethodSavedPaymentMethodDto'
+      required:
+      - items
+      - paymentMethods
+    MemberCheckoutCompatibleMembershipsRequestDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/MemberCheckoutMembershipItemDto'
+            - $ref: '#/components/schemas/MemberCheckoutSessionItemDto'
+        homeLocationId:
+          type: integer
+      required:
+      - items
+    MemberCheckoutPurchasedAppointmentDto:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - appointment
+        appointmentTransactionId:
+          type: integer
+      required:
+      - type
+      - appointmentTransactionId
+    HostMembershipBasicDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        name:
+          type: string
+          example: Monthly Membership
+        description:
+          type: string
+          nullable: true
+          example: Monthly membership with unlimited access to <b>all</b> classes.
+        type:
+          enum:
+          - subscription
+          - on-demand-subscription
+          - package-events
+          - package-money
+          - patron
+          type: string
+          example: subscription
+          x-enumNames:
+          - Subscription
+          - OnDemandSubscription
+          - PackageEvents
+          - PackageMoney
+          - Patron
+        locationId:
+          type: integer
+          nullable: true
+          example: null
+        disabled:
+          type: boolean
+          description: Indicates that the membership was disabled
+          example: false
+        autoRenewing:
+          type: boolean
+          description: Indicates that membership renews after specific interval
+          example: true
+        minimumAutoRenews:
+          type: integer
+          nullable: true
+          description: How many times membership has to renew before user can cancel renewal
+          example: null
+        eventCredits:
+          type: integer
+          nullable: true
+          description: For PACKAGE_EVENTS memberships, defines how many event credits are included
+          example: null
+        moneyCredits:
+          type: number
+          nullable: true
+          description: For PACKAGE_MONEY memberships, defines how much money is included
+          example: null
+        duration:
+          type: integer
+          nullable: true
+          description: For SUBSCRIPTION this is auto renew duration, for PACKAGE_* this is expiration time
+          example: 1
+        durationUnit:
+          nullable: true
+          enum:
+          - days
+          - months
+          - years
+          type: string
+          example: months
+          x-enumNames:
+          - DAYS
+          - MONTHS
+          - YEARS
+        isActivatedOnFirstUse:
+          type: boolean
+          description: If set to false, membership is activated upon purchase. When set to true, membership is activated at the moment of the first purchase. When the purchase is for booking in the future, the activation date is set to the booking date.
+          example: false
+        activationDeadlineInDays:
+          type: integer
+          nullable: true
+          description: Only applicable when isActivatedOnFirstUse=true. If set, the member must activate the membership within this many days of purchase or it expires automatically.
+          example: 21
+        hasFreeTrial:
+          type: boolean
+          example: false
+        freeTrialDurationInDays:
+          type: integer
+          example: 7
+        contractAgreement:
+          type: string
+          nullable: true
+          example: Contract agreement text
+        order:
+          type: integer
+          example: 1
+        isIntroOffer:
+          type: boolean
+          example: false
+        usageLimitForSessions:
+          type: number
+          nullable: true
+          description: Only applicable for SUBSCRIPTION. Maximum number of sessions customer can book with this membership during one renewal period, not used when combinedUsageLimitEnabled=true
+          example: 5
+        usageLimitForAppointments:
+          type: number
+          nullable: true
+          description: Only applicable for SUBSCRIPTION. Maximum number of appointments customer can book with this membership during one renewal period, not used when combinedUsageLimitEnabled=true
+          example: 2
+        combinedUsageLimitEnabled:
+          type: boolean
+          description: Only applicable for SUBSCRIPTION. The usage limits of the memberships are applied to sum of both bookings and appointments.
+          example: false
+        combinedUsageLimit:
+          type: number
+          nullable: true
+          description: Only applicable for SUBSCRIPTION. Combined maximum number of bookings and appointments customer can book with this membership during one renewal period, only used when combinedUsageLimitEnabled=true
+          example: null
+        usageLimitRenewalEnabled:
+          type: boolean
+          description: Only applicable for SUBSCRIPTION. Calculate usage limits differently to renewal duration.
+          example: false
+        usageLimitRenewalDuration:
+          type: number
+          nullable: true
+          description: Only applicable for SUBSCRIPTION. Interval for which the usage limits are calculated, only used when usageLimitRenewalEnabled=true
+          example: null
+        usageLimitRenewalDurationUnit:
+          nullable: true
+          enum:
+          - days
+          - months
+          - years
+          type: string
+          description: Only applicable for SUBSCRIPTION. Interval for which the usage limits are calculated, only used when usageLimitRenewalEnabled=true
+          example: null
+          x-enumNames:
+          - DAYS
+          - MONTHS
+          - YEARS
+        usageLimitRolloverEnabled:
+          type: boolean
+          description: Only applicable for SUBSCRIPTION. When true and customer doesn't use reach their usage limits, the rest is transferred to the customer according to usageLimitRolloverMode
+          example: false
+        usageLimitRolloverMode:
+          nullable: true
+          enum:
+          - next-renewal
+          - event-credits
+          type: string
+          description: Only applicable for SUBSCRIPTION. How should extra usage limits be transferred to customer, either as package or as addition to next renewal period. Only used when usageLimitRolloverEnabled=true
+          example: null
+          x-enumNames:
+          - NEXT_RENEWAL
+          - EVENT_CREDITS
+        usageLimitRolloverExpirationDuration:
+          type: number
+          nullable: true
+          description: Only applicable for SUBSCRIPTION. When should the extra limits / package expire after rolling over. Only used when usageLimitRolloverEnabled=true
+          example: null
+        usageLimitRolloverExpirationDurationUnit:
+          nullable: true
+          enum:
+          - days
+          - months
+          - years
+          type: string
+          description: Only applicable for SUBSCRIPTION. When should the extra limits / package expire after rolling over. Only used when usageLimitRolloverEnabled=true
+          example: null
+          x-enumNames:
+          - DAYS
+          - MONTHS
+          - YEARS
+      required:
+      - id
+      - name
+      - description
+      - type
+      - locationId
+      - disabled
+      - autoRenewing
+      - minimumAutoRenews
+      - eventCredits
+      - moneyCredits
+      - duration
+      - durationUnit
+      - isActivatedOnFirstUse
+      - activationDeadlineInDays
+      - hasFreeTrial
+      - freeTrialDurationInDays
+      - contractAgreement
+      - order
+      - isIntroOffer
+      - usageLimitForSessions
+      - usageLimitForAppointments
+      - combinedUsageLimitEnabled
+      - combinedUsageLimit
+      - usageLimitRenewalEnabled
+      - usageLimitRenewalDuration
+      - usageLimitRenewalDurationUnit
+      - usageLimitRolloverEnabled
+      - usageLimitRolloverMode
+      - usageLimitRolloverExpirationDuration
+      - usageLimitRolloverExpirationDurationUnit
+    MemberCheckoutPurchasedMoneyCreditsDto:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - money-credit
+        numberOfMoneyCredits:
+          type: number
+      required:
+      - type
+      - numberOfMoneyCredits
+    MemberCheckoutMembershipItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - subscription
+        membershipId:
+          type: integer
+      required:
+      - id
+      - type
+      - membershipId
+    MemberCheckoutPurchasedSessionDto:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - session
+        sessionBookingId:
+          type: integer
+      required:
+      - type
+      - sessionBookingId
+    MemberCheckoutPurchasedGiftCardDto:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - gift-card
+        giftCardId:
+          type: integer
+      required:
+      - type
+      - giftCardId
+    MemberCheckoutSessionItemWithPriceDto:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - session
+        sessionId:
+          type: integer
+        appliedPriceRuleIds:
+          type: array
+          items:
+            type: integer
+        attemptedPriceInCurrency:
+          type: string
+      required:
+      - id
+      - type
+      - sessionId
+      - attemptedPriceInCurrency
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          scopes: {}
+          tokenUrl: /api/v2/auth/token
+        authorizationCode:
+          authorizationUrl: /api/v2/auth/authorize
+          tokenUrl: /api/v2/auth/token
+          scopes: {}
+    OAuth2ApiClient:
+      type: http
+      scheme: basic
+      description: Use your `client_id` as username and `client_secret` as password

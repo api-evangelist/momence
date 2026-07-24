@@ -1,0 +1,1033 @@
+openapi: 3.0.0
+info:
+  title: Momence Public auth member-host API
+  description: ''
+  version: '2.0'
+  contact: {}
+servers:
+- url: https://api.momence.com
+  description: Production API
+security:
+- OAuth2: []
+  OAuth2ApiClient: []
+tags:
+- name: member-host
+paths:
+  /api/v2/member/host/locations:
+    get:
+      operationId: ApiV2MemberHostLocationsController_list
+      summary: Get available host locations
+      parameters:
+      - name: page
+        required: true
+        in: query
+        description: Starts at 0
+        schema:
+          minimum: 0
+          example: 0
+          type: integer
+      - name: pageSize
+        required: true
+        in: query
+        schema:
+          minimum: 1
+          maximum: 200
+          example: 10
+          type: integer
+      - name: sortOrder
+        required: false
+        in: query
+        schema:
+          enum:
+          - ASC
+          - DESC
+          type: string
+      - name: sortBy
+        required: false
+        in: query
+        description: Field to sort by
+        schema:
+          enum:
+          - name
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/PaginatedResponseDto'
+                - required:
+                  - payload
+                  properties:
+                    payload:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/MemberHostLocationDto'
+          description: ''
+      tags:
+      - member-host
+      security:
+      - OAuth2: []
+  /api/v2/member/host/memberships:
+    get:
+      operationId: ApiV2MemberHostMembershipsController_list
+      summary: Get available host memberships
+      parameters:
+      - name: page
+        required: true
+        in: query
+        description: Starts at 0
+        schema:
+          minimum: 0
+          example: 0
+          type: integer
+      - name: pageSize
+        required: true
+        in: query
+        schema:
+          minimum: 1
+          maximum: 200
+          example: 10
+          type: integer
+      - name: sortOrder
+        required: false
+        in: query
+        schema:
+          enum:
+          - ASC
+          - DESC
+          type: string
+      - name: sortBy
+        required: false
+        in: query
+        description: Field to sort by
+        schema:
+          enum:
+          - name
+          - orderNumber
+          type: string
+      - name: includeDisabled
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: onlyFeatured
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: compatibleWithSessionId
+        required: false
+        in: query
+        schema:
+          type: integer
+      - name: compatibleWithAppointmentId
+        required: false
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/PaginatedResponseDto'
+                - required:
+                  - payload
+                  properties:
+                    payload:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/MemberHostMembershipDto'
+          description: ''
+      tags:
+      - member-host
+      security:
+      - OAuth2: []
+  /api/v2/member/host/sessions:
+    get:
+      operationId: ApiV2MemberHostSessionsController_list
+      summary: Get available host sessions
+      parameters:
+      - name: page
+        required: true
+        in: query
+        description: Starts at 0
+        schema:
+          minimum: 0
+          example: 0
+          type: integer
+      - name: pageSize
+        required: true
+        in: query
+        schema:
+          minimum: 1
+          maximum: 200
+          example: 10
+          type: integer
+      - name: sortOrder
+        required: false
+        in: query
+        schema:
+          enum:
+          - ASC
+          - DESC
+          type: string
+      - name: sortBy
+        required: false
+        in: query
+        description: Field to sort by
+        schema:
+          enum:
+          - name
+          - startsAt
+          - endsAt
+          type: string
+      - name: includeCancelled
+        required: false
+        in: query
+        description: also include cancelled sessions
+        schema:
+          type: boolean
+      - name: types
+        required: false
+        in: query
+        description: only return specified session types
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - private
+            - special-event
+            - special-event-new
+            - retreat
+            - fitness
+            - course
+            - course-class
+            - semester
+            - recital
+      - name: teacherId
+        required: false
+        in: query
+        schema:
+          type: integer
+      - name: locationId
+        required: false
+        in: query
+        schema:
+          type: integer
+      - name: startAfter
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: startBefore
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: endAfter
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: endBefore
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/PaginatedResponseDto'
+                - required:
+                  - payload
+                  properties:
+                    payload:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/MemberHostSessionDto'
+          description: ''
+      tags:
+      - member-host
+  /api/v2/member/host/signable-documents:
+    get:
+      operationId: ApiV2MemberHostSignableDocumentsController_list
+      summary: Returns signable documents (waivers, privacy policy, contracts...) with signature status
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberSignableDocumentsResponseDto'
+          description: ''
+      tags:
+      - member-host
+      security:
+      - OAuth2: []
+  /api/v2/member/host/signable-documents/sign:
+    put:
+      operationId: ApiV2MemberHostSignableDocumentsController_sign
+      summary: Signs one or multiple signable documents (waivers, privacy policy, contracts...) using one signature
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberSignDocumentRequestDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+      - member-host
+      security:
+      - OAuth2: []
+components:
+  schemas:
+    HandwrittenElementDto:
+      type: object
+      properties:
+        paths:
+          type: array
+          items:
+            $ref: '#/components/schemas/HandwrittenElementPathDto'
+      required:
+      - paths
+    HandwrittenElementPointDto:
+      type: object
+      properties:
+        x:
+          type: integer
+          minimum: 0
+        y:
+          type: integer
+          minimum: 0
+      required:
+      - x
+      - y
+    MemberTeacherDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: Doe
+        pictureUrl:
+          type: string
+          nullable: true
+          example: https://example.com/picture.jpg
+      required:
+      - id
+      - firstName
+      - lastName
+      - pictureUrl
+    HandwrittenElementPathDto:
+      type: object
+      properties:
+        points:
+          type: array
+          items:
+            $ref: '#/components/schemas/HandwrittenElementPointDto'
+      required:
+      - points
+    MemberHostSessionDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 3
+        name:
+          type: string
+          example: Stretching with John
+        type:
+          enum:
+          - private
+          - special-event
+          - special-event-new
+          - retreat
+          - fitness
+          - course
+          - course-class
+          - semester
+          - recital
+          type: string
+          example: fitness
+          x-enumNames:
+          - PRIVATE
+          - SPECIAL_EVENT
+          - SPECIAL_EVENT_NEW
+          - RETREAT
+          - FITNESS
+          - COURSE
+          - COURSE_CLASS
+          - SEMESTER
+          - RECITAL
+        description:
+          type: string
+          nullable: true
+          example: Our stretching class is a great way to start your day.
+        startsAt:
+          type: string
+          example: '2021-01-01T05:00:00Z'
+          format: date-time
+        endsAt:
+          type: string
+          example: '2021-01-01T06:00:00Z'
+          format: date-time
+        durationInMinutes:
+          type: integer
+          example: 60
+        capacity:
+          type: integer
+          nullable: true
+          description: Maximum session capacity, NULL means unlimited
+          example: 10
+          minimum: 0
+        participants:
+          type: integer
+          description: How many bookings the session already has
+          example: 1
+        waitlistEnabled:
+          type: boolean
+          example: true
+        waitlistCapacity:
+          type: integer
+          nullable: true
+          description: Maximum number of people on the waitlist if the waitlist is enabled. NULL means unlimited
+          example: 5
+        salesCutoffInMinutes:
+          type: number
+          nullable: true
+          description: How long before the session start the bookings sale stops
+          example: 10
+        isCancelled:
+          type: boolean
+          example: false
+        priceType:
+          enum:
+          - fixed-price
+          - dynamic
+          type: string
+          example: fixed-price
+          x-enumNames:
+          - FIXED
+          - DYNAMIC
+        fixedTicketPrice:
+          type: number
+          example: 955
+        dynamicTicketPriceMin:
+          type: number
+          nullable: true
+          example: null
+        dynamicTicketPriceMax:
+          type: number
+          nullable: true
+          example: null
+        dynamicTicketFreeOptionEnabled:
+          type: boolean
+          nullable: true
+          example: null
+        teacher:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/MemberTeacherDto'
+        originalTeacher:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/MemberTeacherDto'
+        additionalTeachers:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemberTeacherDto'
+        isRecurring:
+          type: boolean
+          example: false
+        isInPerson:
+          type: boolean
+          example: false
+        inPersonLocation:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/MemberLocationDto'
+        bannerImageUrl:
+          type: string
+          nullable: true
+          example: https://example.com/image.jpg
+        hostPhotoUrl:
+          type: string
+          nullable: true
+          example: https://example.com/image.jpg
+        onlineStreamUrl:
+          type: string
+          nullable: true
+          example: https://example.com/online-stream
+        onlineStreamPassword:
+          type: string
+          nullable: true
+          example: password123
+      required:
+      - id
+      - name
+      - type
+      - description
+      - startsAt
+      - endsAt
+      - durationInMinutes
+      - capacity
+      - participants
+      - waitlistEnabled
+      - waitlistCapacity
+      - salesCutoffInMinutes
+      - isCancelled
+      - priceType
+      - fixedTicketPrice
+      - dynamicTicketPriceMin
+      - dynamicTicketPriceMax
+      - dynamicTicketFreeOptionEnabled
+      - teacher
+      - originalTeacher
+      - additionalTeachers
+      - isRecurring
+      - isInPerson
+      - inPersonLocation
+      - bannerImageUrl
+      - hostPhotoUrl
+      - onlineStreamUrl
+      - onlineStreamPassword
+    MemberHostMembershipDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        name:
+          type: string
+          example: Monthly Membership
+        description:
+          type: string
+          nullable: true
+          example: Monthly membership with unlimited access to <b>all</b> classes.
+        type:
+          enum:
+          - subscription
+          - on-demand-subscription
+          - package-events
+          - package-money
+          - patron
+          type: string
+          example: subscription
+          x-enumNames:
+          - Subscription
+          - OnDemandSubscription
+          - PackageEvents
+          - PackageMoney
+          - Patron
+        locationId:
+          type: integer
+          nullable: true
+          example: null
+        disabled:
+          type: boolean
+          description: Indicates that the membership was disabled and shouldn't be shown
+          example: false
+        autoRenewing:
+          type: boolean
+          description: Indicates that membership renews after specific interval
+          example: true
+        minimumAutoRenews:
+          type: integer
+          nullable: true
+          description: How many times membership has to renew before user can cancel renewal
+          example: null
+        eventCredits:
+          type: integer
+          nullable: true
+          description: For PACKAGE_EVENTS memberships, defines how many event credits are included
+          example: null
+        moneyCredits:
+          type: number
+          nullable: true
+          description: For PACKAGE_MONEY memberships, defines how much money is included
+          example: null
+        duration:
+          type: integer
+          nullable: true
+          description: For SUBSCRIPTION this is auto renew duration, for PACKAGE_* this is expiration time
+          example: 1
+        durationUnit:
+          nullable: true
+          enum:
+          - days
+          - months
+          - years
+          type: string
+          example: months
+          x-enumNames:
+          - DAYS
+          - MONTHS
+          - YEARS
+        isActivatedOnFirstUse:
+          type: boolean
+          description: If set to false, membership is activated upon purchase. When set to true, membership is activated at the moment of the first purchase. When the purchase is for booking in the future, the activation date is set to the booking date.
+          example: false
+        activationDeadlineInDays:
+          type: integer
+          nullable: true
+          description: Only applicable when isActivatedOnFirstUse=true. If set, the member must activate the membership within this many days of purchase or it expires automatically.
+          example: 21
+        hasFreeTrial:
+          type: boolean
+          example: false
+        freeTrialDurationInDays:
+          type: integer
+          example: 7
+        contractAgreement:
+          type: string
+          nullable: true
+          example: Contract agreement text
+        order:
+          type: integer
+          example: 1
+        isIntroOffer:
+          type: boolean
+          example: false
+        usageLimitForSessions:
+          type: number
+          nullable: true
+          description: Only applicable for SUBSCRIPTION. Maximum number of sessions customer can book with this membership during one renewal period, not used when combinedUsageLimitEnabled=true
+          example: 5
+        usageLimitForAppointments:
+          type: number
+          nullable: true
+          description: Only applicable for SUBSCRIPTION. Maximum number of appointments customer can book with this membership during one renewal period, not used when combinedUsageLimitEnabled=true
+          example: 2
+        combinedUsageLimitEnabled:
+          type: boolean
+          description: Only applicable for SUBSCRIPTION. The usage limits of the memberships are applied to sum of both bookings and appointments.
+          example: false
+        combinedUsageLimit:
+          type: number
+          nullable: true
+          description: Only applicable for SUBSCRIPTION. Combined maximum number of bookings and appointments customer can book with this membership during one renewal period, only used when combinedUsageLimitEnabled=true
+          example: null
+        usageLimitRenewalEnabled:
+          type: boolean
+          description: Only applicable for SUBSCRIPTION. Calculate usage limits differently to renewal duration.
+          example: false
+        usageLimitRenewalDuration:
+          type: number
+          nullable: true
+          description: Only applicable for SUBSCRIPTION. Interval for which the usage limits are calculated, only used when usageLimitRenewalEnabled=true
+          example: null
+        usageLimitRenewalDurationUnit:
+          nullable: true
+          enum:
+          - days
+          - months
+          - years
+          type: string
+          description: Only applicable for SUBSCRIPTION. Interval for which the usage limits are calculated, only used when usageLimitRenewalEnabled=true
+          example: null
+          x-enumNames:
+          - DAYS
+          - MONTHS
+          - YEARS
+        usageLimitRolloverEnabled:
+          type: boolean
+          description: Only applicable for SUBSCRIPTION. When true and customer doesn't use reach their usage limits, the rest is transferred to the customer according to usageLimitRolloverMode
+          example: false
+        usageLimitRolloverMode:
+          nullable: true
+          enum:
+          - next-renewal
+          - event-credits
+          type: string
+          description: Only applicable for SUBSCRIPTION. How should extra usage limits be transferred to customer, either as package or as addition to next renewal period. Only used when usageLimitRolloverEnabled=true
+          example: null
+          x-enumNames:
+          - NEXT_RENEWAL
+          - EVENT_CREDITS
+        usageLimitRolloverExpirationDuration:
+          type: number
+          nullable: true
+          description: Only applicable for SUBSCRIPTION. When should the extra limits / package expire after rolling over. Only used when usageLimitRolloverEnabled=true
+          example: null
+        usageLimitRolloverExpirationDurationUnit:
+          nullable: true
+          enum:
+          - days
+          - months
+          - years
+          type: string
+          description: Only applicable for SUBSCRIPTION. When should the extra limits / package expire after rolling over. Only used when usageLimitRolloverEnabled=true
+          example: null
+          x-enumNames:
+          - DAYS
+          - MONTHS
+          - YEARS
+        startDate:
+          type: string
+          nullable: true
+          description: Explicit start date for memberships that have specific duration
+          example: '2022-01-01T00:00:00Z'
+          format: date-time
+        endDate:
+          type: string
+          nullable: true
+          description: Explicit end date for memberships that have specific duration
+          example: '2022-02-01T00:00:00Z'
+          format: date-time
+        featured:
+          type: boolean
+          description: Indicates that membership should be featured on checkout
+          example: false
+        priceType:
+          enum:
+          - fixed-price
+          - dynamic
+          type: string
+          example: fixed-price
+          x-enumNames:
+          - FIXED
+          - DYNAMIC
+        price:
+          type: number
+          nullable: true
+          description: In cents, membership price for FIXED priceType
+          example: 955
+        minimumPrice:
+          type: integer
+          nullable: true
+          description: In cents, minimum membership price for DYNAMIC priceType
+          example: null
+        maximumPrice:
+          type: integer
+          nullable: true
+          description: In cents, maximum membership price for DYNAMIC priceType
+          example: null
+        recommendedPrice:
+          type: integer
+          nullable: true
+          description: In cents, recommended membership price for DYNAMIC priceType
+          example: null
+        priceIncludesTax:
+          type: boolean
+          description: Indicates if tax is already included in the price
+          example: true
+        taxRateInPercent:
+          type: number
+          nullable: true
+          description: Tax rate in percents
+          example: 20
+        freeTrialPrice:
+          type: integer
+          description: in cents
+          example: 199
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/HostTagDto'
+      required:
+      - id
+      - name
+      - description
+      - type
+      - locationId
+      - disabled
+      - autoRenewing
+      - minimumAutoRenews
+      - eventCredits
+      - moneyCredits
+      - duration
+      - durationUnit
+      - isActivatedOnFirstUse
+      - activationDeadlineInDays
+      - hasFreeTrial
+      - freeTrialDurationInDays
+      - contractAgreement
+      - order
+      - isIntroOffer
+      - usageLimitForSessions
+      - usageLimitForAppointments
+      - combinedUsageLimitEnabled
+      - combinedUsageLimit
+      - usageLimitRenewalEnabled
+      - usageLimitRenewalDuration
+      - usageLimitRenewalDurationUnit
+      - usageLimitRolloverEnabled
+      - usageLimitRolloverMode
+      - usageLimitRolloverExpirationDuration
+      - usageLimitRolloverExpirationDurationUnit
+      - startDate
+      - endDate
+      - featured
+      - priceType
+      - price
+      - minimumPrice
+      - maximumPrice
+      - recommendedPrice
+      - priceIncludesTax
+      - taxRateInPercent
+      - freeTrialPrice
+      - tags
+    MemberHostLocationDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        parentLocationId:
+          type: integer
+          nullable: true
+          example: null
+        name:
+          type: string
+          nullable: true
+          example: Brooklyn Location
+        timeZone:
+          type: string
+          nullable: true
+          example: America/New_York
+        fullAddress:
+          type: string
+          nullable: true
+          description: Full location address
+          example: 96 North Country Club Street, Brooklyn, NY 11233
+        address:
+          type: string
+          nullable: true
+          example: 96 North Country Club Street
+        city:
+          type: string
+          nullable: true
+          example: Brooklyn
+        countryCode:
+          type: string
+          nullable: true
+          example: NY
+        zipCode:
+          type: string
+          nullable: true
+          example: '11233'
+        latitude:
+          type: number
+          nullable: true
+          example: 40.6453448
+        longitude:
+          type: number
+          nullable: true
+          example: -74.0275687
+        isPhysical:
+          type: boolean
+          nullable: true
+          example: true
+      required:
+      - id
+      - parentLocationId
+      - name
+      - timeZone
+      - fullAddress
+      - address
+      - city
+      - countryCode
+      - zipCode
+      - latitude
+      - longitude
+      - isPhysical
+    PaginatedResponseDataDto:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 0
+          minimum: 0
+        pageSize:
+          type: integer
+          example: 10
+          minimum: 1
+        totalCount:
+          type: integer
+          example: 1
+        sortBy:
+          type: string
+        sortOrder:
+          type: string
+          enum:
+          - ASC
+          - DESC
+      required:
+      - page
+      - pageSize
+      - totalCount
+    HostTagDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: VIP
+        isCustomerBadge:
+          type: boolean
+          example: false
+        badgeLabel:
+          type: string
+          nullable: true
+          example: VIP
+        badgeColor:
+          type: string
+          nullable: true
+          example: '#fe0000'
+        corporateTagId:
+          type: integer
+          nullable: true
+          example: 1
+      required:
+      - id
+      - name
+      - isCustomerBadge
+      - badgeLabel
+      - badgeColor
+      - corporateTagId
+    MemberSignableDocumentsResponseDto:
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemberSignableDocumentDto'
+      required:
+      - documents
+    PaginatedResponseDto:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/PaginatedResponseDataDto'
+      required:
+      - pagination
+    MemberSignableDocumentDto:
+      type: object
+      properties:
+        predefinedWaiverType:
+          enum:
+          - waiver
+          - membership-waiver
+          - child-waiver
+          - privacy-policy
+          type: string
+          x-enumNames:
+          - CUSTOMER_WAIVER
+          - MEMBERSHIP_TERMS_AND_CONDITIONS
+          - CHILD_BOOKING_WAIVER
+          - PRIVACY_POLICY
+        customWaiverId:
+          type: integer
+        type:
+          enum:
+          - predefinedWaiver
+          - customWaiver
+          type: string
+          x-enumNames:
+          - PredefinedWaiver
+          - CustomWaiver
+        name:
+          type: string
+          nullable: true
+        content:
+          type: string
+          nullable: true
+        signedAt:
+          type: string
+          nullable: true
+          format: date-time
+        signatureStatus:
+          enum:
+          - signed
+          - unsigned
+          - signature-expired
+          type: string
+          x-enumNames:
+          - SIGNED
+          - UNSIGNED
+          - SIGNATURE_EXPIRED
+        simpleSignature:
+          type: string
+        handwrittenSignature:
+          $ref: '#/components/schemas/HandwrittenElementDto'
+      required:
+      - type
+      - name
+      - content
+      - signedAt
+      - signatureStatus
+    MemberLocationDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Main Studio
+      required:
+      - id
+      - name
+    MemberSignDocumentRequestDto:
+      type: object
+      properties:
+        customWaiverIdsToSign:
+          description: Customer waiver IDs to sign, can be empty
+          type: array
+          items:
+            type: integer
+        predefinedWaiverTypesToSign:
+          type: array
+          items:
+            enum:
+            - waiver
+            - membership-waiver
+            - child-waiver
+            - privacy-policy
+            type: string
+            x-enumNames:
+            - CUSTOMER_WAIVER
+            - MEMBERSHIP_TERMS_AND_CONDITIONS
+            - CHILD_BOOKING_WAIVER
+            - PRIVACY_POLICY
+          description: Predefined waiver types to sign, can be empty
+        simpleSignature:
+          type: string
+          description: This signature can be a customer name; useful for people who prefer typing instead of drawing their own signature by hand
+        handwrittenSignature:
+          description: This signature contains a representation of handwritten vector element (array of SVG paths), as produced by Konva
+          allOf:
+          - $ref: '#/components/schemas/HandwrittenElementDto'
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          scopes: {}
+          tokenUrl: /api/v2/auth/token
+        authorizationCode:
+          authorizationUrl: /api/v2/auth/authorize
+          tokenUrl: /api/v2/auth/token
+          scopes: {}
+    OAuth2ApiClient:
+      type: http
+      scheme: basic
+      description: Use your `client_id` as username and `client_secret` as password

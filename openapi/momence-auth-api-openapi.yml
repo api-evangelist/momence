@@ -1,0 +1,234 @@
+openapi: 3.0.0
+info:
+  title: Momence Public auth API
+  description: ''
+  version: '2.0'
+  contact: {}
+servers:
+- url: https://api.momence.com
+  description: Production API
+security:
+- OAuth2: []
+  OAuth2ApiClient: []
+tags:
+- name: auth
+paths:
+  /api/v2/auth/authorize:
+    get:
+      operationId: ApiV2AuthController_authorize
+      summary: OAuth2 authorize
+      parameters:
+      - name: client_id
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: redirect_uri
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: prompt
+        required: false
+        in: query
+        description: "Indicates possible user prompts:\n\n - login (default): show Sign In screen; if a user is logged in, they are logged out first\n - sign-up: show Sign Up screen; if a user is logged in, they are logged out first\n - none: no prompt, throw when user isn't logged in"
+        x-enumNames:
+        - LOGIN
+        - SIGN_UP
+        - NONE
+        schema:
+          enum:
+          - login
+          - sign-up
+          - none
+          type: string
+      - name: scope
+        required: false
+        in: query
+        x-enumNames:
+        - PUBLIC_API_V2
+        schema:
+          enum:
+          - public-api-v2
+          type: string
+      - name: response_type
+        required: false
+        in: query
+        x-enumNames:
+        - CODE
+        schema:
+          enum:
+          - code
+          type: string
+      - name: state
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - auth
+      security:
+      - OAuth2ApiClient: []
+  /api/v2/auth/token:
+    post:
+      operationId: ApiV2AuthController_token
+      summary: OAuth2 token
+      description: Obtain a new access token
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/AuthTokenPasswordRequestDto'
+              - $ref: '#/components/schemas/AuthTokenRefreshTokenRequestDto'
+              - $ref: '#/components/schemas/AuthTokenAuthorizationCodeRequestDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokenDto'
+      tags:
+      - auth
+      security:
+      - OAuth2ApiClient: []
+  /api/v2/auth/profile:
+    get:
+      operationId: ApiV2AuthController_profile
+      summary: Get logged user data
+      description: Get info about currently logged user
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthProfileDto'
+          description: ''
+      tags:
+      - auth
+  /api/v2/auth/logout:
+    post:
+      operationId: ApiV2AuthController_logout
+      summary: Logout
+      description: Invalidate provided access token
+      parameters: []
+      responses:
+        '201':
+          description: ''
+      tags:
+      - auth
+components:
+  schemas:
+    AuthTokenAuthorizationCodeRequestDto:
+      type: object
+      properties:
+        grant_type:
+          type: string
+          enum:
+          - authorization_code
+        code:
+          type: string
+        redirect_uri:
+          type: string
+      required:
+      - grant_type
+      - code
+      - redirect_uri
+    AuthProfileDto:
+      type: object
+      properties:
+        userId:
+          type: integer
+          example: 1
+        memberId:
+          type: integer
+          nullable: true
+          example: 1
+        email:
+          type: string
+          example: john.doe@example.com
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: Doe
+      required:
+      - userId
+      - memberId
+      - email
+      - firstName
+      - lastName
+    AuthTokenDto:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        access_token:
+          type: string
+        accessTokenExpiresAt:
+          type: string
+          format: date-time
+        refreshToken:
+          type: string
+        refresh_token:
+          type: string
+        refreshTokenExpiresAt:
+          type: string
+          format: date-time
+      required:
+      - accessToken
+      - access_token
+      - accessTokenExpiresAt
+      - refreshToken
+      - refresh_token
+      - refreshTokenExpiresAt
+    AuthTokenRefreshTokenRequestDto:
+      type: object
+      properties:
+        grant_type:
+          type: string
+          enum:
+          - refresh_token
+        refresh_token:
+          type: string
+      required:
+      - grant_type
+      - refresh_token
+    AuthTokenPasswordRequestDto:
+      type: object
+      properties:
+        grant_type:
+          type: string
+          enum:
+          - password
+        username:
+          type: string
+        password:
+          type: string
+      required:
+      - grant_type
+      - username
+      - password
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          scopes: {}
+          tokenUrl: /api/v2/auth/token
+        authorizationCode:
+          authorizationUrl: /api/v2/auth/authorize
+          tokenUrl: /api/v2/auth/token
+          scopes: {}
+    OAuth2ApiClient:
+      type: http
+      scheme: basic
+      description: Use your `client_id` as username and `client_secret` as password
