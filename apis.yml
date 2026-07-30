@@ -12,7 +12,20 @@ description: Momence is an all-in-one management platform for fitness, wellness,
   staff automation) using public API clients created in the Momence dashboard, and
   covers members, sessions and bookings, memberships, checkout and sales, reports,
   appointments, addresses, and saved payment methods.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/momence.png
 tags:
 - Fitness
 - Wellness
@@ -26,169 +39,262 @@ created: '2026-07-04'
 modified: '2026-07-04'
 specificationVersion: '0.19'
 apis:
-- aid: momence:momence-authentication-api
-  name: Momence Authentication API
-  tags:
-  - Authentication
-  - OAuth2
-  - Identity
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+- aid: momence:momence-auth-api
+  name: Momence auth API
+  description: The auth API from Momence — 4 operation(s) for auth.
   humanURL: https://api.docs.momence.com/docs/authorization
   baseURL: https://api.momence.com/api/v2
-  properties:
-  - url: https://api.docs.momence.com/docs/authorization
-    type: Documentation
-  - url: https://api.docs.momence.com/docs/getting-started
-    type: APIReference
-  - url: openapi/momence-openapi.yml
-    type: OpenAPI
-  - url: collections/momence.postman_collection.json
-    type: PostmanCollection
-  - url: collections/momence.opencollection.json
-    type: OpenCollection
-  description: OAuth2 authorization and token endpoints for the Momence Public API.
-    Supports the authorization code grant (redirecting customers to a Momence login
-    screen), the password grant for staff automation, and refresh tokens, plus
-    endpoints to fetch the logged-in user profile and log out. Public API clients
-    (client_id / client_secret) are created in the Momence dashboard.
-- aid: momence:momence-host-members-api
-  name: Momence Host Members API
   tags:
-  - Members
-  - Customers
-  - CRM
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://api.docs.momence.com/reference/apiv2hostmemberscontroller_list
-  baseURL: https://api.momence.com/api/v2
+  - auth
   properties:
-  - url: https://api.docs.momence.com/docs/terminology
-    type: Documentation
-  - url: https://api.docs.momence.com/reference/apiv2hostmemberscontroller_list
-    type: APIReference
-  - url: openapi/momence-openapi.yml
-    type: OpenAPI
-  - url: collections/momence.postman_collection.json
-    type: PostmanCollection
-  - url: collections/momence.opencollection.json
-    type: OpenCollection
-  description: Staff-side management of the members (customers) in a Momence host -
-    list and filter members, create members, retrieve a member, update name, email,
-    and phone number, read and manage member notes, and assign or unassign tags for
-    segmentation and access control.
-- aid: momence:momence-host-sessions-api
-  name: Momence Host Sessions & Bookings API
+  - type: OpenAPI
+    url: openapi/momence-auth-api-openapi.yml
+  - type: Documentation
+    url: https://api.docs.momence.com/docs/authorization
+  - type: APIReference
+    url: https://api.docs.momence.com/docs/getting-started
+  - type: PostmanCollection
+    url: collections/momence.postman_collection.json
+  - type: OpenCollection
+    url: collections/momence.opencollection.json
+  - type: Documentation
+    url: https://api.docs.momence.com/docs/terminology
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostmemberscontroller_list
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostsessionscontroller_getsessions
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostmembershipscontroller_list
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostcheckoutcontroller_post
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2membercontroller_get
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2memberhostsessionscontroller_list
+- aid: momence:momence-host-api
+  name: Momence host API
+  description: The host API from Momence — 29 operation(s) for host.
+  humanURL: https://api.docs.momence.com/docs/authorization
+  baseURL: https://api.momence.com/api/v2
   tags:
-  - Sessions
-  - Classes
-  - Bookings
-  - Waitlist
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://api.docs.momence.com/reference/apiv2hostsessionscontroller_getsessions
-  baseURL: https://api.momence.com/api/v2
+  - host
   properties:
-  - url: https://api.docs.momence.com/reference/apiv2hostsessionscontroller_getsessions
-    type: APIReference
-  - url: openapi/momence-openapi.yml
-    type: OpenAPI
-  - url: collections/momence.postman_collection.json
-    type: PostmanCollection
-  - url: collections/momence.opencollection.json
-    type: OpenCollection
-  description: Staff-side scheduling surface - list sessions (classes) and retrieve
-    session detail, list a session's bookings, add a member to a session for free or
-    to its waitlist, mark a booking checked-in or not, and cancel individual or
-    recurring session bookings.
-- aid: momence:momence-host-memberships-api
-  name: Momence Host Memberships API
+  - type: OpenAPI
+    url: openapi/momence-host-api-openapi.yml
+  - type: Documentation
+    url: https://api.docs.momence.com/docs/authorization
+  - type: APIReference
+    url: https://api.docs.momence.com/docs/getting-started
+  - type: PostmanCollection
+    url: collections/momence.postman_collection.json
+  - type: OpenCollection
+    url: collections/momence.opencollection.json
+  - type: Documentation
+    url: https://api.docs.momence.com/docs/terminology
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostmemberscontroller_list
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostsessionscontroller_getsessions
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostmembershipscontroller_list
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostcheckoutcontroller_post
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2membercontroller_get
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2memberhostsessionscontroller_list
+- aid: momence:momence-host-checkout-api
+  name: Momence host-checkout API
+  description: The host-checkout API from Momence — 3 operation(s) for host-checkout.
+  humanURL: https://api.docs.momence.com/docs/authorization
+  baseURL: https://api.momence.com/api/v2
   tags:
-  - Memberships
-  - Subscriptions
-  - Packages
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://api.docs.momence.com/reference/apiv2hostmembershipscontroller_list
-  baseURL: https://api.momence.com/api/v2
+  - host-checkout
   properties:
-  - url: https://api.docs.momence.com/reference/apiv2hostmembershipscontroller_list
-    type: APIReference
-  - url: openapi/momence-openapi.yml
-    type: OpenAPI
-  - url: collections/momence.postman_collection.json
-    type: PostmanCollection
-  - url: collections/momence.opencollection.json
-    type: OpenCollection
-  description: Manage the membership products a host sells and the memberships a member
-    has bought - list available host memberships, list a member's active subscriptions
-    and packs, adjust class credits, and freeze, schedule freeze/unfreeze, or unfreeze
-    a member's bought membership.
-- aid: momence:momence-host-checkout-sales-api
-  name: Momence Host Checkout & Sales API
+  - type: OpenAPI
+    url: openapi/momence-host-checkout-api-openapi.yml
+  - type: Documentation
+    url: https://api.docs.momence.com/docs/authorization
+  - type: APIReference
+    url: https://api.docs.momence.com/docs/getting-started
+  - type: PostmanCollection
+    url: collections/momence.postman_collection.json
+  - type: OpenCollection
+    url: collections/momence.opencollection.json
+  - type: Documentation
+    url: https://api.docs.momence.com/docs/terminology
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostmemberscontroller_list
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostsessionscontroller_getsessions
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostmembershipscontroller_list
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostcheckoutcontroller_post
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2membercontroller_get
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2memberhostsessionscontroller_list
+- aid: momence:momence-member-addresses-api
+  name: Momence member-addresses API
+  description: The member-addresses API from Momence — 2 operation(s) for member-addresses.
+  humanURL: https://api.docs.momence.com/docs/authorization
+  baseURL: https://api.momence.com/api/v2
   tags:
-  - Checkout
-  - Payments
-  - Sales
-  - Reports
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://api.docs.momence.com/reference/apiv2hostcheckoutcontroller_post
-  baseURL: https://api.momence.com/api/v2
+  - member-addresses
   properties:
-  - url: https://api.docs.momence.com/reference/apiv2hostcheckoutcontroller_post
-    type: APIReference
-  - url: openapi/momence-openapi.yml
-    type: OpenAPI
-  - url: collections/momence.postman_collection.json
-    type: PostmanCollection
-  - url: collections/momence.opencollection.json
-    type: OpenCollection
-  description: Staff-side commerce and reporting - resolve compatible memberships and
-    prices for a cart, perform checkout on behalf of a member (buy a session with a
-    subscription or a saved payment method, or buy a membership), list sales, manage
-    appointment reservations, and run and retrieve host reports.
-- aid: momence:momence-member-account-api
-  name: Momence Member Account API
+  - type: OpenAPI
+    url: openapi/momence-member-addresses-api-openapi.yml
+  - type: Documentation
+    url: https://api.docs.momence.com/docs/authorization
+  - type: APIReference
+    url: https://api.docs.momence.com/docs/getting-started
+  - type: PostmanCollection
+    url: collections/momence.postman_collection.json
+  - type: OpenCollection
+    url: collections/momence.opencollection.json
+  - type: Documentation
+    url: https://api.docs.momence.com/docs/terminology
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostmemberscontroller_list
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostsessionscontroller_getsessions
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostmembershipscontroller_list
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostcheckoutcontroller_post
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2membercontroller_get
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2memberhostsessionscontroller_list
+- aid: momence:momence-member-api
+  name: Momence member API
+  description: The member API from Momence — 11 operation(s) for member.
+  humanURL: https://api.docs.momence.com/docs/authorization
+  baseURL: https://api.momence.com/api/v2
   tags:
-  - Member
-  - Profile
-  - Addresses
-  - Payment Methods
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://api.docs.momence.com/reference/apiv2membercontroller_get
-  baseURL: https://api.momence.com/api/v2
+  - member
   properties:
-  - url: https://api.docs.momence.com/reference/apiv2membercontroller_get
-    type: APIReference
-  - url: openapi/momence-openapi.yml
-    type: OpenAPI
-  - url: collections/momence.postman_collection.json
-    type: PostmanCollection
-  - url: collections/momence.opencollection.json
-    type: OpenCollection
-  description: Customer-scoped account management for the logged-in member - read and
-    update member info, email, and phone number, request a password-reset email, list
-    visits, CRUD member addresses, list a member's active memberships and manage
-    their freeze schedule, and save, list, and remove payment methods.
-- aid: momence:momence-member-booking-api
-  name: Momence Member Booking API
+  - type: OpenAPI
+    url: openapi/momence-member-api-openapi.yml
+  - type: Documentation
+    url: https://api.docs.momence.com/docs/authorization
+  - type: APIReference
+    url: https://api.docs.momence.com/docs/getting-started
+  - type: PostmanCollection
+    url: collections/momence.postman_collection.json
+  - type: OpenCollection
+    url: collections/momence.opencollection.json
+  - type: Documentation
+    url: https://api.docs.momence.com/docs/terminology
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostmemberscontroller_list
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostsessionscontroller_getsessions
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostmembershipscontroller_list
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostcheckoutcontroller_post
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2membercontroller_get
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2memberhostsessionscontroller_list
+- aid: momence:momence-member-checkout-api
+  name: Momence member-checkout API
+  description: The member-checkout API from Momence — 3 operation(s) for member-checkout.
+  humanURL: https://api.docs.momence.com/docs/authorization
+  baseURL: https://api.momence.com/api/v2
   tags:
-  - Booking
-  - Sessions
-  - Checkout
-  - Documents
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://api.docs.momence.com/reference/apiv2memberhostsessionscontroller_list
-  baseURL: https://api.momence.com/api/v2
+  - member-checkout
   properties:
-  - url: https://api.docs.momence.com/reference/apiv2memberhostsessionscontroller_list
-    type: APIReference
-  - url: openapi/momence-openapi.yml
-    type: OpenAPI
-  - url: collections/momence.postman_collection.json
-    type: PostmanCollection
-  - url: collections/momence.opencollection.json
-    type: OpenCollection
-  description: Customer-facing booking flow - browse a host's available locations,
-    memberships, and sessions, resolve compatible memberships and prices, perform
-    checkout to buy or book a session, list and cancel the member's own session
-    bookings, and read and sign required signable documents (waivers and contracts).
+  - type: OpenAPI
+    url: openapi/momence-member-checkout-api-openapi.yml
+  - type: Documentation
+    url: https://api.docs.momence.com/docs/authorization
+  - type: APIReference
+    url: https://api.docs.momence.com/docs/getting-started
+  - type: PostmanCollection
+    url: collections/momence.postman_collection.json
+  - type: OpenCollection
+    url: collections/momence.opencollection.json
+  - type: Documentation
+    url: https://api.docs.momence.com/docs/terminology
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostmemberscontroller_list
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostsessionscontroller_getsessions
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostmembershipscontroller_list
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostcheckoutcontroller_post
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2membercontroller_get
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2memberhostsessionscontroller_list
+- aid: momence:momence-member-host-api
+  name: Momence member-host API
+  description: The member-host API from Momence — 5 operation(s) for member-host.
+  humanURL: https://api.docs.momence.com/docs/authorization
+  baseURL: https://api.momence.com/api/v2
+  tags:
+  - member-host
+  properties:
+  - type: OpenAPI
+    url: openapi/momence-member-host-api-openapi.yml
+  - type: Documentation
+    url: https://api.docs.momence.com/docs/authorization
+  - type: APIReference
+    url: https://api.docs.momence.com/docs/getting-started
+  - type: PostmanCollection
+    url: collections/momence.postman_collection.json
+  - type: OpenCollection
+    url: collections/momence.opencollection.json
+  - type: Documentation
+    url: https://api.docs.momence.com/docs/terminology
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostmemberscontroller_list
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostsessionscontroller_getsessions
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostmembershipscontroller_list
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostcheckoutcontroller_post
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2membercontroller_get
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2memberhostsessionscontroller_list
+- aid: momence:momence-member-sessions-api
+  name: Momence member-sessions API
+  description: The member-sessions API from Momence — 2 operation(s) for member-sessions.
+  humanURL: https://api.docs.momence.com/docs/authorization
+  baseURL: https://api.momence.com/api/v2
+  tags:
+  - member-sessions
+  properties:
+  - type: OpenAPI
+    url: openapi/momence-member-sessions-api-openapi.yml
+  - type: Documentation
+    url: https://api.docs.momence.com/docs/authorization
+  - type: APIReference
+    url: https://api.docs.momence.com/docs/getting-started
+  - type: PostmanCollection
+    url: collections/momence.postman_collection.json
+  - type: OpenCollection
+    url: collections/momence.opencollection.json
+  - type: Documentation
+    url: https://api.docs.momence.com/docs/terminology
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostmemberscontroller_list
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostsessionscontroller_getsessions
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostmembershipscontroller_list
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2hostcheckoutcontroller_post
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2membercontroller_get
+  - type: APIReference
+    url: https://api.docs.momence.com/reference/apiv2memberhostsessionscontroller_list
 common:
 - type: AgenticAccess
   url: agentic-access/momence-agentic-access.yml
