@@ -1,0 +1,28 @@
+{
+  "provider": "momence",
+  "sources": [
+    "momence-auth-api-openapi.yml",
+    "momence-host-api-openapi.yml",
+    "momence-host-checkout-api-openapi.yml",
+    "momence-member-addresses-api-openapi.yml",
+    "momence-member-api-openapi.yml",
+    "momence-member-checkout-api-openapi.yml",
+    "momence-member-host-api-openapi.yml",
+    "momence-member-sessions-api-openapi.yml"
+  ],
+  "outputs": [
+    "momence-auth-api-openapi.yml",
+    "momence-host-api-openapi.yml",
+    "momence-host-checkout-api-openapi.yml",
+    "momence-member-addresses-api-openapi.yml",
+    "momence-member-api-openapi.yml",
+    "momence-member-checkout-api-openapi.yml",
+    "momence-member-host-api-openapi.yml",
+    "momence-member-sessions-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
