@@ -1,0 +1,761 @@
+{
+  "item": [
+    {
+      "id": "c5b28622-5573-4f6e-9f02-3f80115070bd",
+      "name": "member-host",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3cc5b187-6854-4fea-a9af-a1f0f2e52ea1",
+          "name": "Get available host locations",
+          "request": {
+            "name": "Get available host locations",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "member",
+                "host",
+                "locations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "(Required) Starts at 0"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "sortOrder",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortBy",
+                  "value": "<string>",
+                  "description": "Field to sort by"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "05b0eb65-464c-42ea-a930-c2383373687e",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "member",
+                    "host",
+                    "locations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortOrder",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pagination\": {\n    \"page\": 0,\n    \"pageSize\": 10,\n    \"totalCount\": 1,\n    \"sortBy\": \"string\",\n    \"sortOrder\": \"ASC\"\n  },\n  \"payload\": [\n    {\n      \"id\": 5,\n      \"parentLocationId\": null,\n      \"name\": \"Brooklyn Location\",\n      \"timeZone\": \"America/New_York\",\n      \"fullAddress\": \"96 North Country Club Street, Brooklyn, NY 11233\",\n      \"address\": \"96 North Country Club Street\",\n      \"city\": \"Brooklyn\",\n      \"countryCode\": \"NY\",\n      \"zipCode\": \"11233\",\n      \"latitude\": 40.6453448,\n      \"longitude\": -74.0275687,\n      \"isPhysical\": true\n    },\n    {\n      \"id\": 5,\n      \"parentLocationId\": null,\n      \"name\": \"Brooklyn Location\",\n      \"timeZone\": \"America/New_York\",\n      \"fullAddress\": \"96 North Country Club Street, Brooklyn, NY 11233\",\n      \"address\": \"96 North Country Club Street\",\n      \"city\": \"Brooklyn\",\n      \"countryCode\": \"NY\",\n      \"zipCode\": \"11233\",\n      \"latitude\": 40.6453448,\n      \"longitude\": -74.0275687,\n      \"isPhysical\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7ea2cbef-5be8-49ee-809b-e69e7bcfc929",
+          "name": "Get available host memberships",
+          "request": {
+            "name": "Get available host memberships",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "member",
+                "host",
+                "memberships"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "(Required) Starts at 0"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "sortOrder",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortBy",
+                  "value": "<string>",
+                  "description": "Field to sort by"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeDisabled",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "onlyFeatured",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "compatibleWithSessionId",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "compatibleWithAppointmentId",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c037759b-4637-429e-8e62-d8c0de26ae8a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "member",
+                    "host",
+                    "memberships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortOrder",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeDisabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "onlyFeatured",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "compatibleWithSessionId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "compatibleWithAppointmentId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pagination\": {\n    \"page\": 0,\n    \"pageSize\": 10,\n    \"totalCount\": 1,\n    \"sortBy\": \"string\",\n    \"sortOrder\": \"ASC\"\n  },\n  \"payload\": [\n    {\n      \"id\": 5,\n      \"name\": \"Monthly Membership\",\n      \"description\": \"Monthly membership with unlimited access to <b>all</b> classes.\",\n      \"type\": \"subscription\",\n      \"locationId\": null,\n      \"disabled\": false,\n      \"autoRenewing\": true,\n      \"minimumAutoRenews\": null,\n      \"eventCredits\": null,\n      \"moneyCredits\": null,\n      \"duration\": 1,\n      \"durationUnit\": \"months\",\n      \"isActivatedOnFirstUse\": false,\n      \"activationDeadlineInDays\": 21,\n      \"hasFreeTrial\": false,\n      \"freeTrialDurationInDays\": 7,\n      \"contractAgreement\": \"Contract agreement text\",\n      \"order\": 1,\n      \"isIntroOffer\": false,\n      \"usageLimitForSessions\": 5,\n      \"usageLimitForAppointments\": 2,\n      \"combinedUsageLimitEnabled\": false,\n      \"combinedUsageLimit\": null,\n      \"usageLimitRenewalEnabled\": false,\n      \"usageLimitRenewalDuration\": null,\n      \"usageLimitRenewalDurationUnit\": \"days\",\n      \"usageLimitRolloverEnabled\": false,\n      \"usageLimitRolloverMode\": \"event-credits\",\n      \"usageLimitRolloverExpirationDuration\": null,\n      \"usageLimitRolloverExpirationDurationUnit\": \"months\",\n      \"startDate\": \"2022-01-01T00:00:00Z\",\n      \"endDate\": \"2022-02-01T00:00:00Z\",\n      \"featured\": false,\n      \"priceType\": \"fixed-price\",\n      \"price\": 955,\n      \"minimumPrice\": null,\n      \"maximumPrice\": null,\n      \"recommendedPrice\": null,\n      \"priceIncludesTax\": true,\n      \"taxRateInPercent\": 20,\n      \"freeTrialPrice\": 199,\n      \"tags\": [\n        {\n          \"id\": 1,\n          \"name\": \"VIP\",\n          \"isCustomerBadge\": false,\n          \"badgeLabel\": \"VIP\",\n          \"badgeColor\": \"#fe0000\",\n          \"corporateTagId\": 1\n        },\n        {\n          \"id\": 1,\n          \"name\": \"VIP\",\n          \"isCustomerBadge\": false,\n          \"badgeLabel\": \"VIP\",\n          \"badgeColor\": \"#fe0000\",\n          \"corporateTagId\": 1\n        }\n      ]\n    },\n    {\n      \"id\": 5,\n      \"name\": \"Monthly Membership\",\n      \"description\": \"Monthly membership with unlimited access to <b>all</b> classes.\",\n      \"type\": \"subscription\",\n      \"locationId\": null,\n      \"disabled\": false,\n      \"autoRenewing\": true,\n      \"minimumAutoRenews\": null,\n      \"eventCredits\": null,\n      \"moneyCredits\": null,\n      \"duration\": 1,\n      \"durationUnit\": \"months\",\n      \"isActivatedOnFirstUse\": false,\n      \"activationDeadlineInDays\": 21,\n      \"hasFreeTrial\": false,\n      \"freeTrialDurationInDays\": 7,\n      \"contractAgreement\": \"Contract agreement text\",\n      \"order\": 1,\n      \"isIntroOffer\": false,\n      \"usageLimitForSessions\": 5,\n      \"usageLimitForAppointments\": 2,\n      \"combinedUsageLimitEnabled\": false,\n      \"combinedUsageLimit\": null,\n      \"usageLimitRenewalEnabled\": false,\n      \"usageLimitRenewalDuration\": null,\n      \"usageLimitRenewalDurationUnit\": \"days\",\n      \"usageLimitRolloverEnabled\": false,\n      \"usageLimitRolloverMode\": \"next-renewal\",\n      \"usageLimitRolloverExpirationDuration\": null,\n      \"usageLimitRolloverExpirationDurationUnit\": \"years\",\n      \"startDate\": \"2022-01-01T00:00:00Z\",\n      \"endDate\": \"2022-02-01T00:00:00Z\",\n      \"featured\": false,\n      \"priceType\": \"fixed-price\",\n      \"price\": 955,\n      \"minimumPrice\": null,\n      \"maximumPrice\": null,\n      \"recommendedPrice\": null,\n      \"priceIncludesTax\": true,\n      \"taxRateInPercent\": 20,\n      \"freeTrialPrice\": 199,\n      \"tags\": [\n        {\n          \"id\": 1,\n          \"name\": \"VIP\",\n          \"isCustomerBadge\": false,\n          \"badgeLabel\": \"VIP\",\n          \"badgeColor\": \"#fe0000\",\n          \"corporateTagId\": 1\n        },\n        {\n          \"id\": 1,\n          \"name\": \"VIP\",\n          \"isCustomerBadge\": false,\n          \"badgeLabel\": \"VIP\",\n          \"badgeColor\": \"#fe0000\",\n          \"corporateTagId\": 1\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a8fdc035-c47f-4b80-bc77-05b7625bb44d",
+          "name": "Get available host sessions",
+          "request": {
+            "name": "Get available host sessions",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "member",
+                "host",
+                "sessions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "(Required) Starts at 0"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "sortOrder",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortBy",
+                  "value": "<string>",
+                  "description": "Field to sort by"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeCancelled",
+                  "value": "<boolean>",
+                  "description": "also include cancelled sessions"
+                },
+                {
+                  "disabled": false,
+                  "key": "types",
+                  "value": "<string>",
+                  "description": "only return specified session types"
+                },
+                {
+                  "disabled": false,
+                  "key": "types",
+                  "value": "<string>",
+                  "description": "only return specified session types"
+                },
+                {
+                  "disabled": false,
+                  "key": "teacherId",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "locationId",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "startAfter",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "startBefore",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "endAfter",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "endBefore",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "015614f0-9689-4bcb-b286-e5a87305717f",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "member",
+                    "host",
+                    "sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortOrder",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeCancelled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "types",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teacherId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "locationId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "startAfter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startBefore",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endAfter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endBefore",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pagination\": {\n    \"page\": 0,\n    \"pageSize\": 10,\n    \"totalCount\": 1,\n    \"sortBy\": \"string\",\n    \"sortOrder\": \"DESC\"\n  },\n  \"payload\": [\n    {\n      \"id\": 3,\n      \"name\": \"Stretching with John\",\n      \"type\": \"fitness\",\n      \"description\": \"Our stretching class is a great way to start your day.\",\n      \"startsAt\": \"2021-01-01T05:00:00Z\",\n      \"endsAt\": \"2021-01-01T06:00:00Z\",\n      \"durationInMinutes\": 60,\n      \"capacity\": 10,\n      \"participants\": 1,\n      \"waitlistEnabled\": true,\n      \"waitlistCapacity\": 5,\n      \"salesCutoffInMinutes\": 10,\n      \"isCancelled\": false,\n      \"priceType\": \"fixed-price\",\n      \"fixedTicketPrice\": 955,\n      \"dynamicTicketPriceMin\": null,\n      \"dynamicTicketPriceMax\": null,\n      \"dynamicTicketFreeOptionEnabled\": null,\n      \"teacher\": {\n        \"id\": 1,\n        \"firstName\": \"John\",\n        \"lastName\": \"Doe\",\n        \"pictureUrl\": \"https://example.com/picture.jpg\"\n      },\n      \"originalTeacher\": {\n        \"id\": 1,\n        \"firstName\": \"John\",\n        \"lastName\": \"Doe\",\n        \"pictureUrl\": \"https://example.com/picture.jpg\"\n      },\n      \"additionalTeachers\": [\n        {\n          \"id\": 1,\n          \"firstName\": \"John\",\n          \"lastName\": \"Doe\",\n          \"pictureUrl\": \"https://example.com/picture.jpg\"\n        },\n        {\n          \"id\": 1,\n          \"firstName\": \"John\",\n          \"lastName\": \"Doe\",\n          \"pictureUrl\": \"https://example.com/picture.jpg\"\n        }\n      ],\n      \"isRecurring\": false,\n      \"isInPerson\": false,\n      \"inPersonLocation\": {\n        \"id\": 1,\n        \"name\": \"Main Studio\"\n      },\n      \"bannerImageUrl\": \"https://example.com/image.jpg\",\n      \"hostPhotoUrl\": \"https://example.com/image.jpg\",\n      \"onlineStreamUrl\": \"https://example.com/online-stream\",\n      \"onlineStreamPassword\": \"password123\"\n    },\n    {\n      \"id\": 3,\n      \"name\": \"Stretching with John\",\n      \"type\": \"fitness\",\n      \"description\": \"Our stretching class is a great way to start your day.\",\n      \"startsAt\": \"2021-01-01T05:00:00Z\",\n      \"endsAt\": \"2021-01-01T06:00:00Z\",\n      \"durationInMinutes\": 60,\n      \"capacity\": 10,\n      \"participants\": 1,\n      \"waitlistEnabled\": true,\n      \"waitlistCapacity\": 5,\n      \"salesCutoffInMinutes\": 10,\n      \"isCancelled\": false,\n      \"priceType\": \"fixed-price\",\n      \"fixedTicketPrice\": 955,\n      \"dynamicTicketPriceMin\": null,\n      \"dynamicTicketPriceMax\": null,\n      \"dynamicTicketFreeOptionEnabled\": null,\n      \"teacher\": {\n        \"id\": 1,\n        \"firstName\": \"John\",\n        \"lastName\": \"Doe\",\n        \"pictureUrl\": \"https://example.com/picture.jpg\"\n      },\n      \"originalTeacher\": {\n        \"id\": 1,\n        \"firstName\": \"John\",\n        \"lastName\": \"Doe\",\n        \"pictureUrl\": \"https://example.com/picture.jpg\"\n      },\n      \"additionalTeachers\": [\n        {\n          \"id\": 1,\n          \"firstName\": \"John\",\n          \"lastName\": \"Doe\",\n          \"pictureUrl\": \"https://example.com/picture.jpg\"\n        },\n        {\n          \"id\": 1,\n          \"firstName\": \"John\",\n          \"lastName\": \"Doe\",\n          \"pictureUrl\": \"https://example.com/picture.jpg\"\n        }\n      ],\n      \"isRecurring\": false,\n      \"isInPerson\": false,\n      \"inPersonLocation\": {\n        \"id\": 1,\n        \"name\": \"Main Studio\"\n      },\n      \"bannerImageUrl\": \"https://example.com/image.jpg\",\n      \"hostPhotoUrl\": \"https://example.com/image.jpg\",\n      \"onlineStreamUrl\": \"https://example.com/online-stream\",\n      \"onlineStreamPassword\": \"password123\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5a6a275e-ef42-4770-ae20-01e926b80f5c",
+          "name": "Returns signable documents (waivers, privacy policy, contracts...) with signature status",
+          "request": {
+            "name": "Returns signable documents (waivers, privacy policy, contracts...) with signature status",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "member",
+                "host",
+                "signable-documents"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e9a10a99-fecb-4787-8106-c43f77d89510",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "member",
+                    "host",
+                    "signable-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"documents\": [\n    {\n      \"type\": \"predefinedWaiver\",\n      \"name\": \"string\",\n      \"content\": \"string\",\n      \"signedAt\": \"1991-10-24T22:37:23.114Z\",\n      \"signatureStatus\": \"signed\",\n      \"predefinedWaiverType\": \"membership-waiver\",\n      \"customWaiverId\": 6548,\n      \"simpleSignature\": \"string\",\n      \"handwrittenSignature\": {\n        \"paths\": [\n          {\n            \"points\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"points\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      }\n    },\n    {\n      \"type\": \"customWaiver\",\n      \"name\": \"string\",\n      \"content\": \"string\",\n      \"signedAt\": \"1992-11-12T04:00:22.219Z\",\n      \"signatureStatus\": \"signature-expired\",\n      \"predefinedWaiverType\": \"waiver\",\n      \"customWaiverId\": 2320,\n      \"simpleSignature\": \"string\",\n      \"handwrittenSignature\": {\n        \"paths\": [\n          {\n            \"points\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"points\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "382a3206-38e5-4b5a-a745-ca5c63e05905",
+          "name": "Signs one or multiple signable documents (waivers, privacy policy, contracts...) using one signature",
+          "request": {
+            "name": "Signs one or multiple signable documents (waivers, privacy policy, contracts...) using one signature",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "member",
+                "host",
+                "signable-documents",
+                "sign"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customWaiverIdsToSign\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"predefinedWaiverTypesToSign\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"simpleSignature\": \"<string>\",\n  \"handwrittenSignature\": {\n    \"paths\": [\n      {\n        \"points\": [\n          {\n            \"x\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"y\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"x\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"y\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      {\n        \"points\": [\n          {\n            \"x\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"y\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"x\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"y\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "31e14d5b-8000-4646-8210-3df26cb06344",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "member",
+                    "host",
+                    "signable-documents",
+                    "sign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customWaiverIdsToSign\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"predefinedWaiverTypesToSign\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"simpleSignature\": \"<string>\",\n  \"handwrittenSignature\": {\n    \"paths\": [\n      {\n        \"points\": [\n          {\n            \"x\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"y\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"x\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"y\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      {\n        \"points\": [\n          {\n            \"x\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"y\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"x\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"y\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.momence.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "accessTokenUrl",
+        "value": "/api/v2/auth/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "password_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7d010e16-3a12-4014-9204-4665b68f6629",
+    "name": "Momence Public auth member-host API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

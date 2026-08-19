@@ -1,0 +1,1797 @@
+{
+  "item": [
+    {
+      "id": "f7ec3637-7d75-46bb-9c2a-399756e45d14",
+      "name": "member",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2a407217-9230-4ff8-9e8c-93dd0b5c3411",
+          "name": "Get member active memberships",
+          "request": {
+            "name": "Get member active memberships",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "member",
+                "bought-memberships",
+                "active"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "(Required) Starts at 0"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "includeFrozen",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c331d222-8902-474a-a332-ad794725ed8a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "member",
+                    "bought-memberships",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "10"
+                    },
+                    {
+                      "key": "includeFrozen",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pagination\": {\n    \"page\": 0,\n    \"pageSize\": 10,\n    \"totalCount\": 1,\n    \"sortBy\": \"string\",\n    \"sortOrder\": \"DESC\"\n  },\n  \"payload\": [\n    {\n      \"id\": 1,\n      \"type\": \"subscription\",\n      \"startDate\": \"2021-01-01T00:00:00Z\",\n      \"endDate\": \"2021-02-01T00:00:00Z\",\n      \"isFrozen\": false,\n      \"eventCreditsLeft\": null,\n      \"eventCreditsTotal\": null,\n      \"moneyCreditsLeft\": null,\n      \"moneyCreditsTotal\": null,\n      \"usageLimitForSessions\": 5,\n      \"usageLimitForAppointments\": 3,\n      \"combinedUsageLimit\": null,\n      \"usedSessions\": 1,\n      \"usedAppointments\": 2,\n      \"combinedUsage\": null,\n      \"usageLimitStartDate\": null,\n      \"usageLimitEndDate\": null,\n      \"membership\": {\n        \"id\": 5,\n        \"name\": \"Monthly Membership\",\n        \"description\": \"Monthly membership with unlimited access to <b>all</b> classes.\",\n        \"type\": \"subscription\",\n        \"locationId\": null,\n        \"disabled\": false,\n        \"autoRenewing\": true,\n        \"minimumAutoRenews\": null,\n        \"eventCredits\": null,\n        \"moneyCredits\": null,\n        \"duration\": 1,\n        \"durationUnit\": \"months\",\n        \"isActivatedOnFirstUse\": false,\n        \"activationDeadlineInDays\": 21,\n        \"hasFreeTrial\": false,\n        \"freeTrialDurationInDays\": 7,\n        \"contractAgreement\": \"Contract agreement text\",\n        \"order\": 1,\n        \"isIntroOffer\": false,\n        \"usageLimitForSessions\": 5,\n        \"usageLimitForAppointments\": 2,\n        \"combinedUsageLimitEnabled\": false,\n        \"combinedUsageLimit\": null,\n        \"usageLimitRenewalEnabled\": false,\n        \"usageLimitRenewalDuration\": null,\n        \"usageLimitRenewalDurationUnit\": \"days\",\n        \"usageLimitRolloverEnabled\": false,\n        \"usageLimitRolloverMode\": \"event-credits\",\n        \"usageLimitRolloverExpirationDuration\": null,\n        \"usageLimitRolloverExpirationDurationUnit\": \"days\"\n      },\n      \"freeze\": {\n        \"freezedAt\": \"1964-04-25T16:24:32.189Z\",\n        \"unfreezedScheduledAt\": \"2003-09-04T13:30:11.317Z\",\n        \"unfrozenAt\": \"1951-03-31T11:15:46.247Z\",\n        \"remainingFreezedMinutes\": 7396,\n        \"scheduledFreezeAt\": \"2002-03-20T05:34:59.277Z\"\n      },\n      \"declinedRenewal\": {\n        \"declinedAt\": \"2001-11-15T03:24:01.018Z\",\n        \"cardLast4\": \"string\"\n      }\n    },\n    {\n      \"id\": 1,\n      \"type\": \"subscription\",\n      \"startDate\": \"2021-01-01T00:00:00Z\",\n      \"endDate\": \"2021-02-01T00:00:00Z\",\n      \"isFrozen\": false,\n      \"eventCreditsLeft\": null,\n      \"eventCreditsTotal\": null,\n      \"moneyCreditsLeft\": null,\n      \"moneyCreditsTotal\": null,\n      \"usageLimitForSessions\": 5,\n      \"usageLimitForAppointments\": 3,\n      \"combinedUsageLimit\": null,\n      \"usedSessions\": 1,\n      \"usedAppointments\": 2,\n      \"combinedUsage\": null,\n      \"usageLimitStartDate\": null,\n      \"usageLimitEndDate\": null,\n      \"membership\": {\n        \"id\": 5,\n        \"name\": \"Monthly Membership\",\n        \"description\": \"Monthly membership with unlimited access to <b>all</b> classes.\",\n        \"type\": \"subscription\",\n        \"locationId\": null,\n        \"disabled\": false,\n        \"autoRenewing\": true,\n        \"minimumAutoRenews\": null,\n        \"eventCredits\": null,\n        \"moneyCredits\": null,\n        \"duration\": 1,\n        \"durationUnit\": \"months\",\n        \"isActivatedOnFirstUse\": false,\n        \"activationDeadlineInDays\": 21,\n        \"hasFreeTrial\": false,\n        \"freeTrialDurationInDays\": 7,\n        \"contractAgreement\": \"Contract agreement text\",\n        \"order\": 1,\n        \"isIntroOffer\": false,\n        \"usageLimitForSessions\": 5,\n        \"usageLimitForAppointments\": 2,\n        \"combinedUsageLimitEnabled\": false,\n        \"combinedUsageLimit\": null,\n        \"usageLimitRenewalEnabled\": false,\n        \"usageLimitRenewalDuration\": null,\n        \"usageLimitRenewalDurationUnit\": \"months\",\n        \"usageLimitRolloverEnabled\": false,\n        \"usageLimitRolloverMode\": \"event-credits\",\n        \"usageLimitRolloverExpirationDuration\": null,\n        \"usageLimitRolloverExpirationDurationUnit\": \"days\"\n      },\n      \"freeze\": {\n        \"freezedAt\": \"1972-01-12T04:12:57.590Z\",\n        \"unfreezedScheduledAt\": \"2006-07-13T23:31:25.738Z\",\n        \"unfrozenAt\": \"1987-05-27T19:32:13.063Z\",\n        \"remainingFreezedMinutes\": 9340,\n        \"scheduledFreezeAt\": \"1983-01-01T00:33:54.380Z\"\n      },\n      \"declinedRenewal\": {\n        \"declinedAt\": \"1977-08-17T19:42:05.557Z\",\n        \"cardLast4\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "58d0b202-813a-47ae-8167-c89e8bb71cba",
+          "name": "Freeze bought membership immediately or schedule freeze/unfreeze",
+          "request": {
+            "name": "Freeze bought membership immediately or schedule freeze/unfreeze",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "member",
+                "bought-memberships",
+                ":boughtMembershipId",
+                "membership-freeze"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "boughtMembershipId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"freezeType\": \"<string>\",\n  \"freezeAt\": \"<dateTime>\",\n  \"unfreezeType\": \"<string>\",\n  \"unfreezeAt\": \"<dateTime>\",\n  \"reason\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "278284d5-c5b6-4c74-8ec7-e58a87f84f42",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "member",
+                    "bought-memberships",
+                    ":boughtMembershipId",
+                    "membership-freeze"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "boughtMembershipId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"freezeType\": \"<string>\",\n  \"freezeAt\": \"<dateTime>\",\n  \"unfreezeType\": \"<string>\",\n  \"unfreezeAt\": \"<dateTime>\",\n  \"reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "19a15642-3ae1-4636-95a8-aef73a2a5ebd",
+          "name": "Schedule bought membership freeze",
+          "request": {
+            "name": "Schedule bought membership freeze",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "member",
+                "bought-memberships",
+                ":boughtMembershipId",
+                "membership-schedule-freeze"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "boughtMembershipId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"freezeType\": \"<string>\",\n  \"freezeAt\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "65a7300d-ba82-4b94-9d74-958162aa0a1a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "member",
+                    "bought-memberships",
+                    ":boughtMembershipId",
+                    "membership-schedule-freeze"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "boughtMembershipId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"freezeType\": \"<string>\",\n  \"freezeAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e77aa9c4-cc6f-4075-b673-6a4d6cb0a80b",
+          "name": "Unfreeze bought membership or remove scheduled freeze",
+          "request": {
+            "name": "Unfreeze bought membership or remove scheduled freeze",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "member",
+                "bought-memberships",
+                ":boughtMembershipId",
+                "membership-schedule-freeze"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "boughtMembershipId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ae07277d-66c4-42b7-b267-f18a0f9c8152",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "member",
+                    "bought-memberships",
+                    ":boughtMembershipId",
+                    "membership-schedule-freeze"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "boughtMembershipId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cd171be7-8b1d-4daf-89d1-59e0a72207ce",
+          "name": "Schedule bought membership unfreeze",
+          "request": {
+            "name": "Schedule bought membership unfreeze",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "member",
+                "bought-memberships",
+                ":boughtMembershipId",
+                "membership-schedule-unfreeze"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "boughtMembershipId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"unfreezeType\": \"<string>\",\n  \"unfreezeAt\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "96dbf0d6-e5d9-4eab-b0c9-f7bd15e2fbcd",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "member",
+                    "bought-memberships",
+                    ":boughtMembershipId",
+                    "membership-schedule-unfreeze"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "boughtMembershipId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"unfreezeType\": \"<string>\",\n  \"unfreezeAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "291d0fc9-575b-45c0-afcd-30a3e31b9b96",
+          "name": "Remove bought membership scheduled unfreeze",
+          "request": {
+            "name": "Remove bought membership scheduled unfreeze",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "member",
+                "bought-memberships",
+                ":boughtMembershipId",
+                "membership-schedule-unfreeze"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "boughtMembershipId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d28e46b0-7f91-4575-b0ad-dbb33b9161a6",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "member",
+                    "bought-memberships",
+                    ":boughtMembershipId",
+                    "membership-schedule-unfreeze"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "boughtMembershipId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3a789c4a-4aa7-4be7-a627-6a1906f31841",
+          "name": "Get member info",
+          "request": {
+            "name": "Get member info",
+            "description": {
+              "content": "Returns general info for the current member",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "member"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c404c171-2b1e-4b58-a9d0-fb2b4d03ed1c",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "member"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 2431,\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"phoneNumber\": \"1234567890\",\n  \"pictureUrl\": \"https://example.com/picture.jpg\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ff2d8bb0-8bdc-4a94-aaa2-ac1e292f6a4e",
+          "name": "Update member info",
+          "request": {
+            "name": "Update member info",
+            "description": {
+              "content": "Changes some user detail, use `/email` endpoint to change email, use `/phone-number` endpoint to change phone number",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "member"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5559ece8-b707-4f55-a3c5-c0e8d6445af3",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "member"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0ff19631-1c9d-44db-ab6a-d526afa920b1",
+          "name": "Get member visits",
+          "request": {
+            "name": "Get member visits",
+            "description": {
+              "content": "Returns visits counts for the current member",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "member",
+                "visits"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c6e2ffb1-5154-4f0a-8b3a-da054afd4e89",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "member",
+                    "visits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"appointments\": 736,\n  \"appointmentsVisits\": 5172,\n  \"bookings\": 4818,\n  \"bookingsVisits\": 9147,\n  \"openAreaVisits\": 4114,\n  \"total\": 3199,\n  \"totalVisits\": 4102\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "61c67c32-590a-48dc-8255-e4fbb939f25f",
+          "name": "Update member email",
+          "request": {
+            "name": "Update member email",
+            "description": {
+              "content": "Changes user email",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "member",
+                "email"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "674821cd-ad63-4119-bcda-a86eb0980e36",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "member",
+                    "email"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"john.doe@example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cc36a32e-d87d-452b-8675-a8c54e0b24ca",
+          "name": "Update member phone number",
+          "request": {
+            "name": "Update member phone number",
+            "description": {
+              "content": "Changes user phone number",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "member",
+                "phone-number"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phoneNumber\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "34d86073-bdb5-412d-a187-88b591eee909",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "member",
+                    "phone-number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phoneNumber\": \"1234567890\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cda98b19-c5df-4bba-be85-205772373d06",
+          "name": "Delete all phone number records for a member",
+          "request": {
+            "name": "Delete all phone number records for a member",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "member",
+                "phone-number"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4031df03-517e-4f7d-a4f2-ef23b53dbe15",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "member",
+                    "phone-number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7302ae38-f51c-4a71-98ba-be5fec97c985",
+          "name": "Request member password reset",
+          "request": {
+            "name": "Request member password reset",
+            "description": {
+              "content": "Requests a new password reset email to be sent to the user",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "member",
+                "password-reset-email"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c78abc0b-1e73-41d8-b92d-6aed64670686",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "member",
+                    "password-reset-email"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "273bbe87-8866-4515-9aec-f0ad92ef6d13",
+          "name": "Get saved member payment methods",
+          "request": {
+            "name": "Get saved member payment methods",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "member",
+                "saved-payment-methods"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "29f23a7f-f5ae-478f-bac2-6fea2ef87901",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "member",
+                    "saved-payment-methods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"paymentMethods\": [\n    {\n      \"id\": 1,\n      \"type\": \"card\",\n      \"last4\": \"4242\",\n      \"expiresAt\": \"2022-12-31\"\n    },\n    {\n      \"id\": 1,\n      \"type\": \"card\",\n      \"last4\": \"4242\",\n      \"expiresAt\": \"2022-12-31\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a516abc6-b6a4-4b40-b363-fa019e611133",
+          "name": "Add member saved payment method",
+          "request": {
+            "name": "Add member saved payment method",
+            "description": {
+              "content": "This endpoint returns a temporary pre-authenticated URL that allows user to add a payment method. \nRedirect user to that URL, which will allow them to add a payment method using a Momence-hosted app. \nThe URL will be valid for 3600 seconds. \nAfter the user finishes adding the payment method, they will get redirected to the URL provided.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "member",
+                "saved-payment-methods"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"redirectUrl\": \"<string>\",\n  \"redirectUrlOnCancel\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "63cd8da7-4fdb-4e0a-afa5-a993b4e29706",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "member",
+                    "saved-payment-methods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"redirectUrl\": \"<string>\",\n  \"redirectUrlOnCancel\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"addPaymentMethodPageUrl\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cc68cffa-7a8c-47de-b7f5-af42bbab7874",
+          "name": "Remove member saved payment method",
+          "request": {
+            "name": "Remove member saved payment method",
+            "description": {
+              "content": "This endpoint allows members to remove their saved payment method.\n\n| Error | Description |\n| --- | --- |\n| err-active-non-cancellable-subscription | member has an active non-cancellable subscription which prevent the last payment method from being deleted |\n| err-no-payment-method-found | the specified payment method does not exist |",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "member",
+                "saved-payment-methods",
+                ":savedPaymentMethodId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "savedPaymentMethodId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "226a4017-bbdc-4558-b148-e6bf627b3cba",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "member",
+                    "saved-payment-methods",
+                    ":savedPaymentMethodId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "savedPaymentMethodId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7dd06415-e6d6-45c8-ba38-1518244e597d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "member",
+                    "saved-payment-methods",
+                    ":savedPaymentMethodId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "savedPaymentMethodId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"err-no-payment-method-found\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.momence.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "accessTokenUrl",
+        "value": "/api/v2/auth/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "password_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9acbbdca-950c-4974-97b3-dda298c2710a",
+    "name": "Momence Public auth member API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Momence Public auth API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "/api/v2/auth/authorize",
+      "accessTokenUrl": "/api/v2/auth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "OAuth2 authorize",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.momence.com/api/v2/auth/authorize",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "redirect_uri",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "prompt",
+                "value": "",
+                "type": "query",
+                "description": "Indicates possible user prompts:\n\n - login (default): show Sign In screen; if a user is logged in, they are logged out first\n - sign-up: show Sign Up screen; if a user is logged in, they are logged out first\n - none: no prompt, throw when user isn't logged in"
+              },
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "response_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "OAuth2 authorize"
+        },
+        {
+          "info": {
+            "name": "OAuth2 token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.momence.com/api/v2/auth/token",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Obtain a new access token"
+        },
+        {
+          "info": {
+            "name": "Get logged user data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.momence.com/api/v2/auth/profile"
+          },
+          "docs": "Get info about currently logged user"
+        },
+        {
+          "info": {
+            "name": "Logout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.momence.com/api/v2/auth/logout"
+          },
+          "docs": "Invalidate provided access token"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,450 @@
+{
+  "item": [
+    {
+      "id": "c4a5de75-81af-41f6-8f44-ea694cc97c6f",
+      "name": "host-checkout",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "cb1e0f90-98a4-4864-9a52-dfe5f45c80ba",
+          "name": "Get compatible memberships for checkout cart",
+          "request": {
+            "name": "Get compatible memberships for checkout cart",
+            "description": {
+              "content": "This endpoint will return list of bought memberships of the specified member potentially compatible with the given checkout cart.\n\n**NOTE**: The endpoint also returns memberships that are incompatible which is indicated by the incompatibility field. This is so you can present user with a reason why the membership is not usable in this case.\n\n| Incompatibility | Description |\n| --- | --- |\n| session-membership-excluded | session is not included in specified membership |\n| session-bought-membership-will-expire | bought membership will expire before the session start and it's not scheduled to renew |\n| session-bought-membership-pack-will-expire | pack will expire before the session starts |\n| session-bought-membership-already-used | bought membership was already used for this session and it's not allowed to use it multiple times |\n| session-bought-membership-usage-limit-reached | subscription has reached its usage limit for the renewal period that's aligned with session |\n| session-bought-membership-usage-limit-reached-for-semester-or-course | subscription has reached its usage limit for the renewal period or periods that're aligned with the whole semester or course |\n| session-bought-membership-daily-limit-reached | bought membership was already used today and is limited to one use per day |\n| session-bought-membership-no-event-credits-left | no event credits are left in the pack |\n| session-bought-membership-no-money-credits-left | no money credits are left in the pack |\n| session-bought-membership-on-demand | bought membership is only usable for on-demand content, not classes |\n| session-bought-membership-starts-later | bought membership starts being valid after the session start |\n| session-bought-membership-invalid-type | bought membership is not usable for this |\n| session-bought-membership-disabled | membership linked with the bought membership was disabled and thus it can't be used |\n| session-bought-membership-frozen | bought membership is frozen when the session happens |\n| session-subscription-ticket-limit | subscription is limited to one ticket |\n| unknown | unknown reason |\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "host",
+                "checkout",
+                "compatible-memberships"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"memberId\": \"<integer>\",\n  \"items\": [\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"membershipId\": \"<integer>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"membershipId\": \"<integer>\"\n    }\n  ],\n  \"homeLocationId\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6d08c01e-aa5f-43c0-add1-01becffc2890",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "host",
+                    "checkout",
+                    "compatible-memberships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"memberId\": \"<integer>\",\n  \"items\": [\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"membershipId\": \"<integer>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"membershipId\": \"<integer>\"\n    }\n  ],\n  \"homeLocationId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"boughtMembership\": {\n        \"id\": 1,\n        \"type\": \"subscription\",\n        \"startDate\": \"2021-01-01T00:00:00Z\",\n        \"endDate\": \"2021-02-01T00:00:00Z\",\n        \"eventCreditsLeft\": null,\n        \"eventCreditsTotal\": null,\n        \"moneyCreditsLeft\": null,\n        \"moneyCreditsTotal\": null,\n        \"membership\": {\n          \"id\": 5,\n          \"name\": \"Monthly Membership\",\n          \"description\": \"Monthly membership with unlimited access to <b>all</b> classes.\",\n          \"type\": \"subscription\",\n          \"locationId\": null,\n          \"disabled\": false,\n          \"autoRenewing\": true,\n          \"minimumAutoRenews\": null,\n          \"eventCredits\": null,\n          \"moneyCredits\": null,\n          \"duration\": 1,\n          \"durationUnit\": \"months\",\n          \"isActivatedOnFirstUse\": false,\n          \"activationDeadlineInDays\": 21,\n          \"hasFreeTrial\": false,\n          \"freeTrialDurationInDays\": 7,\n          \"contractAgreement\": \"Contract agreement text\",\n          \"order\": 1,\n          \"isIntroOffer\": false,\n          \"usageLimitForSessions\": 5,\n          \"usageLimitForAppointments\": 2,\n          \"combinedUsageLimitEnabled\": false,\n          \"combinedUsageLimit\": null,\n          \"usageLimitRenewalEnabled\": false,\n          \"usageLimitRenewalDuration\": null,\n          \"usageLimitRenewalDurationUnit\": \"days\",\n          \"usageLimitRolloverEnabled\": false,\n          \"usageLimitRolloverMode\": \"event-credits\",\n          \"usageLimitRolloverExpirationDuration\": null,\n          \"usageLimitRolloverExpirationDurationUnit\": \"months\"\n        }\n      },\n      \"incompatibility\": \"session-membership-excluded\"\n    },\n    {\n      \"boughtMembership\": {\n        \"id\": 1,\n        \"type\": \"subscription\",\n        \"startDate\": \"2021-01-01T00:00:00Z\",\n        \"endDate\": \"2021-02-01T00:00:00Z\",\n        \"eventCreditsLeft\": null,\n        \"eventCreditsTotal\": null,\n        \"moneyCreditsLeft\": null,\n        \"moneyCreditsTotal\": null,\n        \"membership\": {\n          \"id\": 5,\n          \"name\": \"Monthly Membership\",\n          \"description\": \"Monthly membership with unlimited access to <b>all</b> classes.\",\n          \"type\": \"subscription\",\n          \"locationId\": null,\n          \"disabled\": false,\n          \"autoRenewing\": true,\n          \"minimumAutoRenews\": null,\n          \"eventCredits\": null,\n          \"moneyCredits\": null,\n          \"duration\": 1,\n          \"durationUnit\": \"months\",\n          \"isActivatedOnFirstUse\": false,\n          \"activationDeadlineInDays\": 21,\n          \"hasFreeTrial\": false,\n          \"freeTrialDurationInDays\": 7,\n          \"contractAgreement\": \"Contract agreement text\",\n          \"order\": 1,\n          \"isIntroOffer\": false,\n          \"usageLimitForSessions\": 5,\n          \"usageLimitForAppointments\": 2,\n          \"combinedUsageLimitEnabled\": false,\n          \"combinedUsageLimit\": null,\n          \"usageLimitRenewalEnabled\": false,\n          \"usageLimitRenewalDuration\": null,\n          \"usageLimitRenewalDurationUnit\": \"years\",\n          \"usageLimitRolloverEnabled\": false,\n          \"usageLimitRolloverMode\": \"event-credits\",\n          \"usageLimitRolloverExpirationDuration\": null,\n          \"usageLimitRolloverExpirationDurationUnit\": \"years\"\n        }\n      },\n      \"incompatibility\": \"session-membership-excluded\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cb5cfe30-a43c-456f-b369-5612cb98180b",
+          "name": "Get prices for checkout",
+          "request": {
+            "name": "Get prices for checkout",
+            "description": {
+              "content": "This endpoint should be used before calling checkout to fetch correct prices for every item.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "host",
+                "checkout",
+                "prices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"memberId\": \"<integer>\",\n  \"items\": [\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"membershipId\": \"<integer>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"membershipId\": \"<integer>\"\n    }\n  ],\n  \"paymentMethods\": [\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"boughtMembershipId\": \"<integer>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"boughtMembershipId\": \"<integer>\"\n    }\n  ],\n  \"homeLocationId\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4a0ee9e7-c4b5-4a76-80b1-4c1ae1e798af",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "host",
+                    "checkout",
+                    "prices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"memberId\": \"<integer>\",\n  \"items\": [\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"membershipId\": \"<integer>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"membershipId\": \"<integer>\"\n    }\n  ],\n  \"paymentMethods\": [\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"boughtMembershipId\": \"<integer>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"boughtMembershipId\": \"<integer>\"\n    }\n  ],\n  \"homeLocationId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"totalInCurrency\": \"string\",\n  \"itemsWithPrices\": [\n    {\n      \"id\": \"string\",\n      \"priceInCurrencyWithTax\": \"string\",\n      \"priceInCurrencyWithoutTax\": \"string\",\n      \"taxInCurrency\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"priceInCurrencyWithTax\": \"string\",\n      \"priceInCurrencyWithoutTax\": \"string\",\n      \"taxInCurrency\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ea39e755-0d34-499e-82c4-758d9b91db1d",
+          "name": "Perform checkout",
+          "request": {
+            "name": "Perform checkout",
+            "description": {
+              "content": "Perform payment for specified items in the checkout cart on behalf of the specified member. The endpoint will return list of purchased items. The checkout endpoint will reject any request that doesn't contain correct prices even when you're using memberships to pay.\n\n**NOTE**: Currently the endpoint only supports buying sessions with membership payment method.\n\n**NOTE:** You should call `/prices` endpoint to fetch correct prices for every item in the cart before calling this endpoint\n\n**NOTE:** You should call `/compatible-memberships` endpoint to fetch list of bought memberships that are potentially compatible with the cart before calling this endpoint\n\n| Error | Description |\n| --- | --- |\n| err-no-payment-methods | request doesn't contain any payment methods |\n| err-no-items | request doesn't contain any items |\n| err-too-many-items | request contain more than 1 items |\n| err-combined-payment-methods | request contains multiple payment method types in single request |\n| err-cannot-pay-for-membership-with-membership | request is attempting to buy membership with membership |\n| err-multiple-membership-types | request is combining different membership types in payment methods |\n| err-multiple-subscriptions | request contains more than 1 subscription payment methods |\n| err-saved-card-not-found | request contains invalid saved card payment method |\n| err-cart-validation-failed | general error when validating cart |\n| err-payment-failed | error occurred during payment processing |\n| err-duplicate-membership-payment-methods | request contains single bought membership multiple times |\n| err-invalid-membership-payment-method | request contains invalid membership payment method |\n| err-incompatible-membership | request contains membership that's incompatible with the checkout cart |\n| err-unsupported-payment-methods | request contains invalid payment methods |\n| err-session-has-invalid-state | request contains session with status that prevent sale |\n| err-session-has-passed | request contains session that has already passed |\n| err-session-sales-ended | request contains session that has ended sales |\n| err-session-dropins-not-allowed | request contains session that does not allow dropins |\n| err-session-is-full | request contains session that's full |\n| err-session-purchase-limit-reached | request contains session that member has already booked and host doesn't allow that |\n| err-session-access-restricted | request contains session that requires specific tag to book |\n| err-duplicate-item-ids | request contains single item id multiple times |\n| err-duplicate-payment-method-ids | request contains single payment method id multiple times |\n| err-unsupported-item-type | request contains unsupported item type |\n| err-missing-customer-date-of-birth | customer has no birthday information, but it's required |\n| err-customer-age-prevents-from-action | customer is not eligible for the action due to age restriction |\n| err-invalid-custom-payment-method | request contains invalid custom payment method id |\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "host",
+                "checkout"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"memberId\": \"<integer>\",\n  \"items\": [\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"membershipId\": \"<integer>\",\n      \"attemptedPriceInCurrency\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"membershipId\": \"<integer>\",\n      \"attemptedPriceInCurrency\": \"<string>\"\n    }\n  ],\n  \"paymentMethods\": [\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"boughtMembershipId\": \"<integer>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"boughtMembershipId\": \"<integer>\"\n    }\n  ],\n  \"homeLocationId\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fe7b8823-ecce-4f5d-be54-bf5384d15200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "host",
+                    "checkout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"memberId\": 12345,\n  \"items\": [\n    {\n      \"id\": \"1\",\n      \"type\": \"session\",\n      \"sessionId\": 15525,\n      \"attemptedPriceInCurrency\": \"10.5\"\n    }\n  ],\n  \"paymentMethods\": [\n    {\n      \"id\": \"1\",\n      \"type\": \"membership\",\n      \"boughtMembershipId\": 25568\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"purchasedItems\": [\n    {\n      \"type\": \"session\",\n      \"sessionBookingId\": 3906\n    },\n    {\n      \"type\": \"session\",\n      \"sessionBookingId\": 8703\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e5f5a4d2-dcd5-4054-b37c-f6c5b674772a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "host",
+                    "checkout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"memberId\": 12345,\n  \"items\": [\n    {\n      \"id\": \"1\",\n      \"type\": \"session\",\n      \"sessionId\": 15525,\n      \"attemptedPriceInCurrency\": \"10.5\"\n    }\n  ],\n  \"paymentMethods\": [\n    {\n      \"id\": \"1\",\n      \"type\": \"membership\",\n      \"boughtMembershipId\": 25568\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"err-invalid-custom-payment-method\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.momence.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "accessTokenUrl",
+        "value": "/api/v2/auth/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "password_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3258bb9e-66b6-48f9-9270-60c1e83cd607",
+    "name": "Momence Public auth host-checkout API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

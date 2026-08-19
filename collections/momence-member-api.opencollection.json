@@ -1,0 +1,454 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Momence Public auth member API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "/api/v2/auth/authorize",
+      "accessTokenUrl": "/api/v2/auth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "member",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get member active memberships",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.momence.com/api/v2/member/bought-memberships/active",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Starts at 0"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeFrozen",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get member active memberships"
+        },
+        {
+          "info": {
+            "name": "Freeze bought membership immediately or schedule freeze/unfreeze",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.momence.com/api/v2/member/bought-memberships/:boughtMembershipId/membership-freeze",
+            "params": [
+              {
+                "name": "boughtMembershipId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Freeze bought membership immediately or schedule freeze/unfreeze"
+        },
+        {
+          "info": {
+            "name": "Schedule bought membership freeze",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.momence.com/api/v2/member/bought-memberships/:boughtMembershipId/membership-schedule-freeze",
+            "params": [
+              {
+                "name": "boughtMembershipId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Schedule bought membership freeze"
+        },
+        {
+          "info": {
+            "name": "Unfreeze bought membership or remove scheduled freeze",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.momence.com/api/v2/member/bought-memberships/:boughtMembershipId/membership-schedule-freeze",
+            "params": [
+              {
+                "name": "boughtMembershipId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Unfreeze bought membership or remove scheduled freeze"
+        },
+        {
+          "info": {
+            "name": "Schedule bought membership unfreeze",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.momence.com/api/v2/member/bought-memberships/:boughtMembershipId/membership-schedule-unfreeze",
+            "params": [
+              {
+                "name": "boughtMembershipId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Schedule bought membership unfreeze"
+        },
+        {
+          "info": {
+            "name": "Remove bought membership scheduled unfreeze",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.momence.com/api/v2/member/bought-memberships/:boughtMembershipId/membership-schedule-unfreeze",
+            "params": [
+              {
+                "name": "boughtMembershipId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Remove bought membership scheduled unfreeze"
+        },
+        {
+          "info": {
+            "name": "Get member info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.momence.com/api/v2/member",
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns general info for the current member"
+        },
+        {
+          "info": {
+            "name": "Update member info",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.momence.com/api/v2/member",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Changes some user detail, use `/email` endpoint to change email, use `/phone-number` endpoint to change phone number"
+        },
+        {
+          "info": {
+            "name": "Get member visits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.momence.com/api/v2/member/visits",
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns visits counts for the current member"
+        },
+        {
+          "info": {
+            "name": "Update member email",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.momence.com/api/v2/member/email",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Changes user email"
+        },
+        {
+          "info": {
+            "name": "Update member phone number",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.momence.com/api/v2/member/phone-number",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Changes user phone number"
+        },
+        {
+          "info": {
+            "name": "Delete all phone number records for a member",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.momence.com/api/v2/member/phone-number",
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Delete all phone number records for a member"
+        },
+        {
+          "info": {
+            "name": "Request member password reset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.momence.com/api/v2/member/password-reset-email",
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Requests a new password reset email to be sent to the user"
+        },
+        {
+          "info": {
+            "name": "Get saved member payment methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.momence.com/api/v2/member/saved-payment-methods",
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get saved member payment methods"
+        },
+        {
+          "info": {
+            "name": "Add member saved payment method",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.momence.com/api/v2/member/saved-payment-methods",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint returns a temporary pre-authenticated URL that allows user to add a payment method. \nRedirect user to that URL, which will allow them to add a payment method using a Momence-hosted app. \nThe URL will be valid for 3600 seconds. \nAfter the user finishes adding the payment method, they will get redirected to the URL provided."
+        },
+        {
+          "info": {
+            "name": "Remove member saved payment method",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.momence.com/api/v2/member/saved-payment-methods/:savedPaymentMethodId",
+            "params": [
+              {
+                "name": "savedPaymentMethodId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint allows members to remove their saved payment method.\n\n| Error | Description |\n| --- | --- |\n| err-active-non-cancellable-subscription | member has an active non-cancellable subscription which prevent the last payment method from being deleted |\n| err-no-payment-method-found | the specified payment method does not exist |"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

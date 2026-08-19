@@ -1,0 +1,1461 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Momence Public auth host API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "/api/v2/auth/authorize",
+      "accessTokenUrl": "/api/v2/auth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "host",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all appointment reservations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.momence.com/api/v2/host/appointments/reservations",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Starts at 0"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortOrder",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by"
+              },
+              {
+                "name": "startAfter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "startBefore",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "endAfter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "endBefore",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeCancelled",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeCancelledAttendees",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "isPaid",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get all appointment reservations"
+        },
+        {
+          "info": {
+            "name": "Get appointments by a specific member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.momence.com/api/v2/host/members/:memberId/appointments",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Starts at 0"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortOrder",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by"
+              },
+              {
+                "name": "startAfter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "startBefore",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "endAfter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "endBefore",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeCancelled",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get appointments by a specific member"
+        },
+        {
+          "info": {
+            "name": "Get all active subscriptions and packs of a specific member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.momence.com/api/v2/host/members/:memberId/bought-memberships/active",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Starts at 0"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeFrozen",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get all active subscriptions and packs of a specific member"
+        },
+        {
+          "info": {
+            "name": "Update credits of package-events or package-money bought membership for a specific member",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.momence.com/api/v2/host/members/:memberId/bought-memberships/:boughtMembershipId/credits",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "boughtMembershipId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update credits of package-events or package-money bought membership for a specific member"
+        },
+        {
+          "info": {
+            "name": "Freeze bought membership immediately or schedule freeze/unfreeze",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.momence.com/api/v2/host/members/:memberId/bought-memberships/:boughtMembershipId/membership-freeze",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "boughtMembershipId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Freeze bought membership immediately or schedule freeze/unfreeze"
+        },
+        {
+          "info": {
+            "name": "Schedule bought membership freeze",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.momence.com/api/v2/host/members/:memberId/bought-memberships/:boughtMembershipId/membership-schedule-freeze",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "boughtMembershipId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Schedule bought membership freeze"
+        },
+        {
+          "info": {
+            "name": "Unfreeze bought membership or remove scheduled freeze",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.momence.com/api/v2/host/members/:memberId/bought-memberships/:boughtMembershipId/membership-schedule-freeze",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "boughtMembershipId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Unfreeze bought membership or remove scheduled freeze"
+        },
+        {
+          "info": {
+            "name": "Schedule bought membership unfreeze",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.momence.com/api/v2/host/members/:memberId/bought-memberships/:boughtMembershipId/membership-schedule-unfreeze",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "boughtMembershipId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Schedule bought membership unfreeze"
+        },
+        {
+          "info": {
+            "name": "Remove bought membership scheduled unfreeze",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.momence.com/api/v2/host/members/:memberId/bought-memberships/:boughtMembershipId/membership-schedule-unfreeze",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "boughtMembershipId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Remove bought membership scheduled unfreeze"
+        },
+        {
+          "info": {
+            "name": "Get members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.momence.com/api/v2/host/members",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Starts at 0"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortOrder",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Search customers by query"
+              },
+              {
+                "name": "filterPreset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "staticSegmentId",
+                "value": "",
+                "type": "query",
+                "description": "Filter customers by static segment ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get members"
+        },
+        {
+          "info": {
+            "name": "Add member",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.momence.com/api/v2/host/members",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Add member"
+        },
+        {
+          "info": {
+            "name": "Get members (with filters)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.momence.com/api/v2/host/members/list",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get members (with filters)"
+        },
+        {
+          "info": {
+            "name": "Get member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.momence.com/api/v2/host/members/:memberId",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get member"
+        },
+        {
+          "info": {
+            "name": "Update member name",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.momence.com/api/v2/host/members/:memberId/name",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update member name"
+        },
+        {
+          "info": {
+            "name": "Update member phone number",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.momence.com/api/v2/host/members/:memberId/phone-number",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update member phone number"
+        },
+        {
+          "info": {
+            "name": "Delete all phone number records for a member",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.momence.com/api/v2/host/members/:memberId/phone-number",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Delete all phone number records for a member"
+        },
+        {
+          "info": {
+            "name": "Update member e-mail",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.momence.com/api/v2/host/members/:memberId/email",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update member e-mail"
+        },
+        {
+          "info": {
+            "name": "Get available host memberships",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.momence.com/api/v2/host/memberships",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Starts at 0"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortOrder",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by"
+              },
+              {
+                "name": "includeDisabled",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "onlyFeatured",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "compatibleWithSessionId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "compatibleWithAppointmentId",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get available host memberships"
+        },
+        {
+          "info": {
+            "name": "Get notes for a specific member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.momence.com/api/v2/host/members/:memberId/notes",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Starts at 0"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortOrder",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by"
+              },
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get notes for a specific member"
+        },
+        {
+          "info": {
+            "name": "Get session bookings by a specific member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.momence.com/api/v2/host/members/:memberId/sessions",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Starts at 0"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortOrder",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by"
+              },
+              {
+                "name": "startAfter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "startBefore",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "endAfter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "endBefore",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeCancelled",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get session bookings by a specific member"
+        },
+        {
+          "info": {
+            "name": "Assign a tag to a member",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.momence.com/api/v2/host/members/:memberId/tags/:tagId",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tagId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Assign a tag to a member"
+        },
+        {
+          "info": {
+            "name": "Unassign a tag from a member",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.momence.com/api/v2/host/members/:memberId/tags/:tagId",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tagId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Unassign a tag from a member"
+        },
+        {
+          "info": {
+            "name": "Get sales",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.momence.com/api/v2/host/sales",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Starts at 0"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortOrder",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "**Note:** This is an experimental feature, please contact support if you want to utilize this endpoint. \n \nThis endpoint returns a list of host sales. \nThe default sorting mode is DESC (newest sales first), but you can also specify ASC (oldest sales first). \nFor session and appointment sales, additional meta data is returned in the response."
+        },
+        {
+          "info": {
+            "name": "Mark session booking as checked-in",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.momence.com/api/v2/host/session-bookings/:bookingId/check-in",
+            "params": [
+              {
+                "name": "bookingId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Mark session booking as checked-in"
+        },
+        {
+          "info": {
+            "name": "Mark session booking as not checked-in",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.momence.com/api/v2/host/session-bookings/:bookingId/check-in",
+            "params": [
+              {
+                "name": "bookingId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Mark session booking as not checked-in"
+        },
+        {
+          "info": {
+            "name": "Cancel session booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.momence.com/api/v2/host/session-bookings/:bookingId",
+            "params": [
+              {
+                "name": "bookingId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Cancel a single session booking identified by its ID. \n**Tip:** You can find the ID within the *ApiV2HostSessionBookingDto* object (`id` field) returned from the session booking list endpoint. \n**Note:** This endpoint does not cancel or impact any recurring bookings. There is a separate endpoint for canceling those."
+        },
+        {
+          "info": {
+            "name": "Cancel recurring session booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.momence.com/api/v2/host/session-recurring-bookings/:bookingId",
+            "params": [
+              {
+                "name": "bookingId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Cancel recurring session booking identified by its ID and related session bookings. \n**Tip:** You can find the ID within the ApiV2HostSessionBookingDto object (`recurringBookingId` field) returned from the session booking list endpoint. \n**Note:** This endpoint cancels both recurring booking and individual bookings originating from the same. \nUser can provide more specific filters to specify which bookings will be cancelled."
+        },
+        {
+          "info": {
+            "name": "Returns a list of sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.momence.com/api/v2/host/sessions",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Starts at 0"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortOrder",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by"
+              },
+              {
+                "name": "includeCancelled",
+                "value": "",
+                "type": "query",
+                "description": "also include cancelled sessions"
+              },
+              {
+                "name": "types",
+                "value": "",
+                "type": "query",
+                "description": "only return specified session types"
+              },
+              {
+                "name": "teacherId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "startAfter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "startBefore",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "endAfter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "endBefore",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of sessions"
+        },
+        {
+          "info": {
+            "name": "Returns a session detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.momence.com/api/v2/host/sessions/:sessionId",
+            "params": [
+              {
+                "name": "sessionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a session detail"
+        },
+        {
+          "info": {
+            "name": "Returns a list of session bookings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.momence.com/api/v2/host/sessions/:sessionId/bookings",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Starts at 0"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortOrder",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by"
+              },
+              {
+                "name": "includeCancelled",
+                "value": "",
+                "type": "query",
+                "description": "also include cancelled bookings"
+              },
+              {
+                "name": "sessionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of session bookings"
+        },
+        {
+          "info": {
+            "name": "Add a member to a session for free",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.momence.com/api/v2/host/sessions/:sessionId/bookings/free",
+            "params": [
+              {
+                "name": "sessionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint allows staff user to add a member to a session for free \n \n| Error | Description |\n| --- | --- |\n| err-member-not-found | member not found |\n| err-member-not-assigned-to-host | member is not assigned to the host |\n| err-session-not-found | session not found |\n| err-session-not-provided-by-host | session not provided by the host |\n| err-customer-age-prevents-from-action | member is not eligible due to age restrictions |\n| err-missing-customer-date-of-birth | member is missing date o"
+        },
+        {
+          "info": {
+            "name": "Add a member to a session waitlist",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.momence.com/api/v2/host/sessions/:sessionId/waitlist/bookings",
+            "params": [
+              {
+                "name": "sessionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint allows staff user to add a member to a session waitlist \n \n**NOTE**: You can use the optional `useBoughtMembershipIds` field to provide a list of bought memberships that should be attempted to use during booking from the waitlist. If you don't provide anything here the best matching membership will be used automatically. \n \n| Error | Description |\n| --- | --- |\n| err-waitlist-not-allowed | session does not have waitlist enabled |\n| err-waitlist-full | session waitlist is full |\n| e"
+        },
+        {
+          "info": {
+            "name": "List available tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.momence.com/api/v2/host/tags",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Starts at 0"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortOrder",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "List available tags"
+        },
+        {
+          "info": {
+            "name": "Initiate report generation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.momence.com/api/v2/host/reports",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Initiates generation of a report. Use \"Retrieve a report\" endpoint to retrieve the report data once the generation is completed.\n\n**Rate limit:** 100 req / 1 d"
+        },
+        {
+          "info": {
+            "name": "Retrieve a report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.momence.com/api/v2/host/reports/:reportRunId",
+            "params": [
+              {
+                "name": "reportRunId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "**Rate limit:** 1000 req / 1 d"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

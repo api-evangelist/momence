@@ -1,0 +1,188 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Momence Public auth member-addresses API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "/api/v2/auth/authorize",
+      "accessTokenUrl": "/api/v2/auth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "member-addresses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get member addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.momence.com/api/v2/member-addresses",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Starts at 0"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortOrder",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get member addresses"
+        },
+        {
+          "info": {
+            "name": "Create member address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.momence.com/api/v2/member-addresses",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Create member address"
+        },
+        {
+          "info": {
+            "name": "Get member address",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.momence.com/api/v2/member-addresses/:memberAddressId",
+            "params": [
+              {
+                "name": "memberAddressId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get member address"
+        },
+        {
+          "info": {
+            "name": "Update member address",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.momence.com/api/v2/member-addresses/:memberAddressId",
+            "params": [
+              {
+                "name": "memberAddressId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update member address"
+        },
+        {
+          "info": {
+            "name": "Delete member address",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.momence.com/api/v2/member-addresses/:memberAddressId",
+            "params": [
+              {
+                "name": "memberAddressId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Delete member address"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,302 @@
+{
+  "item": [
+    {
+      "id": "b8c86eee-d081-48c9-8a7d-88e98ceabec4",
+      "name": "member-sessions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "da902a97-73cb-4c7c-ab96-199fac49c63f",
+          "name": "Get member bookings",
+          "request": {
+            "name": "Get member bookings",
+            "description": {
+              "content": "Returns list of sessions current user is signed up for",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "member",
+                "sessions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "(Required) Starts at 0"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "sortOrder",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortBy",
+                  "value": "<string>",
+                  "description": "Field to sort by"
+                },
+                {
+                  "disabled": false,
+                  "key": "startAfter",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "endAfter",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5ca87b9f-803a-40b1-93b6-4547b6ac0b54",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "member",
+                    "sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortOrder",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startAfter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endAfter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pagination\": {\n    \"page\": 0,\n    \"pageSize\": 10,\n    \"totalCount\": 1,\n    \"sortBy\": \"string\",\n    \"sortOrder\": \"ASC\"\n  },\n  \"payload\": [\n    {\n      \"id\": 1,\n      \"createdAt\": \"2021-08-01T10:00:00Z\",\n      \"roomSpotId\": 1159,\n      \"checkedIn\": true,\n      \"cancelledAt\": null,\n      \"isRecurring\": false,\n      \"session\": {\n        \"id\": 1,\n        \"name\": \"Stretching with John\",\n        \"type\": \"fitness\",\n        \"description\": \"Our program is designed to help you increase your flexibility and strength.\",\n        \"startsAt\": \"2021-08-01T10:00:00Z\",\n        \"endsAt\": \"2021-08-01T11:00:00Z\",\n        \"durationInMinutes\": 60,\n        \"capacity\": 10,\n        \"teacher\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"firstName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lastName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"pictureUrl\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"isRecurring\": false,\n        \"isInPerson\": false,\n        \"inPersonLocation\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"onlineStreamUrl\": \"https://example.com/online-stream\",\n        \"onlineStreamPassword\": \"password123\",\n        \"bannerImageUrl\": \"https://example.com/banner.jpg\",\n        \"hostPhotoUrl\": \"https://example.com/host.jpg\",\n        \"isLocationPrivate\": false\n      }\n    },\n    {\n      \"id\": 1,\n      \"createdAt\": \"2021-08-01T10:00:00Z\",\n      \"roomSpotId\": 740,\n      \"checkedIn\": true,\n      \"cancelledAt\": null,\n      \"isRecurring\": false,\n      \"session\": {\n        \"id\": 1,\n        \"name\": \"Stretching with John\",\n        \"type\": \"fitness\",\n        \"description\": \"Our program is designed to help you increase your flexibility and strength.\",\n        \"startsAt\": \"2021-08-01T10:00:00Z\",\n        \"endsAt\": \"2021-08-01T11:00:00Z\",\n        \"durationInMinutes\": 60,\n        \"capacity\": 10,\n        \"teacher\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"firstName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lastName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"pictureUrl\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"isRecurring\": false,\n        \"isInPerson\": false,\n        \"inPersonLocation\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"onlineStreamUrl\": \"https://example.com/online-stream\",\n        \"onlineStreamPassword\": \"password123\",\n        \"bannerImageUrl\": \"https://example.com/banner.jpg\",\n        \"hostPhotoUrl\": \"https://example.com/host.jpg\",\n        \"isLocationPrivate\": false\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "173c46d7-f8fa-458f-9474-6c5f210530a0",
+          "name": "Cancel member booking",
+          "request": {
+            "name": "Cancel member booking",
+            "description": {
+              "content": "Cancels session booking",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "member",
+                "sessions",
+                ":sessionBookingId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "sessionBookingId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/api/v2/auth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b00cc6bb-51a0-455b-8d7d-17d5fe9575cb",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "member",
+                    "sessions",
+                    ":sessionBookingId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "sessionBookingId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.momence.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "accessTokenUrl",
+        "value": "/api/v2/auth/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "password_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "89c59122-d93d-4d01-a132-5397d7dea16c",
+    "name": "Momence Public auth member-sessions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

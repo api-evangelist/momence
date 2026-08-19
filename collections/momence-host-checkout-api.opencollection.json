@@ -1,0 +1,105 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Momence Public auth host-checkout API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "/api/v2/auth/authorize",
+      "accessTokenUrl": "/api/v2/auth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "host-checkout",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get compatible memberships for checkout cart",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.momence.com/api/v2/host/checkout/compatible-memberships",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint will return list of bought memberships of the specified member potentially compatible with the given checkout cart.\n\n**NOTE**: The endpoint also returns memberships that are incompatible which is indicated by the incompatibility field. This is so you can present user with a reason why the membership is not usable in this case.\n\n| Incompatibility | Description |\n| --- | --- |\n| session-membership-excluded | session is not included in specified membership |\n| session-bought-membershi"
+        },
+        {
+          "info": {
+            "name": "Get prices for checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.momence.com/api/v2/host/checkout/prices",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint should be used before calling checkout to fetch correct prices for every item."
+        },
+        {
+          "info": {
+            "name": "Perform checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.momence.com/api/v2/host/checkout",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "/api/v2/auth/authorize",
+              "accessTokenUrl": "/api/v2/auth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Perform payment for specified items in the checkout cart on behalf of the specified member. The endpoint will return list of purchased items. The checkout endpoint will reject any request that doesn't contain correct prices even when you're using memberships to pay.\n\n**NOTE**: Currently the endpoint only supports buying sessions with membership payment method.\n\n**NOTE:** You should call `/prices` endpoint to fetch correct prices for every item in the cart before calling this endpoint\n\n**NOTE:** "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
