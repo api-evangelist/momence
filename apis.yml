@@ -45,6 +45,8 @@ apis:
   humanURL: https://api.docs.momence.com/docs/authorization
   baseURL: https://api.momence.com/api/v2
   tags:
+  - Authentication
+  tags_raw:
   - auth
   properties:
   - type: OpenAPI
@@ -77,6 +79,8 @@ apis:
   humanURL: https://api.docs.momence.com/docs/authorization
   baseURL: https://api.momence.com/api/v2
   tags:
+  - Hosts
+  tags_raw:
   - host
   properties:
   - type: OpenAPI
@@ -173,6 +177,8 @@ apis:
   humanURL: https://api.docs.momence.com/docs/authorization
   baseURL: https://api.momence.com/api/v2
   tags:
+  - Member
+  tags_raw:
   - member
   properties:
   - type: OpenAPI
