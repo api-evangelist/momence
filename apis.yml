@@ -12,6 +12,18 @@ description: Momence is an all-in-one management platform for fitness, wellness,
   staff automation) using public API clients created in the Momence dashboard, and
   covers members, sessions and bookings, memberships, checkout and sales, reports,
   appointments, addresses, and saved payment methods.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
