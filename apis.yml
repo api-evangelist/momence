@@ -91,7 +91,7 @@ apis:
   humanURL: https://api.docs.momence.com/docs/authorization
   baseURL: https://api.momence.com/api/v2
   tags:
-  - host
+  - Hosts
   tags_raw:
   - host
   properties:
@@ -189,7 +189,7 @@ apis:
   humanURL: https://api.docs.momence.com/docs/authorization
   baseURL: https://api.momence.com/api/v2
   tags:
-  - member
+  - Member
   tags_raw:
   - member
   properties:
