@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Momence Public auth member-host API
+  title: Momence Public Member Host API
   description: ''
   version: '2.0'
   contact: {}
@@ -259,7 +259,7 @@ paths:
   /api/v2/member/host/signable-documents:
     get:
       operationId: ApiV2MemberHostSignableDocumentsController_list
-      summary: Returns signable documents (waivers, privacy policy, contracts...) with signature status
+      summary: Returns signable documents (waivers, privacy policy, contracts...) with…
       parameters: []
       responses:
         '200':
@@ -275,7 +275,7 @@ paths:
   /api/v2/member/host/signable-documents/sign:
     put:
       operationId: ApiV2MemberHostSignableDocumentsController_sign
-      summary: Signs one or multiple signable documents (waivers, privacy policy, contracts...) using one signature
+      summary: Signs one or multiple signable documents (waivers, privacy policy…
       parameters: []
       requestBody:
         required: true
@@ -301,6 +301,76 @@ components:
             $ref: '#/components/schemas/HandwrittenElementPathDto'
       required:
       - paths
+    MemberLocationDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Main Studio
+      required:
+      - id
+      - name
+    MemberSignableDocumentDto:
+      type: object
+      properties:
+        predefinedWaiverType:
+          enum:
+          - waiver
+          - membership-waiver
+          - child-waiver
+          - privacy-policy
+          type: string
+          x-enumNames:
+          - CUSTOMER_WAIVER
+          - MEMBERSHIP_TERMS_AND_CONDITIONS
+          - CHILD_BOOKING_WAIVER
+          - PRIVACY_POLICY
+        customWaiverId:
+          type: integer
+        type:
+          enum:
+          - predefinedWaiver
+          - customWaiver
+          type: string
+          x-enumNames:
+          - PredefinedWaiver
+          - CustomWaiver
+        name:
+          type:
+          - string
+          - 'null'
+        content:
+          type:
+          - string
+          - 'null'
+        signedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        signatureStatus:
+          enum:
+          - signed
+          - unsigned
+          - signature-expired
+          type: string
+          x-enumNames:
+          - SIGNED
+          - UNSIGNED
+          - SIGNATURE_EXPIRED
+        simpleSignature:
+          type: string
+        handwrittenSignature:
+          $ref: '#/components/schemas/HandwrittenElementDto'
+      required:
+      - type
+      - name
+      - content
+      - signedAt
+      - signatureStatus
     HandwrittenElementPointDto:
       type: object
       properties:
@@ -313,200 +383,15 @@ components:
       required:
       - x
       - y
-    MemberTeacherDto:
+    MemberSignableDocumentsResponseDto:
       type: object
       properties:
-        id:
-          type: integer
-          example: 1
-        firstName:
-          type: string
-          example: John
-        lastName:
-          type: string
-          example: Doe
-        pictureUrl:
-          type: string
-          nullable: true
-          example: https://example.com/picture.jpg
-      required:
-      - id
-      - firstName
-      - lastName
-      - pictureUrl
-    HandwrittenElementPathDto:
-      type: object
-      properties:
-        points:
+        documents:
           type: array
           items:
-            $ref: '#/components/schemas/HandwrittenElementPointDto'
+            $ref: '#/components/schemas/MemberSignableDocumentDto'
       required:
-      - points
-    MemberHostSessionDto:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 3
-        name:
-          type: string
-          example: Stretching with John
-        type:
-          enum:
-          - private
-          - special-event
-          - special-event-new
-          - retreat
-          - fitness
-          - course
-          - course-class
-          - semester
-          - recital
-          type: string
-          example: fitness
-          x-enumNames:
-          - PRIVATE
-          - SPECIAL_EVENT
-          - SPECIAL_EVENT_NEW
-          - RETREAT
-          - FITNESS
-          - COURSE
-          - COURSE_CLASS
-          - SEMESTER
-          - RECITAL
-        description:
-          type: string
-          nullable: true
-          example: Our stretching class is a great way to start your day.
-        startsAt:
-          type: string
-          example: '2021-01-01T05:00:00Z'
-          format: date-time
-        endsAt:
-          type: string
-          example: '2021-01-01T06:00:00Z'
-          format: date-time
-        durationInMinutes:
-          type: integer
-          example: 60
-        capacity:
-          type: integer
-          nullable: true
-          description: Maximum session capacity, NULL means unlimited
-          example: 10
-          minimum: 0
-        participants:
-          type: integer
-          description: How many bookings the session already has
-          example: 1
-        waitlistEnabled:
-          type: boolean
-          example: true
-        waitlistCapacity:
-          type: integer
-          nullable: true
-          description: Maximum number of people on the waitlist if the waitlist is enabled. NULL means unlimited
-          example: 5
-        salesCutoffInMinutes:
-          type: number
-          nullable: true
-          description: How long before the session start the bookings sale stops
-          example: 10
-        isCancelled:
-          type: boolean
-          example: false
-        priceType:
-          enum:
-          - fixed-price
-          - dynamic
-          type: string
-          example: fixed-price
-          x-enumNames:
-          - FIXED
-          - DYNAMIC
-        fixedTicketPrice:
-          type: number
-          example: 955
-        dynamicTicketPriceMin:
-          type: number
-          nullable: true
-          example: null
-        dynamicTicketPriceMax:
-          type: number
-          nullable: true
-          example: null
-        dynamicTicketFreeOptionEnabled:
-          type: boolean
-          nullable: true
-          example: null
-        teacher:
-          nullable: true
-          allOf:
-          - $ref: '#/components/schemas/MemberTeacherDto'
-        originalTeacher:
-          nullable: true
-          allOf:
-          - $ref: '#/components/schemas/MemberTeacherDto'
-        additionalTeachers:
-          type: array
-          items:
-            $ref: '#/components/schemas/MemberTeacherDto'
-        isRecurring:
-          type: boolean
-          example: false
-        isInPerson:
-          type: boolean
-          example: false
-        inPersonLocation:
-          nullable: true
-          allOf:
-          - $ref: '#/components/schemas/MemberLocationDto'
-        bannerImageUrl:
-          type: string
-          nullable: true
-          example: https://example.com/image.jpg
-        hostPhotoUrl:
-          type: string
-          nullable: true
-          example: https://example.com/image.jpg
-        onlineStreamUrl:
-          type: string
-          nullable: true
-          example: https://example.com/online-stream
-        onlineStreamPassword:
-          type: string
-          nullable: true
-          example: password123
-      required:
-      - id
-      - name
-      - type
-      - description
-      - startsAt
-      - endsAt
-      - durationInMinutes
-      - capacity
-      - participants
-      - waitlistEnabled
-      - waitlistCapacity
-      - salesCutoffInMinutes
-      - isCancelled
-      - priceType
-      - fixedTicketPrice
-      - dynamicTicketPriceMin
-      - dynamicTicketPriceMax
-      - dynamicTicketFreeOptionEnabled
-      - teacher
-      - originalTeacher
-      - additionalTeachers
-      - isRecurring
-      - isInPerson
-      - inPersonLocation
-      - bannerImageUrl
-      - hostPhotoUrl
-      - onlineStreamUrl
-      - onlineStreamPassword
+      - documents
     MemberHostMembershipDto:
       type: object
       properties:
@@ -517,8 +402,9 @@ components:
           type: string
           example: Monthly Membership
         description:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           example: Monthly membership with unlimited access to <b>all</b> classes.
         type:
           enum:
@@ -536,8 +422,9 @@ components:
           - PackageMoney
           - Patron
         locationId:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           example: null
         disabled:
           type: boolean
@@ -548,32 +435,37 @@ components:
           description: Indicates that membership renews after specific interval
           example: true
         minimumAutoRenews:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           description: How many times membership has to renew before user can cancel renewal
           example: null
         eventCredits:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           description: For PACKAGE_EVENTS memberships, defines how many event credits are included
           example: null
         moneyCredits:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
           description: For PACKAGE_MONEY memberships, defines how much money is included
           example: null
         duration:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           description: For SUBSCRIPTION this is auto renew duration, for PACKAGE_* this is expiration time
           example: 1
         durationUnit:
-          nullable: true
           enum:
           - days
           - months
           - years
-          type: string
+          type:
+          - string
+          - 'null'
           example: months
           x-enumNames:
           - DAYS
@@ -584,8 +476,9 @@ components:
           description: If set to false, membership is activated upon purchase. When set to true, membership is activated at the moment of the first purchase. When the purchase is for booking in the future, the activation date is set to the booking date.
           example: false
         activationDeadlineInDays:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           description: Only applicable when isActivatedOnFirstUse=true. If set, the member must activate the membership within this many days of purchase or it expires automatically.
           example: 21
         hasFreeTrial:
@@ -595,8 +488,9 @@ components:
           type: integer
           example: 7
         contractAgreement:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           example: Contract agreement text
         order:
           type: integer
@@ -605,13 +499,15 @@ components:
           type: boolean
           example: false
         usageLimitForSessions:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
           description: Only applicable for SUBSCRIPTION. Maximum number of sessions customer can book with this membership during one renewal period, not used when combinedUsageLimitEnabled=true
           example: 5
         usageLimitForAppointments:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
           description: Only applicable for SUBSCRIPTION. Maximum number of appointments customer can book with this membership during one renewal period, not used when combinedUsageLimitEnabled=true
           example: 2
         combinedUsageLimitEnabled:
@@ -619,8 +515,9 @@ components:
           description: Only applicable for SUBSCRIPTION. The usage limits of the memberships are applied to sum of both bookings and appointments.
           example: false
         combinedUsageLimit:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
           description: Only applicable for SUBSCRIPTION. Combined maximum number of bookings and appointments customer can book with this membership during one renewal period, only used when combinedUsageLimitEnabled=true
           example: null
         usageLimitRenewalEnabled:
@@ -628,17 +525,19 @@ components:
           description: Only applicable for SUBSCRIPTION. Calculate usage limits differently to renewal duration.
           example: false
         usageLimitRenewalDuration:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
           description: Only applicable for SUBSCRIPTION. Interval for which the usage limits are calculated, only used when usageLimitRenewalEnabled=true
           example: null
         usageLimitRenewalDurationUnit:
-          nullable: true
           enum:
           - days
           - months
           - years
-          type: string
+          type:
+          - string
+          - 'null'
           description: Only applicable for SUBSCRIPTION. Interval for which the usage limits are calculated, only used when usageLimitRenewalEnabled=true
           example: null
           x-enumNames:
@@ -650,28 +549,31 @@ components:
           description: Only applicable for SUBSCRIPTION. When true and customer doesn't use reach their usage limits, the rest is transferred to the customer according to usageLimitRolloverMode
           example: false
         usageLimitRolloverMode:
-          nullable: true
           enum:
           - next-renewal
           - event-credits
-          type: string
+          type:
+          - string
+          - 'null'
           description: Only applicable for SUBSCRIPTION. How should extra usage limits be transferred to customer, either as package or as addition to next renewal period. Only used when usageLimitRolloverEnabled=true
           example: null
           x-enumNames:
           - NEXT_RENEWAL
           - EVENT_CREDITS
         usageLimitRolloverExpirationDuration:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
           description: Only applicable for SUBSCRIPTION. When should the extra limits / package expire after rolling over. Only used when usageLimitRolloverEnabled=true
           example: null
         usageLimitRolloverExpirationDurationUnit:
-          nullable: true
           enum:
           - days
           - months
           - years
-          type: string
+          type:
+          - string
+          - 'null'
           description: Only applicable for SUBSCRIPTION. When should the extra limits / package expire after rolling over. Only used when usageLimitRolloverEnabled=true
           example: null
           x-enumNames:
@@ -679,14 +581,16 @@ components:
           - MONTHS
           - YEARS
         startDate:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Explicit start date for memberships that have specific duration
           example: '2022-01-01T00:00:00Z'
           format: date-time
         endDate:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Explicit end date for memberships that have specific duration
           example: '2022-02-01T00:00:00Z'
           format: date-time
@@ -704,23 +608,27 @@ components:
           - FIXED
           - DYNAMIC
         price:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
           description: In cents, membership price for FIXED priceType
           example: 955
         minimumPrice:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           description: In cents, minimum membership price for DYNAMIC priceType
           example: null
         maximumPrice:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           description: In cents, maximum membership price for DYNAMIC priceType
           example: null
         recommendedPrice:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           description: In cents, recommended membership price for DYNAMIC priceType
           example: null
         priceIncludesTax:
@@ -728,8 +636,9 @@ components:
           description: Indicates if tax is already included in the price
           example: true
         taxRateInPercent:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
           description: Tax rate in percents
           example: 20
         freeTrialPrice:
@@ -783,70 +692,40 @@ components:
       - taxRateInPercent
       - freeTrialPrice
       - tags
-    MemberHostLocationDto:
+    HostTagDto:
       type: object
       properties:
         id:
           type: integer
-          example: 5
-        parentLocationId:
-          type: integer
-          nullable: true
-          example: null
+          example: 1
         name:
           type: string
-          nullable: true
-          example: Brooklyn Location
-        timeZone:
-          type: string
-          nullable: true
-          example: America/New_York
-        fullAddress:
-          type: string
-          nullable: true
-          description: Full location address
-          example: 96 North Country Club Street, Brooklyn, NY 11233
-        address:
-          type: string
-          nullable: true
-          example: 96 North Country Club Street
-        city:
-          type: string
-          nullable: true
-          example: Brooklyn
-        countryCode:
-          type: string
-          nullable: true
-          example: NY
-        zipCode:
-          type: string
-          nullable: true
-          example: '11233'
-        latitude:
-          type: number
-          nullable: true
-          example: 40.6453448
-        longitude:
-          type: number
-          nullable: true
-          example: -74.0275687
-        isPhysical:
+          example: VIP
+        isCustomerBadge:
           type: boolean
-          nullable: true
-          example: true
+          example: false
+        badgeLabel:
+          type:
+          - string
+          - 'null'
+          example: VIP
+        badgeColor:
+          type:
+          - string
+          - 'null'
+          example: '#fe0000'
+        corporateTagId:
+          type:
+          - integer
+          - 'null'
+          example: 1
       required:
       - id
-      - parentLocationId
       - name
-      - timeZone
-      - fullAddress
-      - address
-      - city
-      - countryCode
-      - zipCode
-      - latitude
-      - longitude
-      - isPhysical
+      - isCustomerBadge
+      - badgeLabel
+      - badgeColor
+      - corporateTagId
     PaginatedResponseDataDto:
       type: object
       properties:
@@ -872,46 +751,178 @@ components:
       - page
       - pageSize
       - totalCount
-    HostTagDto:
+    MemberHostSessionDto:
       type: object
       properties:
         id:
           type: integer
-          example: 1
+          example: 3
         name:
           type: string
-          example: VIP
-        isCustomerBadge:
+          example: Stretching with John
+        type:
+          enum:
+          - private
+          - special-event
+          - special-event-new
+          - retreat
+          - fitness
+          - course
+          - course-class
+          - semester
+          - recital
+          type: string
+          example: fitness
+          x-enumNames:
+          - PRIVATE
+          - SPECIAL_EVENT
+          - SPECIAL_EVENT_NEW
+          - RETREAT
+          - FITNESS
+          - COURSE
+          - COURSE_CLASS
+          - SEMESTER
+          - RECITAL
+        description:
+          type:
+          - string
+          - 'null'
+          example: Our stretching class is a great way to start your day.
+        startsAt:
+          type: string
+          example: '2021-01-01T05:00:00Z'
+          format: date-time
+        endsAt:
+          type: string
+          example: '2021-01-01T06:00:00Z'
+          format: date-time
+        durationInMinutes:
+          type: integer
+          example: 60
+        capacity:
+          type:
+          - integer
+          - 'null'
+          description: Maximum session capacity, NULL means unlimited
+          example: 10
+          minimum: 0
+        participants:
+          type: integer
+          description: How many bookings the session already has
+          example: 1
+        waitlistEnabled:
+          type: boolean
+          example: true
+        waitlistCapacity:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of people on the waitlist if the waitlist is enabled. NULL means unlimited
+          example: 5
+        salesCutoffInMinutes:
+          type:
+          - number
+          - 'null'
+          description: How long before the session start the bookings sale stops
+          example: 10
+        isCancelled:
           type: boolean
           example: false
-        badgeLabel:
+        priceType:
+          enum:
+          - fixed-price
+          - dynamic
           type: string
-          nullable: true
-          example: VIP
-        badgeColor:
-          type: string
-          nullable: true
-          example: '#fe0000'
-        corporateTagId:
-          type: integer
-          nullable: true
-          example: 1
+          example: fixed-price
+          x-enumNames:
+          - FIXED
+          - DYNAMIC
+        fixedTicketPrice:
+          type: number
+          example: 955
+        dynamicTicketPriceMin:
+          type:
+          - number
+          - 'null'
+          example: null
+        dynamicTicketPriceMax:
+          type:
+          - number
+          - 'null'
+          example: null
+        dynamicTicketFreeOptionEnabled:
+          type:
+          - boolean
+          - 'null'
+          example: null
+        teacher:
+          allOf:
+          - $ref: '#/components/schemas/MemberTeacherDto'
+        originalTeacher:
+          allOf:
+          - $ref: '#/components/schemas/MemberTeacherDto'
+        additionalTeachers:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemberTeacherDto'
+        isRecurring:
+          type: boolean
+          example: false
+        isInPerson:
+          type: boolean
+          example: false
+        inPersonLocation:
+          allOf:
+          - $ref: '#/components/schemas/MemberLocationDto'
+        bannerImageUrl:
+          type:
+          - string
+          - 'null'
+          example: https://example.com/image.jpg
+        hostPhotoUrl:
+          type:
+          - string
+          - 'null'
+          example: https://example.com/image.jpg
+        onlineStreamUrl:
+          type:
+          - string
+          - 'null'
+          example: https://example.com/online-stream
+        onlineStreamPassword:
+          type:
+          - string
+          - 'null'
+          example: password123
       required:
       - id
       - name
-      - isCustomerBadge
-      - badgeLabel
-      - badgeColor
-      - corporateTagId
-    MemberSignableDocumentsResponseDto:
-      type: object
-      properties:
-        documents:
-          type: array
-          items:
-            $ref: '#/components/schemas/MemberSignableDocumentDto'
-      required:
-      - documents
+      - type
+      - description
+      - startsAt
+      - endsAt
+      - durationInMinutes
+      - capacity
+      - participants
+      - waitlistEnabled
+      - waitlistCapacity
+      - salesCutoffInMinutes
+      - isCancelled
+      - priceType
+      - fixedTicketPrice
+      - dynamicTicketPriceMin
+      - dynamicTicketPriceMax
+      - dynamicTicketFreeOptionEnabled
+      - teacher
+      - originalTeacher
+      - additionalTeachers
+      - isRecurring
+      - isInPerson
+      - inPersonLocation
+      - bannerImageUrl
+      - hostPhotoUrl
+      - onlineStreamUrl
+      - onlineStreamPassword
     PaginatedResponseDto:
       type: object
       properties:
@@ -919,73 +930,6 @@ components:
           $ref: '#/components/schemas/PaginatedResponseDataDto'
       required:
       - pagination
-    MemberSignableDocumentDto:
-      type: object
-      properties:
-        predefinedWaiverType:
-          enum:
-          - waiver
-          - membership-waiver
-          - child-waiver
-          - privacy-policy
-          type: string
-          x-enumNames:
-          - CUSTOMER_WAIVER
-          - MEMBERSHIP_TERMS_AND_CONDITIONS
-          - CHILD_BOOKING_WAIVER
-          - PRIVACY_POLICY
-        customWaiverId:
-          type: integer
-        type:
-          enum:
-          - predefinedWaiver
-          - customWaiver
-          type: string
-          x-enumNames:
-          - PredefinedWaiver
-          - CustomWaiver
-        name:
-          type: string
-          nullable: true
-        content:
-          type: string
-          nullable: true
-        signedAt:
-          type: string
-          nullable: true
-          format: date-time
-        signatureStatus:
-          enum:
-          - signed
-          - unsigned
-          - signature-expired
-          type: string
-          x-enumNames:
-          - SIGNED
-          - UNSIGNED
-          - SIGNATURE_EXPIRED
-        simpleSignature:
-          type: string
-        handwrittenSignature:
-          $ref: '#/components/schemas/HandwrittenElementDto'
-      required:
-      - type
-      - name
-      - content
-      - signedAt
-      - signatureStatus
-    MemberLocationDto:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        name:
-          type: string
-          example: Main Studio
-      required:
-      - id
-      - name
     MemberSignDocumentRequestDto:
       type: object
       properties:
@@ -1016,6 +960,112 @@ components:
           description: This signature contains a representation of handwritten vector element (array of SVG paths), as produced by Konva
           allOf:
           - $ref: '#/components/schemas/HandwrittenElementDto'
+    MemberHostLocationDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        parentLocationId:
+          type:
+          - integer
+          - 'null'
+          example: null
+        name:
+          type:
+          - string
+          - 'null'
+          example: Brooklyn Location
+        timeZone:
+          type:
+          - string
+          - 'null'
+          example: America/New_York
+        fullAddress:
+          type:
+          - string
+          - 'null'
+          description: Full location address
+          example: 96 North Country Club Street, Brooklyn, NY 11233
+        address:
+          type:
+          - string
+          - 'null'
+          example: 96 North Country Club Street
+        city:
+          type:
+          - string
+          - 'null'
+          example: Brooklyn
+        countryCode:
+          type:
+          - string
+          - 'null'
+          example: NY
+        zipCode:
+          type:
+          - string
+          - 'null'
+          example: '11233'
+        latitude:
+          type:
+          - number
+          - 'null'
+          example: 40.6453448
+        longitude:
+          type:
+          - number
+          - 'null'
+          example: -74.0275687
+        isPhysical:
+          type:
+          - boolean
+          - 'null'
+          example: true
+      required:
+      - id
+      - parentLocationId
+      - name
+      - timeZone
+      - fullAddress
+      - address
+      - city
+      - countryCode
+      - zipCode
+      - latitude
+      - longitude
+      - isPhysical
+    MemberTeacherDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: Doe
+        pictureUrl:
+          type:
+          - string
+          - 'null'
+          example: https://example.com/picture.jpg
+      required:
+      - id
+      - firstName
+      - lastName
+      - pictureUrl
+    HandwrittenElementPathDto:
+      type: object
+      properties:
+        points:
+          type: array
+          items:
+            $ref: '#/components/schemas/HandwrittenElementPointDto'
+      required:
+      - points
   securitySchemes:
     OAuth2:
       type: oauth2

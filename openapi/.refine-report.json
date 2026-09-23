@@ -1,21 +1,14 @@
 {
   "provider": "momence",
   "sources": [
-    "momence-auth-api-openapi.yml",
-    "momence-host-api-openapi.yml",
-    "momence-host-checkout-api-openapi.yml",
-    "momence-member-addresses-api-openapi.yml",
-    "momence-member-api-openapi.yml",
-    "momence-member-checkout-api-openapi.yml",
-    "momence-member-host-api-openapi.yml",
-    "momence-member-sessions-api-openapi.yml"
+    "_original/momence-openapi.yml"
   ],
   "outputs": [
     "momence-auth-api-openapi.yml",
     "momence-host-api-openapi.yml",
     "momence-host-checkout-api-openapi.yml",
-    "momence-member-addresses-api-openapi.yml",
     "momence-member-api-openapi.yml",
+    "momence-member-addresses-api-openapi.yml",
     "momence-member-checkout-api-openapi.yml",
     "momence-member-host-api-openapi.yml",
     "momence-member-sessions-api-openapi.yml"
@@ -23,6 +16,27 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "momence-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "momence-openapi.yml: declared missing tag: auth",
+    "momence-openapi.yml: declared missing tag: host",
+    "momence-openapi.yml: declared missing tag: host-checkout",
+    "momence-openapi.yml: declared missing tag: member",
+    "momence-openapi.yml: declared missing tag: member-addresses",
+    "momence-openapi.yml: declared missing tag: member-checkout",
+    "momence-openapi.yml: declared missing tag: member-host",
+    "momence-openapi.yml: declared missing tag: member-sessions",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "momence-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "momence-host-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "momence-host-checkout-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "momence-member-addresses-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "momence-member-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "momence-member-checkout-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "momence-member-host-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "momence-member-sessions-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Momence Public auth host-checkout API
+  title: Momence Public Host Checkout API
   description: ''
   version: '2.0'
   contact: {}
@@ -57,9 +57,7 @@ paths:
 
         | session-subscription-ticket-limit | subscription is limited to one ticket |
 
-        | unknown | unknown reason |
-
-        '
+        | unknown | unknown reason |'
       parameters: []
       requestBody:
         required: true
@@ -173,9 +171,7 @@ paths:
 
         | err-customer-age-prevents-from-action | customer is not eligible for the action due to age restriction |
 
-        | err-invalid-custom-payment-method | request contains invalid custom payment method id |
-
-        '
+        | err-invalid-custom-payment-method | request contains invalid custom payment method id |'
       parameters: []
       requestBody:
         required: true
@@ -242,6 +238,146 @@ paths:
       - OAuth2: []
 components:
   schemas:
+    HostCheckoutCompatibleMembershipsResponseDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/HostCheckoutCompatibleMembershipDto'
+      required:
+      - items
+    HostCheckoutPaymentMethodSavedDto:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - saved_payment_method
+        savedPaymentMethodId:
+          type: integer
+      required:
+      - id
+      - type
+      - savedPaymentMethodId
+    HostCheckoutResponseDto:
+      type: object
+      properties:
+        purchasedItems:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/HostCheckoutPurchasedSessionDto'
+            - $ref: '#/components/schemas/HostCheckoutPurchasedMembershipDto'
+            - $ref: '#/components/schemas/HostCheckoutPurchasedAppointmentDto'
+            - $ref: '#/components/schemas/HostCheckoutPurchasedProductDto'
+            - $ref: '#/components/schemas/HostCheckoutPurchasedGiftCardDto'
+            - $ref: '#/components/schemas/HostCheckoutPurchasedMoneyCreditsDto'
+            - $ref: '#/components/schemas/HostCheckoutPurchasedEventCreditsDto'
+      required:
+      - purchasedItems
+    HostCheckoutPaymentMethodFreeDto:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - free
+      required:
+      - id
+      - type
+    HostCheckoutCompatibleBoughtMembershipDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        type:
+          enum:
+          - subscription
+          - on-demand-subscription
+          - package-events
+          - package-money
+          - patron
+          type: string
+          example: subscription
+          x-enumNames:
+          - Subscription
+          - OnDemandSubscription
+          - PackageEvents
+          - PackageMoney
+          - Patron
+        startDate:
+          type:
+          - string
+          - 'null'
+          description: start date of the bought membership
+          example: '2021-01-01T00:00:00Z'
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          description: expiration date of the bought membership
+          example: '2021-02-01T00:00:00Z'
+          format: date-time
+        eventCreditsLeft:
+          type:
+          - number
+          - 'null'
+          description: number of event credits left, valid for PACKAGE_EVENTS
+          example: null
+        eventCreditsTotal:
+          type:
+          - number
+          - 'null'
+          description: number of event credits originally included in the package, valid for PACKAGE_EVENTS
+          example: null
+        moneyCreditsLeft:
+          type:
+          - number
+          - 'null'
+          description: number of money credits left, valid for PACKAGE_MONEY
+          example: null
+        moneyCreditsTotal:
+          type:
+          - number
+          - 'null'
+          description: number of money credits originally included in the package, valid for PACKAGE_MONEY
+          example: null
+        membership:
+          description: info about origin membership, it's possible the bought membership has no origin membership
+          allOf:
+          - $ref: '#/components/schemas/HostMembershipBasicDto'
+      required:
+      - id
+      - type
+      - startDate
+      - endDate
+      - eventCreditsLeft
+      - eventCreditsTotal
+      - moneyCreditsLeft
+      - moneyCreditsTotal
+      - membership
+    HostCheckoutPaymentMethodMembershipDto:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - membership
+        boughtMembershipId:
+          type: integer
+      required:
+      - id
+      - type
+      - boughtMembershipId
     HostCheckoutCompatibleMembershipDto:
       type: object
       properties:
@@ -285,25 +421,18 @@ components:
           - UNKNOWN
       required:
       - boughtMembership
-    HostCheckoutSessionItemDto:
+    HostCheckoutPurchasedGiftCardDto:
       type: object
       properties:
-        id:
-          type: string
         type:
           type: string
           enum:
-          - session
-        sessionId:
+          - gift-card
+        giftCardId:
           type: integer
-        appliedPriceRuleIds:
-          type: array
-          items:
-            type: integer
       required:
-      - id
       - type
-      - sessionId
+      - giftCardId
     HostCheckoutMembershipItemWithPriceDto:
       type: object
       properties:
@@ -322,6 +451,63 @@ components:
       - type
       - membershipId
       - attemptedPriceInCurrency
+    HostCheckoutPurchasedMoneyCreditsDto:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - money-credit
+        numberOfMoneyCredits:
+          type: number
+      required:
+      - type
+      - numberOfMoneyCredits
+    HostCheckoutPurchasedAppointmentDto:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - appointment
+        appointmentTransactionId:
+          type: integer
+      required:
+      - type
+      - appointmentTransactionId
+    HostCheckoutPaymentMethodCustomDto:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - custom
+        customPaymentMethodId:
+          type: integer
+        note:
+          type: string
+          description: This field may be required, depends on your payment settings
+      required:
+      - id
+      - type
+      - customPaymentMethodId
+    HostCheckoutMembershipItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - subscription
+        membershipId:
+          type: integer
+      required:
+      - id
+      - type
+      - membershipId
     HostCheckoutPricesResponseDto:
       type: object
       properties:
@@ -334,51 +520,20 @@ components:
       required:
       - totalInCurrency
       - itemsWithPrices
-    HostCheckoutPurchasedEventCreditsDto:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - event-credit
-        numberOfEventCredits:
-          type: number
-      required:
-      - type
-      - numberOfEventCredits
-    HostCheckoutPurchasedGiftCardDto:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - gift-card
-        giftCardId:
-          type: integer
-      required:
-      - type
-      - giftCardId
-    HostCheckoutPaymentMethodSavedDto:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - saved_payment_method
-        savedPaymentMethodId:
-          type: integer
-      required:
-      - id
-      - type
-      - savedPaymentMethodId
-    HostCheckoutCompatibleBoughtMembershipDto:
+    HostMembershipBasicDto:
       type: object
       properties:
         id:
           type: integer
-          example: 1
+          example: 5
+        name:
+          type: string
+          example: Monthly Membership
+        description:
+          type:
+          - string
+          - 'null'
+          example: Monthly membership with unlimited access to <b>all</b> classes.
         type:
           enum:
           - subscription
@@ -394,87 +549,196 @@ components:
           - PackageEvents
           - PackageMoney
           - Patron
-        startDate:
-          type: string
-          nullable: true
-          description: start date of the bought membership
-          example: '2021-01-01T00:00:00Z'
-          format: date-time
-        endDate:
-          type: string
-          nullable: true
-          description: expiration date of the bought membership
-          example: '2021-02-01T00:00:00Z'
-          format: date-time
-        eventCreditsLeft:
-          type: number
-          nullable: true
-          description: number of event credits left, valid for PACKAGE_EVENTS
+        locationId:
+          type:
+          - integer
+          - 'null'
           example: null
-        eventCreditsTotal:
-          type: number
-          nullable: true
-          description: number of event credits originally included in the package, valid for PACKAGE_EVENTS
+        disabled:
+          type: boolean
+          description: Indicates that the membership was disabled
+          example: false
+        autoRenewing:
+          type: boolean
+          description: Indicates that membership renews after specific interval
+          example: true
+        minimumAutoRenews:
+          type:
+          - integer
+          - 'null'
+          description: How many times membership has to renew before user can cancel renewal
           example: null
-        moneyCreditsLeft:
-          type: number
-          nullable: true
-          description: number of money credits left, valid for PACKAGE_MONEY
+        eventCredits:
+          type:
+          - integer
+          - 'null'
+          description: For PACKAGE_EVENTS memberships, defines how many event credits are included
           example: null
-        moneyCreditsTotal:
-          type: number
-          nullable: true
-          description: number of money credits originally included in the package, valid for PACKAGE_MONEY
+        moneyCredits:
+          type:
+          - number
+          - 'null'
+          description: For PACKAGE_MONEY memberships, defines how much money is included
           example: null
-        membership:
-          nullable: true
-          description: info about origin membership, it's possible the bought membership has no origin membership
-          allOf:
-          - $ref: '#/components/schemas/HostMembershipBasicDto'
-      required:
-      - id
-      - type
-      - startDate
-      - endDate
-      - eventCreditsLeft
-      - eventCreditsTotal
-      - moneyCreditsLeft
-      - moneyCreditsTotal
-      - membership
-    HostCheckoutSessionItemWithPriceDto:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
+        duration:
+          type:
+          - integer
+          - 'null'
+          description: For SUBSCRIPTION this is auto renew duration, for PACKAGE_* this is expiration time
+          example: 1
+        durationUnit:
           enum:
-          - session
-        sessionId:
+          - days
+          - months
+          - years
+          type:
+          - string
+          - 'null'
+          example: months
+          x-enumNames:
+          - DAYS
+          - MONTHS
+          - YEARS
+        isActivatedOnFirstUse:
+          type: boolean
+          description: If set to false, membership is activated upon purchase. When set to true, membership is activated at the moment of the first purchase. When the purchase is for booking in the future, the activation date is set to the booking date.
+          example: false
+        activationDeadlineInDays:
+          type:
+          - integer
+          - 'null'
+          description: Only applicable when isActivatedOnFirstUse=true. If set, the member must activate the membership within this many days of purchase or it expires automatically.
+          example: 21
+        hasFreeTrial:
+          type: boolean
+          example: false
+        freeTrialDurationInDays:
           type: integer
-        appliedPriceRuleIds:
-          type: array
-          items:
-            type: integer
-        attemptedPriceInCurrency:
-          type: string
+          example: 7
+        contractAgreement:
+          type:
+          - string
+          - 'null'
+          example: Contract agreement text
+        order:
+          type: integer
+          example: 1
+        isIntroOffer:
+          type: boolean
+          example: false
+        usageLimitForSessions:
+          type:
+          - number
+          - 'null'
+          description: Only applicable for SUBSCRIPTION. Maximum number of sessions customer can book with this membership during one renewal period, not used when combinedUsageLimitEnabled=true
+          example: 5
+        usageLimitForAppointments:
+          type:
+          - number
+          - 'null'
+          description: Only applicable for SUBSCRIPTION. Maximum number of appointments customer can book with this membership during one renewal period, not used when combinedUsageLimitEnabled=true
+          example: 2
+        combinedUsageLimitEnabled:
+          type: boolean
+          description: Only applicable for SUBSCRIPTION. The usage limits of the memberships are applied to sum of both bookings and appointments.
+          example: false
+        combinedUsageLimit:
+          type:
+          - number
+          - 'null'
+          description: Only applicable for SUBSCRIPTION. Combined maximum number of bookings and appointments customer can book with this membership during one renewal period, only used when combinedUsageLimitEnabled=true
+          example: null
+        usageLimitRenewalEnabled:
+          type: boolean
+          description: Only applicable for SUBSCRIPTION. Calculate usage limits differently to renewal duration.
+          example: false
+        usageLimitRenewalDuration:
+          type:
+          - number
+          - 'null'
+          description: Only applicable for SUBSCRIPTION. Interval for which the usage limits are calculated, only used when usageLimitRenewalEnabled=true
+          example: null
+        usageLimitRenewalDurationUnit:
+          enum:
+          - days
+          - months
+          - years
+          type:
+          - string
+          - 'null'
+          description: Only applicable for SUBSCRIPTION. Interval for which the usage limits are calculated, only used when usageLimitRenewalEnabled=true
+          example: null
+          x-enumNames:
+          - DAYS
+          - MONTHS
+          - YEARS
+        usageLimitRolloverEnabled:
+          type: boolean
+          description: Only applicable for SUBSCRIPTION. When true and customer doesn't use reach their usage limits, the rest is transferred to the customer according to usageLimitRolloverMode
+          example: false
+        usageLimitRolloverMode:
+          enum:
+          - next-renewal
+          - event-credits
+          type:
+          - string
+          - 'null'
+          description: Only applicable for SUBSCRIPTION. How should extra usage limits be transferred to customer, either as package or as addition to next renewal period. Only used when usageLimitRolloverEnabled=true
+          example: null
+          x-enumNames:
+          - NEXT_RENEWAL
+          - EVENT_CREDITS
+        usageLimitRolloverExpirationDuration:
+          type:
+          - number
+          - 'null'
+          description: Only applicable for SUBSCRIPTION. When should the extra limits / package expire after rolling over. Only used when usageLimitRolloverEnabled=true
+          example: null
+        usageLimitRolloverExpirationDurationUnit:
+          enum:
+          - days
+          - months
+          - years
+          type:
+          - string
+          - 'null'
+          description: Only applicable for SUBSCRIPTION. When should the extra limits / package expire after rolling over. Only used when usageLimitRolloverEnabled=true
+          example: null
+          x-enumNames:
+          - DAYS
+          - MONTHS
+          - YEARS
       required:
       - id
+      - name
+      - description
       - type
-      - sessionId
-      - attemptedPriceInCurrency
-    HostCheckoutPurchasedMoneyCreditsDto:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - money-credit
-        numberOfMoneyCredits:
-          type: number
-      required:
-      - type
-      - numberOfMoneyCredits
+      - locationId
+      - disabled
+      - autoRenewing
+      - minimumAutoRenews
+      - eventCredits
+      - moneyCredits
+      - duration
+      - durationUnit
+      - isActivatedOnFirstUse
+      - activationDeadlineInDays
+      - hasFreeTrial
+      - freeTrialDurationInDays
+      - contractAgreement
+      - order
+      - isIntroOffer
+      - usageLimitForSessions
+      - usageLimitForAppointments
+      - combinedUsageLimitEnabled
+      - combinedUsageLimit
+      - usageLimitRenewalEnabled
+      - usageLimitRenewalDuration
+      - usageLimitRenewalDurationUnit
+      - usageLimitRolloverEnabled
+      - usageLimitRolloverMode
+      - usageLimitRolloverExpirationDuration
+      - usageLimitRolloverExpirationDurationUnit
     HostCheckoutErrorResponseDto:
       type: object
       properties:
@@ -541,34 +805,53 @@ components:
       required:
       - type
       - message
-    HostCheckoutPurchasedProductDto:
+    HostCheckoutPurchasedMembershipDto:
       type: object
       properties:
         type:
           type: string
           enum:
-          - product
-        productOrderId:
+          - membership
+        boughtMembershipId:
           type: integer
       required:
       - type
-      - productOrderId
-    HostCheckoutResponseDto:
+      - boughtMembershipId
+    HostCheckoutSessionItemDto:
       type: object
       properties:
-        purchasedItems:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - session
+        sessionId:
+          type: integer
+        appliedPriceRuleIds:
           type: array
           items:
-            oneOf:
-            - $ref: '#/components/schemas/HostCheckoutPurchasedSessionDto'
-            - $ref: '#/components/schemas/HostCheckoutPurchasedMembershipDto'
-            - $ref: '#/components/schemas/HostCheckoutPurchasedAppointmentDto'
-            - $ref: '#/components/schemas/HostCheckoutPurchasedProductDto'
-            - $ref: '#/components/schemas/HostCheckoutPurchasedGiftCardDto'
-            - $ref: '#/components/schemas/HostCheckoutPurchasedMoneyCreditsDto'
-            - $ref: '#/components/schemas/HostCheckoutPurchasedEventCreditsDto'
+            type: integer
       required:
-      - purchasedItems
+      - id
+      - type
+      - sessionId
+    HostCheckoutPricesItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+        priceInCurrencyWithTax:
+          type: string
+        priceInCurrencyWithoutTax:
+          type: string
+        taxInCurrency:
+          type: string
+      required:
+      - id
+      - priceInCurrencyWithTax
+      - priceInCurrencyWithoutTax
+      - taxInCurrency
     HostCheckoutPricesRequestDto:
       type: object
       properties:
@@ -595,7 +878,24 @@ components:
       - memberId
       - items
       - paymentMethods
-    HostCheckoutPaymentMethodFreeDto:
+    HostCheckoutCompatibleMembershipsRequestDto:
+      type: object
+      properties:
+        memberId:
+          type: integer
+          description: ID of the member to perform the checkout for
+        items:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/HostCheckoutMembershipItemDto'
+            - $ref: '#/components/schemas/HostCheckoutSessionItemDto'
+        homeLocationId:
+          type: integer
+      required:
+      - memberId
+      - items
+    HostCheckoutSessionItemWithPriceDto:
       type: object
       properties:
         id:
@@ -603,10 +903,56 @@ components:
         type:
           type: string
           enum:
-          - free
+          - session
+        sessionId:
+          type: integer
+        appliedPriceRuleIds:
+          type: array
+          items:
+            type: integer
+        attemptedPriceInCurrency:
+          type: string
       required:
       - id
       - type
+      - sessionId
+      - attemptedPriceInCurrency
+    HostCheckoutPurchasedSessionDto:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - session
+        sessionBookingId:
+          type: integer
+      required:
+      - type
+      - sessionBookingId
+    HostCheckoutPurchasedProductDto:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - product
+        productOrderId:
+          type: integer
+      required:
+      - type
+      - productOrderId
+    HostCheckoutPurchasedEventCreditsDto:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - event-credit
+        numberOfEventCredits:
+          type: number
+      required:
+      - type
+      - numberOfEventCredits
     HostCheckoutRequestDto:
       type: object
       properties:
@@ -633,334 +979,6 @@ components:
       - memberId
       - items
       - paymentMethods
-    HostCheckoutMembershipItemDto:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - subscription
-        membershipId:
-          type: integer
-      required:
-      - id
-      - type
-      - membershipId
-    HostCheckoutPaymentMethodMembershipDto:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - membership
-        boughtMembershipId:
-          type: integer
-      required:
-      - id
-      - type
-      - boughtMembershipId
-    HostCheckoutPurchasedMembershipDto:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - membership
-        boughtMembershipId:
-          type: integer
-      required:
-      - type
-      - boughtMembershipId
-    HostCheckoutPurchasedSessionDto:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - session
-        sessionBookingId:
-          type: integer
-      required:
-      - type
-      - sessionBookingId
-    HostCheckoutPaymentMethodCustomDto:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - custom
-        customPaymentMethodId:
-          type: integer
-        note:
-          type: string
-          description: This field may be required, depends on your payment settings
-      required:
-      - id
-      - type
-      - customPaymentMethodId
-    HostCheckoutPricesItemDto:
-      type: object
-      properties:
-        id:
-          type: string
-        priceInCurrencyWithTax:
-          type: string
-        priceInCurrencyWithoutTax:
-          type: string
-        taxInCurrency:
-          type: string
-      required:
-      - id
-      - priceInCurrencyWithTax
-      - priceInCurrencyWithoutTax
-      - taxInCurrency
-    HostCheckoutCompatibleMembershipsRequestDto:
-      type: object
-      properties:
-        memberId:
-          type: integer
-          description: ID of the member to perform the checkout for
-        items:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/HostCheckoutMembershipItemDto'
-            - $ref: '#/components/schemas/HostCheckoutSessionItemDto'
-        homeLocationId:
-          type: integer
-      required:
-      - memberId
-      - items
-    HostMembershipBasicDto:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 5
-        name:
-          type: string
-          example: Monthly Membership
-        description:
-          type: string
-          nullable: true
-          example: Monthly membership with unlimited access to <b>all</b> classes.
-        type:
-          enum:
-          - subscription
-          - on-demand-subscription
-          - package-events
-          - package-money
-          - patron
-          type: string
-          example: subscription
-          x-enumNames:
-          - Subscription
-          - OnDemandSubscription
-          - PackageEvents
-          - PackageMoney
-          - Patron
-        locationId:
-          type: integer
-          nullable: true
-          example: null
-        disabled:
-          type: boolean
-          description: Indicates that the membership was disabled
-          example: false
-        autoRenewing:
-          type: boolean
-          description: Indicates that membership renews after specific interval
-          example: true
-        minimumAutoRenews:
-          type: integer
-          nullable: true
-          description: How many times membership has to renew before user can cancel renewal
-          example: null
-        eventCredits:
-          type: integer
-          nullable: true
-          description: For PACKAGE_EVENTS memberships, defines how many event credits are included
-          example: null
-        moneyCredits:
-          type: number
-          nullable: true
-          description: For PACKAGE_MONEY memberships, defines how much money is included
-          example: null
-        duration:
-          type: integer
-          nullable: true
-          description: For SUBSCRIPTION this is auto renew duration, for PACKAGE_* this is expiration time
-          example: 1
-        durationUnit:
-          nullable: true
-          enum:
-          - days
-          - months
-          - years
-          type: string
-          example: months
-          x-enumNames:
-          - DAYS
-          - MONTHS
-          - YEARS
-        isActivatedOnFirstUse:
-          type: boolean
-          description: If set to false, membership is activated upon purchase. When set to true, membership is activated at the moment of the first purchase. When the purchase is for booking in the future, the activation date is set to the booking date.
-          example: false
-        activationDeadlineInDays:
-          type: integer
-          nullable: true
-          description: Only applicable when isActivatedOnFirstUse=true. If set, the member must activate the membership within this many days of purchase or it expires automatically.
-          example: 21
-        hasFreeTrial:
-          type: boolean
-          example: false
-        freeTrialDurationInDays:
-          type: integer
-          example: 7
-        contractAgreement:
-          type: string
-          nullable: true
-          example: Contract agreement text
-        order:
-          type: integer
-          example: 1
-        isIntroOffer:
-          type: boolean
-          example: false
-        usageLimitForSessions:
-          type: number
-          nullable: true
-          description: Only applicable for SUBSCRIPTION. Maximum number of sessions customer can book with this membership during one renewal period, not used when combinedUsageLimitEnabled=true
-          example: 5
-        usageLimitForAppointments:
-          type: number
-          nullable: true
-          description: Only applicable for SUBSCRIPTION. Maximum number of appointments customer can book with this membership during one renewal period, not used when combinedUsageLimitEnabled=true
-          example: 2
-        combinedUsageLimitEnabled:
-          type: boolean
-          description: Only applicable for SUBSCRIPTION. The usage limits of the memberships are applied to sum of both bookings and appointments.
-          example: false
-        combinedUsageLimit:
-          type: number
-          nullable: true
-          description: Only applicable for SUBSCRIPTION. Combined maximum number of bookings and appointments customer can book with this membership during one renewal period, only used when combinedUsageLimitEnabled=true
-          example: null
-        usageLimitRenewalEnabled:
-          type: boolean
-          description: Only applicable for SUBSCRIPTION. Calculate usage limits differently to renewal duration.
-          example: false
-        usageLimitRenewalDuration:
-          type: number
-          nullable: true
-          description: Only applicable for SUBSCRIPTION. Interval for which the usage limits are calculated, only used when usageLimitRenewalEnabled=true
-          example: null
-        usageLimitRenewalDurationUnit:
-          nullable: true
-          enum:
-          - days
-          - months
-          - years
-          type: string
-          description: Only applicable for SUBSCRIPTION. Interval for which the usage limits are calculated, only used when usageLimitRenewalEnabled=true
-          example: null
-          x-enumNames:
-          - DAYS
-          - MONTHS
-          - YEARS
-        usageLimitRolloverEnabled:
-          type: boolean
-          description: Only applicable for SUBSCRIPTION. When true and customer doesn't use reach their usage limits, the rest is transferred to the customer according to usageLimitRolloverMode
-          example: false
-        usageLimitRolloverMode:
-          nullable: true
-          enum:
-          - next-renewal
-          - event-credits
-          type: string
-          description: Only applicable for SUBSCRIPTION. How should extra usage limits be transferred to customer, either as package or as addition to next renewal period. Only used when usageLimitRolloverEnabled=true
-          example: null
-          x-enumNames:
-          - NEXT_RENEWAL
-          - EVENT_CREDITS
-        usageLimitRolloverExpirationDuration:
-          type: number
-          nullable: true
-          description: Only applicable for SUBSCRIPTION. When should the extra limits / package expire after rolling over. Only used when usageLimitRolloverEnabled=true
-          example: null
-        usageLimitRolloverExpirationDurationUnit:
-          nullable: true
-          enum:
-          - days
-          - months
-          - years
-          type: string
-          description: Only applicable for SUBSCRIPTION. When should the extra limits / package expire after rolling over. Only used when usageLimitRolloverEnabled=true
-          example: null
-          x-enumNames:
-          - DAYS
-          - MONTHS
-          - YEARS
-      required:
-      - id
-      - name
-      - description
-      - type
-      - locationId
-      - disabled
-      - autoRenewing
-      - minimumAutoRenews
-      - eventCredits
-      - moneyCredits
-      - duration
-      - durationUnit
-      - isActivatedOnFirstUse
-      - activationDeadlineInDays
-      - hasFreeTrial
-      - freeTrialDurationInDays
-      - contractAgreement
-      - order
-      - isIntroOffer
-      - usageLimitForSessions
-      - usageLimitForAppointments
-      - combinedUsageLimitEnabled
-      - combinedUsageLimit
-      - usageLimitRenewalEnabled
-      - usageLimitRenewalDuration
-      - usageLimitRenewalDurationUnit
-      - usageLimitRolloverEnabled
-      - usageLimitRolloverMode
-      - usageLimitRolloverExpirationDuration
-      - usageLimitRolloverExpirationDurationUnit
-    HostCheckoutPurchasedAppointmentDto:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - appointment
-        appointmentTransactionId:
-          type: integer
-      required:
-      - type
-      - appointmentTransactionId
-    HostCheckoutCompatibleMembershipsResponseDto:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/HostCheckoutCompatibleMembershipDto'
-      required:
-      - items
   securitySchemes:
     OAuth2:
       type: oauth2

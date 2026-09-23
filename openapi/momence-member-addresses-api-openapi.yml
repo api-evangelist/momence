@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Momence Public auth member-addresses API
+  title: Momence Public Member Addresses API
   description: ''
   version: '2.0'
   contact: {}
@@ -200,59 +200,6 @@ paths:
       - OAuth2: []
 components:
   schemas:
-    ApiV2MemberAddressDto:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        address:
-          type: string
-          example: 153 Hunters Drive
-        zipcode:
-          type: string
-          example: '8513'
-        city:
-          type: string
-          example: New York
-        country:
-          type: string
-          example: US
-        createdAt:
-          type: string
-          example: '2021-09-22T00:00:00.000Z'
-          format: date-time
-      required:
-      - id
-      - address
-      - zipcode
-      - city
-      - country
-      - createdAt
-    ApiV2MemberAddressRequestDto:
-      type: object
-      properties:
-        address:
-          type: string
-          example: 153 Hunters Drive
-          maxLength: 2048
-        zipcode:
-          type: string
-          example: '8513'
-          maxLength: 255
-        city:
-          type: string
-          example: New York
-          maxLength: 255
-        country:
-          type: string
-          example: US
-          maxLength: 255
-      required:
-      - address
-      - zipcode
-      - city
-      - country
     PaginatedResponseDataDto:
       type: object
       properties:
@@ -285,6 +232,59 @@ components:
           $ref: '#/components/schemas/PaginatedResponseDataDto'
       required:
       - pagination
+    ApiV2MemberAddressRequestDto:
+      type: object
+      properties:
+        address:
+          type: string
+          example: 153 Hunters Drive
+          maxLength: 2048
+        zipcode:
+          type: string
+          example: '8513'
+          maxLength: 255
+        city:
+          type: string
+          example: New York
+          maxLength: 255
+        country:
+          type: string
+          example: US
+          maxLength: 255
+      required:
+      - address
+      - zipcode
+      - city
+      - country
+    ApiV2MemberAddressDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        address:
+          type: string
+          example: 153 Hunters Drive
+        zipcode:
+          type: string
+          example: '8513'
+        city:
+          type: string
+          example: New York
+        country:
+          type: string
+          example: US
+        createdAt:
+          type: string
+          example: '2021-09-22T00:00:00.000Z'
+          format: date-time
+      required:
+      - id
+      - address
+      - zipcode
+      - city
+      - country
+      - createdAt
   securitySchemes:
     OAuth2:
       type: oauth2
