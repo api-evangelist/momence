@@ -238,6 +238,18 @@ paths:
       - OAuth2: []
 components:
   schemas:
+    HostCheckoutPurchasedMembershipDto:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - membership
+        boughtMembershipId:
+          type: integer
+      required:
+      - type
+      - boughtMembershipId
     HostCheckoutCompatibleMembershipsResponseDto:
       type: object
       properties:
@@ -247,234 +259,22 @@ components:
             $ref: '#/components/schemas/HostCheckoutCompatibleMembershipDto'
       required:
       - items
-    HostCheckoutPaymentMethodSavedDto:
+    HostCheckoutPricesItemDto:
       type: object
       properties:
         id:
           type: string
-        type:
+        priceInCurrencyWithTax:
           type: string
-          enum:
-          - saved_payment_method
-        savedPaymentMethodId:
-          type: integer
-      required:
-      - id
-      - type
-      - savedPaymentMethodId
-    HostCheckoutResponseDto:
-      type: object
-      properties:
-        purchasedItems:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/HostCheckoutPurchasedSessionDto'
-            - $ref: '#/components/schemas/HostCheckoutPurchasedMembershipDto'
-            - $ref: '#/components/schemas/HostCheckoutPurchasedAppointmentDto'
-            - $ref: '#/components/schemas/HostCheckoutPurchasedProductDto'
-            - $ref: '#/components/schemas/HostCheckoutPurchasedGiftCardDto'
-            - $ref: '#/components/schemas/HostCheckoutPurchasedMoneyCreditsDto'
-            - $ref: '#/components/schemas/HostCheckoutPurchasedEventCreditsDto'
-      required:
-      - purchasedItems
-    HostCheckoutPaymentMethodFreeDto:
-      type: object
-      properties:
-        id:
+        priceInCurrencyWithoutTax:
           type: string
-        type:
-          type: string
-          enum:
-          - free
-      required:
-      - id
-      - type
-    HostCheckoutCompatibleBoughtMembershipDto:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        type:
-          enum:
-          - subscription
-          - on-demand-subscription
-          - package-events
-          - package-money
-          - patron
-          type: string
-          example: subscription
-          x-enumNames:
-          - Subscription
-          - OnDemandSubscription
-          - PackageEvents
-          - PackageMoney
-          - Patron
-        startDate:
-          type:
-          - string
-          - 'null'
-          description: start date of the bought membership
-          example: '2021-01-01T00:00:00Z'
-          format: date-time
-        endDate:
-          type:
-          - string
-          - 'null'
-          description: expiration date of the bought membership
-          example: '2021-02-01T00:00:00Z'
-          format: date-time
-        eventCreditsLeft:
-          type:
-          - number
-          - 'null'
-          description: number of event credits left, valid for PACKAGE_EVENTS
-          example: null
-        eventCreditsTotal:
-          type:
-          - number
-          - 'null'
-          description: number of event credits originally included in the package, valid for PACKAGE_EVENTS
-          example: null
-        moneyCreditsLeft:
-          type:
-          - number
-          - 'null'
-          description: number of money credits left, valid for PACKAGE_MONEY
-          example: null
-        moneyCreditsTotal:
-          type:
-          - number
-          - 'null'
-          description: number of money credits originally included in the package, valid for PACKAGE_MONEY
-          example: null
-        membership:
-          description: info about origin membership, it's possible the bought membership has no origin membership
-          allOf:
-          - $ref: '#/components/schemas/HostMembershipBasicDto'
-      required:
-      - id
-      - type
-      - startDate
-      - endDate
-      - eventCreditsLeft
-      - eventCreditsTotal
-      - moneyCreditsLeft
-      - moneyCreditsTotal
-      - membership
-    HostCheckoutPaymentMethodMembershipDto:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - membership
-        boughtMembershipId:
-          type: integer
-      required:
-      - id
-      - type
-      - boughtMembershipId
-    HostCheckoutCompatibleMembershipDto:
-      type: object
-      properties:
-        boughtMembership:
-          $ref: '#/components/schemas/HostCheckoutCompatibleBoughtMembershipDto'
-        incompatibility:
-          enum:
-          - session-membership-excluded
-          - session-bought-membership-will-expire
-          - session-bought-membership-pack-will-expire
-          - session-bought-membership-already-used
-          - session-bought-membership-usage-limit-reached
-          - session-bought-membership-usage-limit-reached-for-semester-or-course
-          - session-bought-membership-daily-limit-reached
-          - session-bought-membership-no-event-credits-left
-          - session-bought-membership-no-money-credits-left
-          - session-bought-membership-on-demand
-          - session-bought-membership-starts-later
-          - session-bought-membership-invalid-type
-          - session-bought-membership-disabled
-          - session-bought-membership-frozen
-          - session-subscription-ticket-limit
-          - unknown
-          type: string
-          x-enumNames:
-          - SESSION_MEMBERSHIP_EXCLUDED
-          - SESSION_BOUGHT_MEMBERSHIP_WILL_EXPIRE
-          - SESSION_BOUGHT_MEMBERSHIP_PACK_WILL_EXPIRE
-          - SESSION_BOUGHT_MEMBERSHIP_ALREADY_USED
-          - SESSION_BOUGHT_MEMBERSHIP_USAGE_LIMIT_REACHED
-          - SESSION_BOUGHT_MEMBERSHIP_USAGE_LIMIT_REACHED_FOR_SEMESTER_OR_COURSE
-          - SESSION_BOUGHT_MEMBERSHIP_DAILY_LIMIT_REACHED
-          - SESSION_BOUGHT_MEMBERSHIP_NO_EVENT_CREDITS_LEFT
-          - SESSION_BOUGHT_MEMBERSHIP_NO_MONEY_CREDITS_LEFT
-          - SESSION_BOUGHT_MEMBERSHIP_ON_DEMAND
-          - SESSION_BOUGHT_MEMBERSHIP_STARTS_LATER
-          - SESSION_BOUGHT_MEMBERSHIP_INVALID_TYPE
-          - SESSION_BOUGHT_MEMBERSHIP_DISABLED
-          - SESSION_BOUGHT_MEMBERSHIP_FROZEN
-          - SESSION_BOUGHT_MEMBERSHIP_TICKET_LIMIT
-          - UNKNOWN
-      required:
-      - boughtMembership
-    HostCheckoutPurchasedGiftCardDto:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - gift-card
-        giftCardId:
-          type: integer
-      required:
-      - type
-      - giftCardId
-    HostCheckoutMembershipItemWithPriceDto:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - subscription
-        membershipId:
-          type: integer
-        attemptedPriceInCurrency:
+        taxInCurrency:
           type: string
       required:
       - id
-      - type
-      - membershipId
-      - attemptedPriceInCurrency
-    HostCheckoutPurchasedMoneyCreditsDto:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - money-credit
-        numberOfMoneyCredits:
-          type: number
-      required:
-      - type
-      - numberOfMoneyCredits
-    HostCheckoutPurchasedAppointmentDto:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - appointment
-        appointmentTransactionId:
-          type: integer
-      required:
-      - type
-      - appointmentTransactionId
+      - priceInCurrencyWithTax
+      - priceInCurrencyWithoutTax
+      - taxInCurrency
     HostCheckoutPaymentMethodCustomDto:
       type: object
       properties:
@@ -493,6 +293,44 @@ components:
       - id
       - type
       - customPaymentMethodId
+    HostCheckoutPurchasedEventCreditsDto:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - event-credit
+        numberOfEventCredits:
+          type: number
+      required:
+      - type
+      - numberOfEventCredits
+    HostCheckoutPricesRequestDto:
+      type: object
+      properties:
+        memberId:
+          type: integer
+          description: ID of the member to perform the checkout for
+        items:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/HostCheckoutMembershipItemDto'
+            - $ref: '#/components/schemas/HostCheckoutSessionItemDto'
+        homeLocationId:
+          type: integer
+        paymentMethods:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/HostCheckoutPaymentMethodMembershipDto'
+            - $ref: '#/components/schemas/HostCheckoutPaymentMethodSavedDto'
+            - $ref: '#/components/schemas/HostCheckoutPaymentMethodCustomDto'
+            - $ref: '#/components/schemas/HostCheckoutPaymentMethodFreeDto'
+      required:
+      - memberId
+      - items
+      - paymentMethods
     HostCheckoutMembershipItemDto:
       type: object
       properties:
@@ -739,6 +577,224 @@ components:
       - usageLimitRolloverMode
       - usageLimitRolloverExpirationDuration
       - usageLimitRolloverExpirationDurationUnit
+    HostCheckoutPurchasedMoneyCreditsDto:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - money-credit
+        numberOfMoneyCredits:
+          type: number
+      required:
+      - type
+      - numberOfMoneyCredits
+    HostCheckoutCompatibleBoughtMembershipDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        type:
+          enum:
+          - subscription
+          - on-demand-subscription
+          - package-events
+          - package-money
+          - patron
+          type: string
+          example: subscription
+          x-enumNames:
+          - Subscription
+          - OnDemandSubscription
+          - PackageEvents
+          - PackageMoney
+          - Patron
+        startDate:
+          type:
+          - string
+          - 'null'
+          description: start date of the bought membership
+          example: '2021-01-01T00:00:00Z'
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          description: expiration date of the bought membership
+          example: '2021-02-01T00:00:00Z'
+          format: date-time
+        eventCreditsLeft:
+          type:
+          - number
+          - 'null'
+          description: number of event credits left, valid for PACKAGE_EVENTS
+          example: null
+        eventCreditsTotal:
+          type:
+          - number
+          - 'null'
+          description: number of event credits originally included in the package, valid for PACKAGE_EVENTS
+          example: null
+        moneyCreditsLeft:
+          type:
+          - number
+          - 'null'
+          description: number of money credits left, valid for PACKAGE_MONEY
+          example: null
+        moneyCreditsTotal:
+          type:
+          - number
+          - 'null'
+          description: number of money credits originally included in the package, valid for PACKAGE_MONEY
+          example: null
+        membership:
+          description: info about origin membership, it's possible the bought membership has no origin membership
+          allOf:
+          - $ref: '#/components/schemas/HostMembershipBasicDto'
+      required:
+      - id
+      - type
+      - startDate
+      - endDate
+      - eventCreditsLeft
+      - eventCreditsTotal
+      - moneyCreditsLeft
+      - moneyCreditsTotal
+      - membership
+    HostCheckoutResponseDto:
+      type: object
+      properties:
+        purchasedItems:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/HostCheckoutPurchasedSessionDto'
+            - $ref: '#/components/schemas/HostCheckoutPurchasedMembershipDto'
+            - $ref: '#/components/schemas/HostCheckoutPurchasedAppointmentDto'
+            - $ref: '#/components/schemas/HostCheckoutPurchasedProductDto'
+            - $ref: '#/components/schemas/HostCheckoutPurchasedGiftCardDto'
+            - $ref: '#/components/schemas/HostCheckoutPurchasedMoneyCreditsDto'
+            - $ref: '#/components/schemas/HostCheckoutPurchasedEventCreditsDto'
+      required:
+      - purchasedItems
+    HostCheckoutSessionItemWithPriceDto:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - session
+        sessionId:
+          type: integer
+        appliedPriceRuleIds:
+          type: array
+          items:
+            type: integer
+        attemptedPriceInCurrency:
+          type: string
+      required:
+      - id
+      - type
+      - sessionId
+      - attemptedPriceInCurrency
+    HostCheckoutCompatibleMembershipsRequestDto:
+      type: object
+      properties:
+        memberId:
+          type: integer
+          description: ID of the member to perform the checkout for
+        items:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/HostCheckoutMembershipItemDto'
+            - $ref: '#/components/schemas/HostCheckoutSessionItemDto'
+        homeLocationId:
+          type: integer
+      required:
+      - memberId
+      - items
+    HostCheckoutMembershipItemWithPriceDto:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - subscription
+        membershipId:
+          type: integer
+        attemptedPriceInCurrency:
+          type: string
+      required:
+      - id
+      - type
+      - membershipId
+      - attemptedPriceInCurrency
+    HostCheckoutPaymentMethodMembershipDto:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - membership
+        boughtMembershipId:
+          type: integer
+      required:
+      - id
+      - type
+      - boughtMembershipId
+    HostCheckoutSessionItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - session
+        sessionId:
+          type: integer
+        appliedPriceRuleIds:
+          type: array
+          items:
+            type: integer
+      required:
+      - id
+      - type
+      - sessionId
+    HostCheckoutRequestDto:
+      type: object
+      properties:
+        memberId:
+          type: integer
+          description: ID of the member to perform the checkout for
+        items:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/HostCheckoutMembershipItemWithPriceDto'
+            - $ref: '#/components/schemas/HostCheckoutSessionItemWithPriceDto'
+        homeLocationId:
+          type: integer
+        paymentMethods:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/HostCheckoutPaymentMethodMembershipDto'
+            - $ref: '#/components/schemas/HostCheckoutPaymentMethodSavedDto'
+            - $ref: '#/components/schemas/HostCheckoutPaymentMethodCustomDto'
+            - $ref: '#/components/schemas/HostCheckoutPaymentMethodFreeDto'
+      required:
+      - memberId
+      - items
+      - paymentMethods
     HostCheckoutErrorResponseDto:
       type: object
       properties:
@@ -805,118 +861,18 @@ components:
       required:
       - type
       - message
-    HostCheckoutPurchasedMembershipDto:
+    HostCheckoutPurchasedGiftCardDto:
       type: object
       properties:
         type:
           type: string
           enum:
-          - membership
-        boughtMembershipId:
+          - gift-card
+        giftCardId:
           type: integer
       required:
       - type
-      - boughtMembershipId
-    HostCheckoutSessionItemDto:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - session
-        sessionId:
-          type: integer
-        appliedPriceRuleIds:
-          type: array
-          items:
-            type: integer
-      required:
-      - id
-      - type
-      - sessionId
-    HostCheckoutPricesItemDto:
-      type: object
-      properties:
-        id:
-          type: string
-        priceInCurrencyWithTax:
-          type: string
-        priceInCurrencyWithoutTax:
-          type: string
-        taxInCurrency:
-          type: string
-      required:
-      - id
-      - priceInCurrencyWithTax
-      - priceInCurrencyWithoutTax
-      - taxInCurrency
-    HostCheckoutPricesRequestDto:
-      type: object
-      properties:
-        memberId:
-          type: integer
-          description: ID of the member to perform the checkout for
-        items:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/HostCheckoutMembershipItemDto'
-            - $ref: '#/components/schemas/HostCheckoutSessionItemDto'
-        homeLocationId:
-          type: integer
-        paymentMethods:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/HostCheckoutPaymentMethodMembershipDto'
-            - $ref: '#/components/schemas/HostCheckoutPaymentMethodSavedDto'
-            - $ref: '#/components/schemas/HostCheckoutPaymentMethodCustomDto'
-            - $ref: '#/components/schemas/HostCheckoutPaymentMethodFreeDto'
-      required:
-      - memberId
-      - items
-      - paymentMethods
-    HostCheckoutCompatibleMembershipsRequestDto:
-      type: object
-      properties:
-        memberId:
-          type: integer
-          description: ID of the member to perform the checkout for
-        items:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/HostCheckoutMembershipItemDto'
-            - $ref: '#/components/schemas/HostCheckoutSessionItemDto'
-        homeLocationId:
-          type: integer
-      required:
-      - memberId
-      - items
-    HostCheckoutSessionItemWithPriceDto:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - session
-        sessionId:
-          type: integer
-        appliedPriceRuleIds:
-          type: array
-          items:
-            type: integer
-        attemptedPriceInCurrency:
-          type: string
-      required:
-      - id
-      - type
-      - sessionId
-      - attemptedPriceInCurrency
+      - giftCardId
     HostCheckoutPurchasedSessionDto:
       type: object
       properties:
@@ -929,6 +885,88 @@ components:
       required:
       - type
       - sessionBookingId
+    HostCheckoutPaymentMethodFreeDto:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - free
+      required:
+      - id
+      - type
+    HostCheckoutCompatibleMembershipDto:
+      type: object
+      properties:
+        boughtMembership:
+          $ref: '#/components/schemas/HostCheckoutCompatibleBoughtMembershipDto'
+        incompatibility:
+          enum:
+          - session-membership-excluded
+          - session-bought-membership-will-expire
+          - session-bought-membership-pack-will-expire
+          - session-bought-membership-already-used
+          - session-bought-membership-usage-limit-reached
+          - session-bought-membership-usage-limit-reached-for-semester-or-course
+          - session-bought-membership-daily-limit-reached
+          - session-bought-membership-no-event-credits-left
+          - session-bought-membership-no-money-credits-left
+          - session-bought-membership-on-demand
+          - session-bought-membership-starts-later
+          - session-bought-membership-invalid-type
+          - session-bought-membership-disabled
+          - session-bought-membership-frozen
+          - session-subscription-ticket-limit
+          - unknown
+          type: string
+          x-enumNames:
+          - SESSION_MEMBERSHIP_EXCLUDED
+          - SESSION_BOUGHT_MEMBERSHIP_WILL_EXPIRE
+          - SESSION_BOUGHT_MEMBERSHIP_PACK_WILL_EXPIRE
+          - SESSION_BOUGHT_MEMBERSHIP_ALREADY_USED
+          - SESSION_BOUGHT_MEMBERSHIP_USAGE_LIMIT_REACHED
+          - SESSION_BOUGHT_MEMBERSHIP_USAGE_LIMIT_REACHED_FOR_SEMESTER_OR_COURSE
+          - SESSION_BOUGHT_MEMBERSHIP_DAILY_LIMIT_REACHED
+          - SESSION_BOUGHT_MEMBERSHIP_NO_EVENT_CREDITS_LEFT
+          - SESSION_BOUGHT_MEMBERSHIP_NO_MONEY_CREDITS_LEFT
+          - SESSION_BOUGHT_MEMBERSHIP_ON_DEMAND
+          - SESSION_BOUGHT_MEMBERSHIP_STARTS_LATER
+          - SESSION_BOUGHT_MEMBERSHIP_INVALID_TYPE
+          - SESSION_BOUGHT_MEMBERSHIP_DISABLED
+          - SESSION_BOUGHT_MEMBERSHIP_FROZEN
+          - SESSION_BOUGHT_MEMBERSHIP_TICKET_LIMIT
+          - UNKNOWN
+      required:
+      - boughtMembership
+    HostCheckoutPaymentMethodSavedDto:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - saved_payment_method
+        savedPaymentMethodId:
+          type: integer
+      required:
+      - id
+      - type
+      - savedPaymentMethodId
+    HostCheckoutPurchasedAppointmentDto:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - appointment
+        appointmentTransactionId:
+          type: integer
+      required:
+      - type
+      - appointmentTransactionId
     HostCheckoutPurchasedProductDto:
       type: object
       properties:
@@ -941,44 +979,6 @@ components:
       required:
       - type
       - productOrderId
-    HostCheckoutPurchasedEventCreditsDto:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - event-credit
-        numberOfEventCredits:
-          type: number
-      required:
-      - type
-      - numberOfEventCredits
-    HostCheckoutRequestDto:
-      type: object
-      properties:
-        memberId:
-          type: integer
-          description: ID of the member to perform the checkout for
-        items:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/HostCheckoutMembershipItemWithPriceDto'
-            - $ref: '#/components/schemas/HostCheckoutSessionItemWithPriceDto'
-        homeLocationId:
-          type: integer
-        paymentMethods:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/HostCheckoutPaymentMethodMembershipDto'
-            - $ref: '#/components/schemas/HostCheckoutPaymentMethodSavedDto'
-            - $ref: '#/components/schemas/HostCheckoutPaymentMethodCustomDto'
-            - $ref: '#/components/schemas/HostCheckoutPaymentMethodFreeDto'
-      required:
-      - memberId
-      - items
-      - paymentMethods
   securitySchemes:
     OAuth2:
       type: oauth2

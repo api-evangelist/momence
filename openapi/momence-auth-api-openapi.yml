@@ -126,6 +126,32 @@ paths:
       - Auth
 components:
   schemas:
+    AuthProfileDto:
+      type: object
+      properties:
+        userId:
+          type: integer
+          example: 1
+        memberId:
+          type:
+          - integer
+          - 'null'
+          example: 1
+        email:
+          type: string
+          example: john.doe@example.com
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: Doe
+      required:
+      - userId
+      - memberId
+      - email
+      - firstName
+      - lastName
     AuthTokenAuthorizationCodeRequestDto:
       type: object
       properties:
@@ -156,6 +182,18 @@ components:
       - grant_type
       - username
       - password
+    AuthTokenRefreshTokenRequestDto:
+      type: object
+      properties:
+        grant_type:
+          type: string
+          enum:
+          - refresh_token
+        refresh_token:
+          type: string
+      required:
+      - grant_type
+      - refresh_token
     AuthTokenDto:
       type: object
       properties:
@@ -180,44 +218,6 @@ components:
       - refreshToken
       - refresh_token
       - refreshTokenExpiresAt
-    AuthTokenRefreshTokenRequestDto:
-      type: object
-      properties:
-        grant_type:
-          type: string
-          enum:
-          - refresh_token
-        refresh_token:
-          type: string
-      required:
-      - grant_type
-      - refresh_token
-    AuthProfileDto:
-      type: object
-      properties:
-        userId:
-          type: integer
-          example: 1
-        memberId:
-          type:
-          - integer
-          - 'null'
-          example: 1
-        email:
-          type: string
-          example: john.doe@example.com
-        firstName:
-          type: string
-          example: John
-        lastName:
-          type: string
-          example: Doe
-      required:
-      - userId
-      - memberId
-      - email
-      - firstName
-      - lastName
   securitySchemes:
     OAuth2:
       type: oauth2
