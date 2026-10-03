@@ -352,31 +352,214 @@ paths:
       - OAuth2: []
 components:
   schemas:
-    PaginatedResponseDataDto:
+    ApiV2MemberUpdatePhoneNumberRequestDto:
       type: object
       properties:
-        page:
-          type: integer
-          example: 0
-          minimum: 0
-        pageSize:
-          type: integer
-          example: 10
-          minimum: 1
-        totalCount:
-          type: integer
-          example: 1
-        sortBy:
+        phoneNumber:
           type: string
-        sortOrder:
-          type: string
-          enum:
-          - ASC
-          - DESC
+          example: '1234567890'
       required:
-      - page
-      - pageSize
-      - totalCount
+      - phoneNumber
+    MemberInfoDto:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: Doe
+        email:
+          type: string
+          example: john.doe@example.com
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+          example: '1234567890'
+        pictureUrl:
+          type:
+          - string
+          - 'null'
+          example: https://example.com/picture.jpg
+      required:
+      - id
+      - firstName
+      - lastName
+      - email
+      - phoneNumber
+      - pictureUrl
+    ApiV2MemberUpdateEmailRequestDto:
+      type: object
+      properties:
+        email:
+          type: string
+          example: john.doe@example.com
+      required:
+      - email
+    ApiV2BoughtMembershipScheduleUnfreezeRequestDto:
+      type: object
+      properties:
+        unfreezeType:
+          enum:
+          - not_set
+          - scheduled
+          type: string
+          x-enumNames:
+          - NOT_SET
+          - SCHEDULED
+        unfreezeAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      required:
+      - unfreezeType
+      - unfreezeAt
+    ApiV2BoughtMembershipFreezeRequestDto:
+      type: object
+      properties:
+        freezeType:
+          enum:
+          - not_set
+          - now
+          - scheduled
+          - before_renewal
+          type: string
+          x-enumNames:
+          - NOT_SET
+          - NOW
+          - SCHEDULED
+          - BEFORE_RENEWAL
+        freezeAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        unfreezeType:
+          enum:
+          - not_set
+          - scheduled
+          type: string
+          x-enumNames:
+          - NOT_SET
+          - SCHEDULED
+        unfreezeAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        reason:
+          type:
+          - string
+          - 'null'
+      required:
+      - freezeType
+      - freezeAt
+      - unfreezeType
+      - unfreezeAt
+    ApiV2BoughtMembershipDeclinedRenewalDto:
+      type: object
+      properties:
+        declinedAt:
+          type: string
+          format: date-time
+        cardLast4:
+          type:
+          - string
+          - 'null'
+      required:
+      - declinedAt
+      - cardLast4
+    ApiV2MemberSavedPaymentMethodsResponseDto:
+      type: object
+      properties:
+        paymentMethods:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiV2MemberSavedPaymentMethodDto'
+      required:
+      - paymentMethods
+    ApiV2BoughtMembershipScheduleFreezeRequestDto:
+      type: object
+      properties:
+        freezeType:
+          enum:
+          - not_set
+          - now
+          - scheduled
+          - before_renewal
+          type: string
+          x-enumNames:
+          - NOT_SET
+          - NOW
+          - SCHEDULED
+          - BEFORE_RENEWAL
+        freezeAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      required:
+      - freezeType
+      - freezeAt
+    MemberVisitsDto:
+      type: object
+      properties:
+        appointments:
+          type: integer
+          description: All the appointments the customer has booked
+        appointmentsVisits:
+          type: integer
+          description: All the appointments the customer has booked and checked into
+        bookings:
+          type: integer
+          description: All the session bookings the customer has booked
+        bookingsVisits:
+          type: integer
+          description: All the session bookings the customer has booked and checked into
+        openAreaVisits:
+          type: integer
+          description: All visits of open areas for customer
+        total:
+          type: integer
+          description: Combined count of appointments + bookings
+        totalVisits:
+          type: integer
+          description: Combined count of appointmentsVisits + bookingsVisits
+      required:
+      - appointments
+      - appointmentsVisits
+      - bookings
+      - bookingsVisits
+      - openAreaVisits
+      - total
+      - totalVisits
+    ApiV2MemberUpdateRequestDto:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: John
+          minLength: 1
+          maxLength: 100
+        lastName:
+          type: string
+          example: Doe
+          minLength: 1
+          maxLength: 100
+      required:
+      - firstName
+      - lastName
+    PaginatedResponseDto:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/PaginatedResponseDataDto'
+      required:
+      - pagination
     MemberBoughtMembershipsDto:
       type: object
       properties:
@@ -521,96 +704,33 @@ components:
       - membership
       - freeze
       - declinedRenewal
-    ApiV2BoughtMembershipFreezeDto:
+    ApiV2MemberManagePaymentMethodsRequestDto:
       type: object
       properties:
-        freezedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        unfreezedScheduledAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        unfrozenAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        remainingFreezedMinutes:
-          type:
-          - integer
-          - 'null'
-        scheduledFreezeAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-      required:
-      - freezedAt
-      - unfreezedScheduledAt
-      - unfrozenAt
-      - remainingFreezedMinutes
-      - scheduledFreezeAt
-    ApiV2MemberUpdateRequestDto:
-      type: object
-      properties:
-        firstName:
+        redirectUrl:
           type: string
-          example: John
-          minLength: 1
-          maxLength: 100
-        lastName:
+          description: URL to redirect after the add operation is completed
+        redirectUrlOnCancel:
           type: string
-          example: Doe
-          minLength: 1
-          maxLength: 100
+          description: Optional URL to redirect on cancel
       required:
-      - firstName
-      - lastName
-    MemberVisitsDto:
+      - redirectUrl
+    MemberDeleteSavedPaymentMethodErrorResponseDto:
       type: object
       properties:
-        appointments:
-          type: integer
-          description: All the appointments the customer has booked
-        appointmentsVisits:
-          type: integer
-          description: All the appointments the customer has booked and checked into
-        bookings:
-          type: integer
-          description: All the session bookings the customer has booked
-        bookingsVisits:
-          type: integer
-          description: All the session bookings the customer has booked and checked into
-        openAreaVisits:
-          type: integer
-          description: All visits of open areas for customer
-        total:
-          type: integer
-          description: Combined count of appointments + bookings
-        totalVisits:
-          type: integer
-          description: Combined count of appointmentsVisits + bookingsVisits
+        type:
+          enum:
+          - err-active-non-cancellable-subscription
+          - err-no-payment-method-found
+          type: string
+          x-enumNames:
+          - ERR_ACTIVE_NON_CANCELLABLE_SUBSCRIPTION
+          - ERR_NO_PAYMENT_METHOD_FOUND
+        message:
+          type: string
       required:
-      - appointments
-      - appointmentsVisits
-      - bookings
-      - bookingsVisits
-      - openAreaVisits
-      - total
-      - totalVisits
-    ApiV2MemberSavedPaymentMethodsResponseDto:
-      type: object
-      properties:
-        paymentMethods:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiV2MemberSavedPaymentMethodDto'
-      required:
-      - paymentMethods
+      - type
+      - message
     HostMembershipBasicDto:
       type: object
       properties:
@@ -830,49 +950,6 @@ components:
       - usageLimitRolloverMode
       - usageLimitRolloverExpirationDuration
       - usageLimitRolloverExpirationDurationUnit
-    ApiV2BoughtMembershipDeclinedRenewalDto:
-      type: object
-      properties:
-        declinedAt:
-          type: string
-          format: date-time
-        cardLast4:
-          type:
-          - string
-          - 'null'
-      required:
-      - declinedAt
-      - cardLast4
-    ApiV2BoughtMembershipScheduleUnfreezeRequestDto:
-      type: object
-      properties:
-        unfreezeType:
-          enum:
-          - not_set
-          - scheduled
-          type: string
-          x-enumNames:
-          - NOT_SET
-          - SCHEDULED
-        unfreezeAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-      required:
-      - unfreezeType
-      - unfreezeAt
-    ApiV2MemberManagePaymentMethodsRequestDto:
-      type: object
-      properties:
-        redirectUrl:
-          type: string
-          description: URL to redirect after the add operation is completed
-        redirectUrlOnCancel:
-          type: string
-          description: Optional URL to redirect on cancel
-      required:
-      - redirectUrl
     ApiV2MemberSavedPaymentMethodDto:
       type: object
       properties:
@@ -903,30 +980,64 @@ components:
       - type
       - last4
       - expiresAt
-    ApiV2MemberUpdateEmailRequestDto:
+    ApiV2BoughtMembershipFreezeDto:
       type: object
       properties:
-        email:
-          type: string
-          example: john.doe@example.com
+        freezedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        unfreezedScheduledAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        unfrozenAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        remainingFreezedMinutes:
+          type:
+          - integer
+          - 'null'
+        scheduledFreezeAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
       required:
-      - email
-    MemberDeleteSavedPaymentMethodErrorResponseDto:
+      - freezedAt
+      - unfreezedScheduledAt
+      - unfrozenAt
+      - remainingFreezedMinutes
+      - scheduledFreezeAt
+    PaginatedResponseDataDto:
       type: object
       properties:
-        type:
+        page:
+          type: integer
+          example: 0
+          minimum: 0
+        pageSize:
+          type: integer
+          example: 10
+          minimum: 1
+        totalCount:
+          type: integer
+          example: 1
+        sortBy:
+          type: string
+        sortOrder:
+          type: string
           enum:
-          - err-active-non-cancellable-subscription
-          - err-no-payment-method-found
-          type: string
-          x-enumNames:
-          - ERR_ACTIVE_NON_CANCELLABLE_SUBSCRIPTION
-          - ERR_NO_PAYMENT_METHOD_FOUND
-        message:
-          type: string
+          - ASC
+          - DESC
       required:
-      - type
-      - message
+      - page
+      - pageSize
+      - totalCount
     ApiV2MemberManagePaymentMethodsResponseDto:
       type: object
       properties:
@@ -935,117 +1046,6 @@ components:
           description: URL to redirect for adding a payment method
       required:
       - addPaymentMethodPageUrl
-    ApiV2MemberUpdatePhoneNumberRequestDto:
-      type: object
-      properties:
-        phoneNumber:
-          type: string
-          example: '1234567890'
-      required:
-      - phoneNumber
-    ApiV2BoughtMembershipFreezeRequestDto:
-      type: object
-      properties:
-        freezeType:
-          enum:
-          - not_set
-          - now
-          - scheduled
-          - before_renewal
-          type: string
-          x-enumNames:
-          - NOT_SET
-          - NOW
-          - SCHEDULED
-          - BEFORE_RENEWAL
-        freezeAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        unfreezeType:
-          enum:
-          - not_set
-          - scheduled
-          type: string
-          x-enumNames:
-          - NOT_SET
-          - SCHEDULED
-        unfreezeAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        reason:
-          type:
-          - string
-          - 'null'
-      required:
-      - freezeType
-      - freezeAt
-      - unfreezeType
-      - unfreezeAt
-    ApiV2BoughtMembershipScheduleFreezeRequestDto:
-      type: object
-      properties:
-        freezeType:
-          enum:
-          - not_set
-          - now
-          - scheduled
-          - before_renewal
-          type: string
-          x-enumNames:
-          - NOT_SET
-          - NOW
-          - SCHEDULED
-          - BEFORE_RENEWAL
-        freezeAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-      required:
-      - freezeType
-      - freezeAt
-    MemberInfoDto:
-      type: object
-      properties:
-        id:
-          type: integer
-        firstName:
-          type: string
-          example: John
-        lastName:
-          type: string
-          example: Doe
-        email:
-          type: string
-          example: john.doe@example.com
-        phoneNumber:
-          type:
-          - string
-          - 'null'
-          example: '1234567890'
-        pictureUrl:
-          type:
-          - string
-          - 'null'
-          example: https://example.com/picture.jpg
-      required:
-      - id
-      - firstName
-      - lastName
-      - email
-      - phoneNumber
-      - pictureUrl
-    PaginatedResponseDto:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/PaginatedResponseDataDto'
-      required:
-      - pagination
   securitySchemes:
     OAuth2:
       type: oauth2

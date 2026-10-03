@@ -152,6 +152,30 @@ components:
       - email
       - firstName
       - lastName
+    AuthTokenDto:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        access_token:
+          type: string
+        accessTokenExpiresAt:
+          type: string
+          format: date-time
+        refreshToken:
+          type: string
+        refresh_token:
+          type: string
+        refreshTokenExpiresAt:
+          type: string
+          format: date-time
+      required:
+      - accessToken
+      - access_token
+      - accessTokenExpiresAt
+      - refreshToken
+      - refresh_token
+      - refreshTokenExpiresAt
     AuthTokenAuthorizationCodeRequestDto:
       type: object
       properties:
@@ -194,30 +218,6 @@ components:
       required:
       - grant_type
       - refresh_token
-    AuthTokenDto:
-      type: object
-      properties:
-        accessToken:
-          type: string
-        access_token:
-          type: string
-        accessTokenExpiresAt:
-          type: string
-          format: date-time
-        refreshToken:
-          type: string
-        refresh_token:
-          type: string
-        refreshTokenExpiresAt:
-          type: string
-          format: date-time
-      required:
-      - accessToken
-      - access_token
-      - accessTokenExpiresAt
-      - refreshToken
-      - refresh_token
-      - refreshTokenExpiresAt
   securitySchemes:
     OAuth2:
       type: oauth2

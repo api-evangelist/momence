@@ -225,37 +225,6 @@ components:
       - page
       - pageSize
       - totalCount
-    PaginatedResponseDto:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/PaginatedResponseDataDto'
-      required:
-      - pagination
-    ApiV2MemberAddressRequestDto:
-      type: object
-      properties:
-        address:
-          type: string
-          example: 153 Hunters Drive
-          maxLength: 2048
-        zipcode:
-          type: string
-          example: '8513'
-          maxLength: 255
-        city:
-          type: string
-          example: New York
-          maxLength: 255
-        country:
-          type: string
-          example: US
-          maxLength: 255
-      required:
-      - address
-      - zipcode
-      - city
-      - country
     ApiV2MemberAddressDto:
       type: object
       properties:
@@ -285,6 +254,37 @@ components:
       - city
       - country
       - createdAt
+    ApiV2MemberAddressRequestDto:
+      type: object
+      properties:
+        address:
+          type: string
+          example: 153 Hunters Drive
+          maxLength: 2048
+        zipcode:
+          type: string
+          example: '8513'
+          maxLength: 255
+        city:
+          type: string
+          example: New York
+          maxLength: 255
+        country:
+          type: string
+          example: US
+          maxLength: 255
+      required:
+      - address
+      - zipcode
+      - city
+      - country
+    PaginatedResponseDto:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/PaginatedResponseDataDto'
+      required:
+      - pagination
   securitySchemes:
     OAuth2:
       type: oauth2

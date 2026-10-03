@@ -97,6 +97,18 @@ paths:
       - OAuth2: []
 components:
   schemas:
+    MemberLocationDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Main Studio
+      required:
+      - id
+      - name
     MemberTeacherDto:
       type: object
       properties:
@@ -119,66 +131,13 @@ components:
       - firstName
       - lastName
       - pictureUrl
-    MemberSessionBookingDto:
+    PaginatedResponseDto:
       type: object
       properties:
-        id:
-          type: integer
-          example: 1
-        createdAt:
-          type: string
-          example: '2021-08-01T10:00:00Z'
-          format: date-time
-        roomSpotId:
-          type:
-          - integer
-          - 'null'
-        checkedIn:
-          type: boolean
-        cancelledAt:
-          type:
-          - string
-          - 'null'
-          example: null
-          format: date-time
-        isRecurring:
-          type: boolean
-          example: false
-        session:
-          $ref: '#/components/schemas/MemberSessionBookingSessionDto'
+        pagination:
+          $ref: '#/components/schemas/PaginatedResponseDataDto'
       required:
-      - id
-      - createdAt
-      - roomSpotId
-      - checkedIn
-      - cancelledAt
-      - isRecurring
-      - session
-    PaginatedResponseDataDto:
-      type: object
-      properties:
-        page:
-          type: integer
-          example: 0
-          minimum: 0
-        pageSize:
-          type: integer
-          example: 10
-          minimum: 1
-        totalCount:
-          type: integer
-          example: 1
-        sortBy:
-          type: string
-        sortOrder:
-          type: string
-          enum:
-          - ASC
-          - DESC
-      required:
-      - page
-      - pageSize
-      - totalCount
+      - pagination
     MemberSessionBookingSessionDto:
       type: object
       properties:
@@ -287,25 +246,66 @@ components:
       - bannerImageUrl
       - hostPhotoUrl
       - isLocationPrivate
-    PaginatedResponseDto:
+    PaginatedResponseDataDto:
       type: object
       properties:
-        pagination:
-          $ref: '#/components/schemas/PaginatedResponseDataDto'
+        page:
+          type: integer
+          example: 0
+          minimum: 0
+        pageSize:
+          type: integer
+          example: 10
+          minimum: 1
+        totalCount:
+          type: integer
+          example: 1
+        sortBy:
+          type: string
+        sortOrder:
+          type: string
+          enum:
+          - ASC
+          - DESC
       required:
-      - pagination
-    MemberLocationDto:
+      - page
+      - pageSize
+      - totalCount
+    MemberSessionBookingDto:
       type: object
       properties:
         id:
           type: integer
           example: 1
-        name:
+        createdAt:
           type: string
-          example: Main Studio
+          example: '2021-08-01T10:00:00Z'
+          format: date-time
+        roomSpotId:
+          type:
+          - integer
+          - 'null'
+        checkedIn:
+          type: boolean
+        cancelledAt:
+          type:
+          - string
+          - 'null'
+          example: null
+          format: date-time
+        isRecurring:
+          type: boolean
+          example: false
+        session:
+          $ref: '#/components/schemas/MemberSessionBookingSessionDto'
       required:
       - id
-      - name
+      - createdAt
+      - roomSpotId
+      - checkedIn
+      - cancelledAt
+      - isRecurring
+      - session
   securitySchemes:
     OAuth2:
       type: oauth2

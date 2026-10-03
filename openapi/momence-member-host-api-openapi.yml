@@ -292,15 +292,70 @@ paths:
       - OAuth2: []
 components:
   schemas:
-    HandwrittenElementDto:
+    MemberSignDocumentRequestDto:
       type: object
       properties:
-        paths:
+        customWaiverIdsToSign:
+          description: Customer waiver IDs to sign, can be empty
           type: array
           items:
-            $ref: '#/components/schemas/HandwrittenElementPathDto'
+            type: integer
+        predefinedWaiverTypesToSign:
+          type: array
+          items:
+            enum:
+            - waiver
+            - membership-waiver
+            - child-waiver
+            - privacy-policy
+            type: string
+            x-enumNames:
+            - CUSTOMER_WAIVER
+            - MEMBERSHIP_TERMS_AND_CONDITIONS
+            - CHILD_BOOKING_WAIVER
+            - PRIVACY_POLICY
+          description: Predefined waiver types to sign, can be empty
+        simpleSignature:
+          type: string
+          description: This signature can be a customer name; useful for people who prefer typing instead of drawing their own signature by hand
+        handwrittenSignature:
+          description: This signature contains a representation of handwritten vector element (array of SVG paths), as produced by Konva
+          allOf:
+          - $ref: '#/components/schemas/HandwrittenElementDto'
+    MemberLocationDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Main Studio
       required:
-      - paths
+      - id
+      - name
+    MemberTeacherDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: Doe
+        pictureUrl:
+          type:
+          - string
+          - 'null'
+          example: https://example.com/picture.jpg
+      required:
+      - id
+      - firstName
+      - lastName
+      - pictureUrl
     PaginatedResponseDataDto:
       type: object
       properties:
@@ -326,37 +381,15 @@ components:
       - page
       - pageSize
       - totalCount
-    MemberTeacherDto:
+    HandwrittenElementDto:
       type: object
       properties:
-        id:
-          type: integer
-          example: 1
-        firstName:
-          type: string
-          example: John
-        lastName:
-          type: string
-          example: Doe
-        pictureUrl:
-          type:
-          - string
-          - 'null'
-          example: https://example.com/picture.jpg
-      required:
-      - id
-      - firstName
-      - lastName
-      - pictureUrl
-    MemberSignableDocumentsResponseDto:
-      type: object
-      properties:
-        documents:
+        paths:
           type: array
           items:
-            $ref: '#/components/schemas/MemberSignableDocumentDto'
+            $ref: '#/components/schemas/HandwrittenElementPathDto'
       required:
-      - documents
+      - paths
     HostTagDto:
       type: object
       properties:
@@ -391,18 +424,6 @@ components:
       - badgeLabel
       - badgeColor
       - corporateTagId
-    HandwrittenElementPointDto:
-      type: object
-      properties:
-        x:
-          type: integer
-          minimum: 0
-        y:
-          type: integer
-          minimum: 0
-      required:
-      - x
-      - y
     MemberHostSessionDto:
       type: object
       properties:
@@ -575,6 +596,64 @@ components:
       - hostPhotoUrl
       - onlineStreamUrl
       - onlineStreamPassword
+    MemberSignableDocumentDto:
+      type: object
+      properties:
+        predefinedWaiverType:
+          enum:
+          - waiver
+          - membership-waiver
+          - child-waiver
+          - privacy-policy
+          type: string
+          x-enumNames:
+          - CUSTOMER_WAIVER
+          - MEMBERSHIP_TERMS_AND_CONDITIONS
+          - CHILD_BOOKING_WAIVER
+          - PRIVACY_POLICY
+        customWaiverId:
+          type: integer
+        type:
+          enum:
+          - predefinedWaiver
+          - customWaiver
+          type: string
+          x-enumNames:
+          - PredefinedWaiver
+          - CustomWaiver
+        name:
+          type:
+          - string
+          - 'null'
+        content:
+          type:
+          - string
+          - 'null'
+        signedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        signatureStatus:
+          enum:
+          - signed
+          - unsigned
+          - signature-expired
+          type: string
+          x-enumNames:
+          - SIGNED
+          - UNSIGNED
+          - SIGNATURE_EXPIRED
+        simpleSignature:
+          type: string
+        handwrittenSignature:
+          $ref: '#/components/schemas/HandwrittenElementDto'
+      required:
+      - type
+      - name
+      - content
+      - signedAt
+      - signatureStatus
     MemberHostMembershipDto:
       type: object
       properties:
@@ -875,64 +954,6 @@ components:
       - taxRateInPercent
       - freeTrialPrice
       - tags
-    MemberSignableDocumentDto:
-      type: object
-      properties:
-        predefinedWaiverType:
-          enum:
-          - waiver
-          - membership-waiver
-          - child-waiver
-          - privacy-policy
-          type: string
-          x-enumNames:
-          - CUSTOMER_WAIVER
-          - MEMBERSHIP_TERMS_AND_CONDITIONS
-          - CHILD_BOOKING_WAIVER
-          - PRIVACY_POLICY
-        customWaiverId:
-          type: integer
-        type:
-          enum:
-          - predefinedWaiver
-          - customWaiver
-          type: string
-          x-enumNames:
-          - PredefinedWaiver
-          - CustomWaiver
-        name:
-          type:
-          - string
-          - 'null'
-        content:
-          type:
-          - string
-          - 'null'
-        signedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        signatureStatus:
-          enum:
-          - signed
-          - unsigned
-          - signature-expired
-          type: string
-          x-enumNames:
-          - SIGNED
-          - UNSIGNED
-          - SIGNATURE_EXPIRED
-        simpleSignature:
-          type: string
-        handwrittenSignature:
-          $ref: '#/components/schemas/HandwrittenElementDto'
-      required:
-      - type
-      - name
-      - content
-      - signedAt
-      - signatureStatus
     HandwrittenElementPathDto:
       type: object
       properties:
@@ -942,36 +963,6 @@ components:
             $ref: '#/components/schemas/HandwrittenElementPointDto'
       required:
       - points
-    MemberSignDocumentRequestDto:
-      type: object
-      properties:
-        customWaiverIdsToSign:
-          description: Customer waiver IDs to sign, can be empty
-          type: array
-          items:
-            type: integer
-        predefinedWaiverTypesToSign:
-          type: array
-          items:
-            enum:
-            - waiver
-            - membership-waiver
-            - child-waiver
-            - privacy-policy
-            type: string
-            x-enumNames:
-            - CUSTOMER_WAIVER
-            - MEMBERSHIP_TERMS_AND_CONDITIONS
-            - CHILD_BOOKING_WAIVER
-            - PRIVACY_POLICY
-          description: Predefined waiver types to sign, can be empty
-        simpleSignature:
-          type: string
-          description: This signature can be a customer name; useful for people who prefer typing instead of drawing their own signature by hand
-        handwrittenSignature:
-          description: This signature contains a representation of handwritten vector element (array of SVG paths), as produced by Konva
-          allOf:
-          - $ref: '#/components/schemas/HandwrittenElementDto'
     PaginatedResponseDto:
       type: object
       properties:
@@ -979,18 +970,6 @@ components:
           $ref: '#/components/schemas/PaginatedResponseDataDto'
       required:
       - pagination
-    MemberLocationDto:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        name:
-          type: string
-          example: Main Studio
-      required:
-      - id
-      - name
     MemberHostLocationDto:
       type: object
       properties:
@@ -1066,6 +1045,27 @@ components:
       - latitude
       - longitude
       - isPhysical
+    MemberSignableDocumentsResponseDto:
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemberSignableDocumentDto'
+      required:
+      - documents
+    HandwrittenElementPointDto:
+      type: object
+      properties:
+        x:
+          type: integer
+          minimum: 0
+        y:
+          type: integer
+          minimum: 0
+      required:
+      - x
+      - y
   securitySchemes:
     OAuth2:
       type: oauth2
