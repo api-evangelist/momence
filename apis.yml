@@ -323,6 +323,9 @@ apis:
   - type: APIReference
     url: https://api.docs.momence.com/reference/apiv2memberhostsessionscontroller_list
 common:
+- type: CapabilityMap
+  url: capabilities/momence-capability-edges.yml
+  name: Momence Business Capability Map
 - type: AgenticAccess
   url: agentic-access/momence-agentic-access.yml
 - type: DomainSecurity
