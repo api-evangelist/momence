@@ -152,6 +152,33 @@ components:
       - email
       - firstName
       - lastName
+    AuthTokenRefreshTokenRequestDto:
+      type: object
+      properties:
+        grant_type:
+          type: string
+          enum:
+          - refresh_token
+        refresh_token:
+          type: string
+      required:
+      - grant_type
+      - refresh_token
+    AuthTokenPasswordRequestDto:
+      type: object
+      properties:
+        grant_type:
+          type: string
+          enum:
+          - password
+        username:
+          type: string
+        password:
+          type: string
+      required:
+      - grant_type
+      - username
+      - password
     AuthTokenDto:
       type: object
       properties:
@@ -191,33 +218,6 @@ components:
       - grant_type
       - code
       - redirect_uri
-    AuthTokenPasswordRequestDto:
-      type: object
-      properties:
-        grant_type:
-          type: string
-          enum:
-          - password
-        username:
-          type: string
-        password:
-          type: string
-      required:
-      - grant_type
-      - username
-      - password
-    AuthTokenRefreshTokenRequestDto:
-      type: object
-      properties:
-        grant_type:
-          type: string
-          enum:
-          - refresh_token
-        refresh_token:
-          type: string
-      required:
-      - grant_type
-      - refresh_token
   securitySchemes:
     OAuth2:
       type: oauth2

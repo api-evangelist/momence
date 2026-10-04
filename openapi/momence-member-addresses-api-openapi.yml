@@ -225,35 +225,6 @@ components:
       - page
       - pageSize
       - totalCount
-    ApiV2MemberAddressDto:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        address:
-          type: string
-          example: 153 Hunters Drive
-        zipcode:
-          type: string
-          example: '8513'
-        city:
-          type: string
-          example: New York
-        country:
-          type: string
-          example: US
-        createdAt:
-          type: string
-          example: '2021-09-22T00:00:00.000Z'
-          format: date-time
-      required:
-      - id
-      - address
-      - zipcode
-      - city
-      - country
-      - createdAt
     ApiV2MemberAddressRequestDto:
       type: object
       properties:
@@ -285,6 +256,35 @@ components:
           $ref: '#/components/schemas/PaginatedResponseDataDto'
       required:
       - pagination
+    ApiV2MemberAddressDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        address:
+          type: string
+          example: 153 Hunters Drive
+        zipcode:
+          type: string
+          example: '8513'
+        city:
+          type: string
+          example: New York
+        country:
+          type: string
+          example: US
+        createdAt:
+          type: string
+          example: '2021-09-22T00:00:00.000Z'
+          format: date-time
+      required:
+      - id
+      - address
+      - zipcode
+      - city
+      - country
+      - createdAt
   securitySchemes:
     OAuth2:
       type: oauth2

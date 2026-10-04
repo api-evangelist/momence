@@ -352,127 +352,6 @@ paths:
       - OAuth2: []
 components:
   schemas:
-    ApiV2MemberUpdatePhoneNumberRequestDto:
-      type: object
-      properties:
-        phoneNumber:
-          type: string
-          example: '1234567890'
-      required:
-      - phoneNumber
-    MemberInfoDto:
-      type: object
-      properties:
-        id:
-          type: integer
-        firstName:
-          type: string
-          example: John
-        lastName:
-          type: string
-          example: Doe
-        email:
-          type: string
-          example: john.doe@example.com
-        phoneNumber:
-          type:
-          - string
-          - 'null'
-          example: '1234567890'
-        pictureUrl:
-          type:
-          - string
-          - 'null'
-          example: https://example.com/picture.jpg
-      required:
-      - id
-      - firstName
-      - lastName
-      - email
-      - phoneNumber
-      - pictureUrl
-    ApiV2MemberUpdateEmailRequestDto:
-      type: object
-      properties:
-        email:
-          type: string
-          example: john.doe@example.com
-      required:
-      - email
-    ApiV2BoughtMembershipScheduleUnfreezeRequestDto:
-      type: object
-      properties:
-        unfreezeType:
-          enum:
-          - not_set
-          - scheduled
-          type: string
-          x-enumNames:
-          - NOT_SET
-          - SCHEDULED
-        unfreezeAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-      required:
-      - unfreezeType
-      - unfreezeAt
-    ApiV2BoughtMembershipFreezeRequestDto:
-      type: object
-      properties:
-        freezeType:
-          enum:
-          - not_set
-          - now
-          - scheduled
-          - before_renewal
-          type: string
-          x-enumNames:
-          - NOT_SET
-          - NOW
-          - SCHEDULED
-          - BEFORE_RENEWAL
-        freezeAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        unfreezeType:
-          enum:
-          - not_set
-          - scheduled
-          type: string
-          x-enumNames:
-          - NOT_SET
-          - SCHEDULED
-        unfreezeAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        reason:
-          type:
-          - string
-          - 'null'
-      required:
-      - freezeType
-      - freezeAt
-      - unfreezeType
-      - unfreezeAt
-    ApiV2BoughtMembershipDeclinedRenewalDto:
-      type: object
-      properties:
-        declinedAt:
-          type: string
-          format: date-time
-        cardLast4:
-          type:
-          - string
-          - 'null'
-      required:
-      - declinedAt
-      - cardLast4
     ApiV2MemberSavedPaymentMethodsResponseDto:
       type: object
       properties:
@@ -482,29 +361,63 @@ components:
             $ref: '#/components/schemas/ApiV2MemberSavedPaymentMethodDto'
       required:
       - paymentMethods
-    ApiV2BoughtMembershipScheduleFreezeRequestDto:
+    ApiV2MemberManagePaymentMethodsResponseDto:
       type: object
       properties:
-        freezeType:
-          enum:
-          - not_set
-          - now
-          - scheduled
-          - before_renewal
+        addPaymentMethodPageUrl:
           type: string
-          x-enumNames:
-          - NOT_SET
-          - NOW
-          - SCHEDULED
-          - BEFORE_RENEWAL
-        freezeAt:
+          description: URL to redirect for adding a payment method
+      required:
+      - addPaymentMethodPageUrl
+    ApiV2BoughtMembershipFreezeDto:
+      type: object
+      properties:
+        freezedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        unfreezedScheduledAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        unfrozenAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        remainingFreezedMinutes:
+          type:
+          - integer
+          - 'null'
+        scheduledFreezeAt:
           type:
           - string
           - 'null'
           format: date-time
       required:
-      - freezeType
-      - freezeAt
+      - freezedAt
+      - unfreezedScheduledAt
+      - unfrozenAt
+      - remainingFreezedMinutes
+      - scheduledFreezeAt
+    MemberDeleteSavedPaymentMethodErrorResponseDto:
+      type: object
+      properties:
+        type:
+          enum:
+          - err-active-non-cancellable-subscription
+          - err-no-payment-method-found
+          type: string
+          x-enumNames:
+          - ERR_ACTIVE_NON_CANCELLABLE_SUBSCRIPTION
+          - ERR_NO_PAYMENT_METHOD_FOUND
+        message:
+          type: string
+      required:
+      - type
+      - message
     MemberVisitsDto:
       type: object
       properties:
@@ -537,200 +450,55 @@ components:
       - openAreaVisits
       - total
       - totalVisits
-    ApiV2MemberUpdateRequestDto:
-      type: object
-      properties:
-        firstName:
-          type: string
-          example: John
-          minLength: 1
-          maxLength: 100
-        lastName:
-          type: string
-          example: Doe
-          minLength: 1
-          maxLength: 100
-      required:
-      - firstName
-      - lastName
-    PaginatedResponseDto:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/PaginatedResponseDataDto'
-      required:
-      - pagination
-    MemberBoughtMembershipsDto:
+    ApiV2MemberSavedPaymentMethodDto:
       type: object
       properties:
         id:
           type: integer
           example: 1
         type:
-          enum:
-          - subscription
-          - on-demand-subscription
-          - package-events
-          - package-money
-          - patron
           type: string
-          example: subscription
+          enum:
+          - card
+          example: card
           x-enumNames:
-          - Subscription
-          - OnDemandSubscription
-          - PackageEvents
-          - PackageMoney
-          - Patron
-        startDate:
+          - CARD
+        last4:
           type:
           - string
           - 'null'
-          description: start date of the bought membership
-          example: '2021-01-01T00:00:00Z'
-          format: date-time
-        endDate:
+          description: Last 4 digits
+          example: '4242'
+        expiresAt:
           type:
           - string
           - 'null'
-          description: expiration date of the bought membership
-          example: '2021-02-01T00:00:00Z'
-          format: date-time
-        isFrozen:
-          type: boolean
-        eventCreditsLeft:
-          type:
-          - number
-          - 'null'
-          description: number of event credits left, valid for PACKAGE_EVENTS
-          example: null
-        eventCreditsTotal:
-          type:
-          - number
-          - 'null'
-          description: number of event credits originally included in the package, valid for PACKAGE_EVENTS
-          example: null
-        moneyCreditsLeft:
-          type:
-          - number
-          - 'null'
-          description: number of money credits left, valid for PACKAGE_MONEY
-          example: null
-        moneyCreditsTotal:
-          type:
-          - number
-          - 'null'
-          description: number of money credits originally included in the package, valid for PACKAGE_MONEY
-          example: null
-        usageLimitForSessions:
-          type:
-          - number
-          - 'null'
-          description: Non-null value indicates the membership has limit to number of session bookings, only valid for SUBSCRIPTION
-          example: 5
-        usageLimitForAppointments:
-          type:
-          - number
-          - 'null'
-          description: Non-null value indicates the membership has limit to number of appointments booked, only valid for SUBSCRIPTION
-          example: 3
-        combinedUsageLimit:
-          type:
-          - number
-          - 'null'
-          description: Non-null value indicates the membership has combined limits for session and appointment bookings, only valid for SUBSCRIPTION
-          example: null
-        usedSessions:
-          type:
-          - number
-          - 'null'
-          description: only valid for SUBSCRIPTION with session-only usage limits
-          example: 1
-        usedAppointments:
-          type:
-          - number
-          - 'null'
-          description: only valid for SUBSCRIPTION with appointment-only usage limits
-          example: 2
-        combinedUsage:
-          type:
-          - number
-          - 'null'
-          description: only valid for SUBSCRIPTION with combined usage limits
-          example: null
-        usageLimitStartDate:
-          type:
-          - string
-          - 'null'
-          description: date range for which the current usage is calculated for, only valid for SUBSCRIPTION with usage limits
-          example: null
-          format: date-time
-        usageLimitEndDate:
-          type:
-          - string
-          - 'null'
-          description: date range for which the current usage is calculated for, only valid for SUBSCRIPTION with usage limits
-          example: null
-          format: date-time
-        membership:
-          description: info about origin membership, it's possible the bought membership has no origin membership
-          allOf:
-          - $ref: '#/components/schemas/HostMembershipBasicDto'
-        freeze:
-          description: freeze details, if the membership is frozen or scheduled to freeze/unfreeze
-          allOf:
-          - $ref: '#/components/schemas/ApiV2BoughtMembershipFreezeDto'
-        declinedRenewal:
-          description: latest failed renewal payment details for this membership, if any
-          allOf:
-          - $ref: '#/components/schemas/ApiV2BoughtMembershipDeclinedRenewalDto'
+          description: Expiration date in YYYY-MM-DD format
+          example: '2022-12-31'
       required:
       - id
       - type
-      - startDate
-      - endDate
-      - isFrozen
-      - eventCreditsLeft
-      - eventCreditsTotal
-      - moneyCreditsLeft
-      - moneyCreditsTotal
-      - usageLimitForSessions
-      - usageLimitForAppointments
-      - combinedUsageLimit
-      - usedSessions
-      - usedAppointments
-      - combinedUsage
-      - usageLimitStartDate
-      - usageLimitEndDate
-      - membership
-      - freeze
-      - declinedRenewal
-    ApiV2MemberManagePaymentMethodsRequestDto:
+      - last4
+      - expiresAt
+    ApiV2BoughtMembershipScheduleUnfreezeRequestDto:
       type: object
       properties:
-        redirectUrl:
-          type: string
-          description: URL to redirect after the add operation is completed
-        redirectUrlOnCancel:
-          type: string
-          description: Optional URL to redirect on cancel
-      required:
-      - redirectUrl
-    MemberDeleteSavedPaymentMethodErrorResponseDto:
-      type: object
-      properties:
-        type:
+        unfreezeType:
           enum:
-          - err-active-non-cancellable-subscription
-          - err-no-payment-method-found
+          - not_set
+          - scheduled
           type: string
           x-enumNames:
-          - ERR_ACTIVE_NON_CANCELLABLE_SUBSCRIPTION
-          - ERR_NO_PAYMENT_METHOD_FOUND
-        message:
-          type: string
+          - NOT_SET
+          - SCHEDULED
+        unfreezeAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
       required:
-      - type
-      - message
+      - unfreezeType
+      - unfreezeAt
     HostMembershipBasicDto:
       type: object
       properties:
@@ -950,69 +718,60 @@ components:
       - usageLimitRolloverMode
       - usageLimitRolloverExpirationDuration
       - usageLimitRolloverExpirationDurationUnit
-    ApiV2MemberSavedPaymentMethodDto:
+    ApiV2MemberUpdateRequestDto:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: John
+          minLength: 1
+          maxLength: 100
+        lastName:
+          type: string
+          example: Doe
+          minLength: 1
+          maxLength: 100
+      required:
+      - firstName
+      - lastName
+    PaginatedResponseDto:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/PaginatedResponseDataDto'
+      required:
+      - pagination
+    MemberInfoDto:
       type: object
       properties:
         id:
           type: integer
-          example: 1
-        type:
+        firstName:
           type: string
-          enum:
-          - card
-          example: card
-          x-enumNames:
-          - CARD
-        last4:
+          example: John
+        lastName:
+          type: string
+          example: Doe
+        email:
+          type: string
+          example: john.doe@example.com
+        phoneNumber:
           type:
           - string
           - 'null'
-          description: Last 4 digits
-          example: '4242'
-        expiresAt:
+          example: '1234567890'
+        pictureUrl:
           type:
           - string
           - 'null'
-          description: Expiration date in YYYY-MM-DD format
-          example: '2022-12-31'
+          example: https://example.com/picture.jpg
       required:
       - id
-      - type
-      - last4
-      - expiresAt
-    ApiV2BoughtMembershipFreezeDto:
-      type: object
-      properties:
-        freezedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        unfreezedScheduledAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        unfrozenAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        remainingFreezedMinutes:
-          type:
-          - integer
-          - 'null'
-        scheduledFreezeAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-      required:
-      - freezedAt
-      - unfreezedScheduledAt
-      - unfrozenAt
-      - remainingFreezedMinutes
-      - scheduledFreezeAt
+      - firstName
+      - lastName
+      - email
+      - phoneNumber
+      - pictureUrl
     PaginatedResponseDataDto:
       type: object
       properties:
@@ -1038,14 +797,255 @@ components:
       - page
       - pageSize
       - totalCount
-    ApiV2MemberManagePaymentMethodsResponseDto:
+    ApiV2MemberManagePaymentMethodsRequestDto:
       type: object
       properties:
-        addPaymentMethodPageUrl:
+        redirectUrl:
           type: string
-          description: URL to redirect for adding a payment method
+          description: URL to redirect after the add operation is completed
+        redirectUrlOnCancel:
+          type: string
+          description: Optional URL to redirect on cancel
       required:
-      - addPaymentMethodPageUrl
+      - redirectUrl
+    ApiV2MemberUpdatePhoneNumberRequestDto:
+      type: object
+      properties:
+        phoneNumber:
+          type: string
+          example: '1234567890'
+      required:
+      - phoneNumber
+    ApiV2BoughtMembershipDeclinedRenewalDto:
+      type: object
+      properties:
+        declinedAt:
+          type: string
+          format: date-time
+        cardLast4:
+          type:
+          - string
+          - 'null'
+      required:
+      - declinedAt
+      - cardLast4
+    ApiV2BoughtMembershipScheduleFreezeRequestDto:
+      type: object
+      properties:
+        freezeType:
+          enum:
+          - not_set
+          - now
+          - scheduled
+          - before_renewal
+          type: string
+          x-enumNames:
+          - NOT_SET
+          - NOW
+          - SCHEDULED
+          - BEFORE_RENEWAL
+        freezeAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      required:
+      - freezeType
+      - freezeAt
+    ApiV2MemberUpdateEmailRequestDto:
+      type: object
+      properties:
+        email:
+          type: string
+          example: john.doe@example.com
+      required:
+      - email
+    ApiV2BoughtMembershipFreezeRequestDto:
+      type: object
+      properties:
+        freezeType:
+          enum:
+          - not_set
+          - now
+          - scheduled
+          - before_renewal
+          type: string
+          x-enumNames:
+          - NOT_SET
+          - NOW
+          - SCHEDULED
+          - BEFORE_RENEWAL
+        freezeAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        unfreezeType:
+          enum:
+          - not_set
+          - scheduled
+          type: string
+          x-enumNames:
+          - NOT_SET
+          - SCHEDULED
+        unfreezeAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        reason:
+          type:
+          - string
+          - 'null'
+      required:
+      - freezeType
+      - freezeAt
+      - unfreezeType
+      - unfreezeAt
+    MemberBoughtMembershipsDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        type:
+          enum:
+          - subscription
+          - on-demand-subscription
+          - package-events
+          - package-money
+          - patron
+          type: string
+          example: subscription
+          x-enumNames:
+          - Subscription
+          - OnDemandSubscription
+          - PackageEvents
+          - PackageMoney
+          - Patron
+        startDate:
+          type:
+          - string
+          - 'null'
+          description: start date of the bought membership
+          example: '2021-01-01T00:00:00Z'
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          description: expiration date of the bought membership
+          example: '2021-02-01T00:00:00Z'
+          format: date-time
+        isFrozen:
+          type: boolean
+        eventCreditsLeft:
+          type:
+          - number
+          - 'null'
+          description: number of event credits left, valid for PACKAGE_EVENTS
+          example: null
+        eventCreditsTotal:
+          type:
+          - number
+          - 'null'
+          description: number of event credits originally included in the package, valid for PACKAGE_EVENTS
+          example: null
+        moneyCreditsLeft:
+          type:
+          - number
+          - 'null'
+          description: number of money credits left, valid for PACKAGE_MONEY
+          example: null
+        moneyCreditsTotal:
+          type:
+          - number
+          - 'null'
+          description: number of money credits originally included in the package, valid for PACKAGE_MONEY
+          example: null
+        usageLimitForSessions:
+          type:
+          - number
+          - 'null'
+          description: Non-null value indicates the membership has limit to number of session bookings, only valid for SUBSCRIPTION
+          example: 5
+        usageLimitForAppointments:
+          type:
+          - number
+          - 'null'
+          description: Non-null value indicates the membership has limit to number of appointments booked, only valid for SUBSCRIPTION
+          example: 3
+        combinedUsageLimit:
+          type:
+          - number
+          - 'null'
+          description: Non-null value indicates the membership has combined limits for session and appointment bookings, only valid for SUBSCRIPTION
+          example: null
+        usedSessions:
+          type:
+          - number
+          - 'null'
+          description: only valid for SUBSCRIPTION with session-only usage limits
+          example: 1
+        usedAppointments:
+          type:
+          - number
+          - 'null'
+          description: only valid for SUBSCRIPTION with appointment-only usage limits
+          example: 2
+        combinedUsage:
+          type:
+          - number
+          - 'null'
+          description: only valid for SUBSCRIPTION with combined usage limits
+          example: null
+        usageLimitStartDate:
+          type:
+          - string
+          - 'null'
+          description: date range for which the current usage is calculated for, only valid for SUBSCRIPTION with usage limits
+          example: null
+          format: date-time
+        usageLimitEndDate:
+          type:
+          - string
+          - 'null'
+          description: date range for which the current usage is calculated for, only valid for SUBSCRIPTION with usage limits
+          example: null
+          format: date-time
+        membership:
+          description: info about origin membership, it's possible the bought membership has no origin membership
+          allOf:
+          - $ref: '#/components/schemas/HostMembershipBasicDto'
+        freeze:
+          description: freeze details, if the membership is frozen or scheduled to freeze/unfreeze
+          allOf:
+          - $ref: '#/components/schemas/ApiV2BoughtMembershipFreezeDto'
+        declinedRenewal:
+          description: latest failed renewal payment details for this membership, if any
+          allOf:
+          - $ref: '#/components/schemas/ApiV2BoughtMembershipDeclinedRenewalDto'
+      required:
+      - id
+      - type
+      - startDate
+      - endDate
+      - isFrozen
+      - eventCreditsLeft
+      - eventCreditsTotal
+      - moneyCreditsLeft
+      - moneyCreditsTotal
+      - usageLimitForSessions
+      - usageLimitForAppointments
+      - combinedUsageLimit
+      - usedSessions
+      - usedAppointments
+      - combinedUsage
+      - usageLimitStartDate
+      - usageLimitEndDate
+      - membership
+      - freeze
+      - declinedRenewal
   securitySchemes:
     OAuth2:
       type: oauth2
