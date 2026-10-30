@@ -1,4 +1,4 @@
-# Momence (momence)
+# Momence
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,184 +64,136 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Momence is an all-in-one management platform for fitness, wellness, and experience-based businesses - studios, gyms, spas, and instructors - covering class and appointment scheduling, memberships and packages, point-of-sale and payments, marketing, and a branded member app. Momence exposes a documented public REST API (api.momence.com, `/api/v2`) split into a **Host API** for staff and back-office automation and a **Member API** scoped to the logged-in customer. The API is authenticated with OAuth2 (authorization code for customers, password grant for staff automation) using public API clients created in the Momence dashboard, and covers members, sessions and bookings, memberships, checkout and sales, reports, appointments, addresses, and saved payment methods.
+Momence is an all-in-one management platform for fitness, wellness, and experience-based businesses - studios, gyms, spas, and instructors - covering class and appointment scheduling, memberships and packages, point-of-sale and payments, marketing, and a branded member app. Momence exposes a documented public REST API (api.momence.com, /api/v2) split into a Host API for staff and back-office automation and a Member API scoped to the logged-in customer. The API is authenticated with OAuth2 (authorization code for customers, password grant for staff automation) using public API clients created in the Momence dashboard, and covers members, sessions and bookings, memberships, checkout and sales, reports, appointments, addresses, and saved payment methods.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/momence/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/momence/refs/heads/main/apis.yml)
+**Areas:** Fitness · Wellness · Studio Management · Booking · Scheduling · Membership · Payments · Class Management
 
-## Tags
+## Momence on APIs.io
 
-- Fitness
-- Wellness
-- Studio Management
-- Booking
-- Scheduling
-- Memberships
-- Payments
-- Class Management
+Everything profiled for Momence is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/momence/](https://apis.io/providers/momence/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (8)
 
-- **Created:** 2026-07-04
-- **Modified:** 2026-07-04
+- [Momence Auth API](https://apis.io/apis/momence/momence-auth-api/) — The auth API from Momence — 4 operation(s) for auth.
+- [Momence Host API](https://apis.io/apis/momence/momence-host-api/) — The host API from Momence — 29 operation(s) for host.
+- [Momence Host Checkout API](https://apis.io/apis/momence/momence-host-checkout-api/) — The host-checkout API from Momence — 3 operation(s) for host-checkout.
+- [Momence Member Addresses API](https://apis.io/apis/momence/momence-member-addresses-api/) — The member-addresses API from Momence — 2 operation(s) for member-addresses.
+- [Momence Member API](https://apis.io/apis/momence/momence-member-api/) — The member API from Momence — 11 operation(s) for member.
+- [Momence Member Checkout API](https://apis.io/apis/momence/momence-member-checkout-api/) — The member-checkout API from Momence — 3 operation(s) for member-checkout.
+- [Momence Member Host API](https://apis.io/apis/momence/momence-member-host-api/) — The member-host API from Momence — 5 operation(s) for member-host.
+- [Momence Member Sessions API](https://apis.io/apis/momence/momence-member-sessions-api/) — The member-sessions API from Momence — 2 operation(s) for member-sessions.
 
-## APIs
+### Published properties
 
-### Momence Authentication API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-OAuth2 authorization and token endpoints for the Momence Public API. Supports the authorization code grant (redirecting customers to a Momence login screen), the password grant for staff automation, and refresh tokens, plus endpoints to fetch the logged-in user profile and log out. Public API clients (client_id / client_secret) are created in the Momence dashboard.
+#### Agentic access (1)
 
-- **Human URL:** [https://api.docs.momence.com/docs/authorization](https://api.docs.momence.com/docs/authorization)
-- **Base URL:** `https://api.momence.com/api/v2`
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Tags
+- [Momence Agentic Access](https://apis.io/agentic-access/momence/momence-agentic-access/)
 
-- Authentication
-- OAuth2
-- Identity
+#### Collections (9)
 
-#### Properties
+Postman and Open Collection request collections.
 
-- [Documentation](https://api.docs.momence.com/docs/authorization)
-- [API Reference](https://api.docs.momence.com/docs/getting-started)
-- [OpenAPI](openapi/momence-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/momence.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/momence.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Momence Public API](https://apis.io/collections/momence/open-momence/)
+- [Momence Public auth API](https://apis.io/collections/momence/open-momence-auth-api/)
+- [Momence Public auth host API](https://apis.io/collections/momence/open-momence-host-api/)
+- [Momence Public auth host-checkout API](https://apis.io/collections/momence/open-momence-host-checkout-api/)
+- [Momence Public auth member-addresses API](https://apis.io/collections/momence/open-momence-member-addresses-api/)
+- [Momence Public auth member API](https://apis.io/collections/momence/open-momence-member-api/)
+- [Momence Public auth member-checkout API](https://apis.io/collections/momence/open-momence-member-checkout-api/)
+- [Momence Public auth member-host API](https://apis.io/collections/momence/open-momence-member-host-api/)
+- [Momence Public auth member-sessions API](https://apis.io/collections/momence/open-momence-member-sessions-api/)
 
-### Momence Host Members API
+#### Security (2)
 
-Staff-side management of the members (customers) in a Momence host - list and filter members, create members, retrieve a member, update name, email, and phone number, read and manage member notes, and assign or unassign tags for segmentation and access control.
+Authentication, trust centre, and vulnerability disclosure.
 
-- **Human URL:** [https://api.docs.momence.com/reference/apiv2hostmemberscontroller_list](https://api.docs.momence.com/reference/apiv2hostmemberscontroller_list)
-- **Base URL:** `https://api.momence.com/api/v2`
+- [Momence Authentication](https://apis.io/security/momence/momence-authentication/)
+- [Momence Domain Security](https://apis.io/security/momence/momence-domain-security/)
 
-#### Tags
+#### OAuth scopes (1)
 
-- Members
-- Customers
-- CRM
+The permissions the API asks for.
 
-#### Properties
+- [Momence Scopes](https://apis.io/scopes/momence/momence-scopes/)
 
-- [Documentation](https://api.docs.momence.com/docs/terminology)
-- [API Reference](https://api.docs.momence.com/reference/apiv2hostmemberscontroller_list)
-- [OpenAPI](openapi/momence-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/momence.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/momence.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Plans and pricing (1)
 
-### Momence Host Sessions & Bookings API
+Published plans, tiers and prices.
 
-Staff-side scheduling surface - list sessions (classes) and retrieve session detail, list a session's bookings, add a member to a session for free or to its waitlist, mark a booking checked-in or not, and cancel individual or recurring session bookings.
+- [Momence Plans Pricing](https://apis.io/plans/momence/momence-plans-pricing/)
 
-- **Human URL:** [https://api.docs.momence.com/reference/apiv2hostsessionscontroller_getsessions](https://api.docs.momence.com/reference/apiv2hostsessionscontroller_getsessions)
-- **Base URL:** `https://api.momence.com/api/v2`
+#### Rate limits (1)
 
-#### Tags
+Published request limits.
 
-- Sessions
-- Classes
-- Bookings
-- Waitlist
+- [Momence Rate Limits](https://apis.io/rate-limits/momence/momence-rate-limits/)
 
-#### Properties
+#### FinOps (1)
 
-- [API Reference](https://api.docs.momence.com/reference/apiv2hostsessionscontroller_getsessions)
-- [OpenAPI](openapi/momence-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/momence.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/momence.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+What the API costs to run, by operation.
 
-### Momence Host Memberships API
+- [Momence Finops](https://apis.io/finops/momence/momence-finops/)
 
-Manage the membership products a host sells and the memberships a member has bought - list available host memberships, list a member's active subscriptions and packs, adjust class credits, and freeze, schedule freeze/unfreeze, or unfreeze a member's bought membership.
+## Where to find this API
 
-- **Human URL:** [https://api.docs.momence.com/reference/apiv2hostmembershipscontroller_list](https://api.docs.momence.com/reference/apiv2hostmembershipscontroller_list)
-- **Base URL:** `https://api.momence.com/api/v2`
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-#### Tags
-
-- Memberships
-- Subscriptions
-- Packages
-
-#### Properties
-
-- [API Reference](https://api.docs.momence.com/reference/apiv2hostmembershipscontroller_list)
-- [OpenAPI](openapi/momence-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/momence.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/momence.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Momence Host Checkout & Sales API
-
-Staff-side commerce and reporting - resolve compatible memberships and prices for a cart, perform checkout on behalf of a member (buy a session with a subscription or a saved payment method, or buy a membership), list sales, manage appointment reservations, and run and retrieve host reports.
-
-- **Human URL:** [https://api.docs.momence.com/reference/apiv2hostcheckoutcontroller_post](https://api.docs.momence.com/reference/apiv2hostcheckoutcontroller_post)
-- **Base URL:** `https://api.momence.com/api/v2`
-
-#### Tags
-
-- Checkout
-- Payments
-- Sales
-- Reports
-
-#### Properties
-
-- [API Reference](https://api.docs.momence.com/reference/apiv2hostcheckoutcontroller_post)
-- [OpenAPI](openapi/momence-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/momence.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/momence.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Momence Member Account API
-
-Customer-scoped account management for the logged-in member - read and update member info, email, and phone number, request a password-reset email, list visits, CRUD member addresses, list a member's active memberships and manage their freeze schedule, and save, list, and remove payment methods.
-
-- **Human URL:** [https://api.docs.momence.com/reference/apiv2membercontroller_get](https://api.docs.momence.com/reference/apiv2membercontroller_get)
-- **Base URL:** `https://api.momence.com/api/v2`
-
-#### Tags
-
-- Member
-- Profile
-- Addresses
-- Payment Methods
-
-#### Properties
-
-- [API Reference](https://api.docs.momence.com/reference/apiv2membercontroller_get)
-- [OpenAPI](openapi/momence-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/momence.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/momence.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Momence Member Booking API
-
-Customer-facing booking flow - browse a host's available locations, memberships, and sessions, resolve compatible memberships and prices, perform checkout to buy or book a session, list and cancel the member's own session bookings, and read and sign required signable documents (waivers and contracts).
-
-- **Human URL:** [https://api.docs.momence.com/reference/apiv2memberhostsessionscontroller_list](https://api.docs.momence.com/reference/apiv2memberhostsessionscontroller_list)
-- **Base URL:** `https://api.momence.com/api/v2`
-
-#### Tags
-
-- Booking
-- Sessions
-- Checkout
-- Documents
-
-#### Properties
-
-- [API Reference](https://api.docs.momence.com/reference/apiv2memberhostsessionscontroller_list)
-- [OpenAPI](openapi/momence-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/momence.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/momence.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [LinkedIn](https://www.linkedin.com/company/momence)
 - [Website](https://momence.com/)
 - [Documentation](https://api.docs.momence.com/)
-- [Plans](plans/momence-plans-pricing.yml)
-- [Rate Limits](rate-limits/momence-rate-limits.yml)
-- [Fin Ops](finops/momence-finops.yml)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 23.7** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 40.9 |
+| Contract governance | 0.0 |
+| Operational transparency | 5.3 |
+| Developer ergonomics | 26.2 |
+| Access clarity | 7.9 |
+
+**Agent readiness 27.2** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | negotiable (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | documented (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 19.6** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/momence/](https://apis.io/providers/momence/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Momence: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/momence/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
